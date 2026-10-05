@@ -10,6 +10,11 @@ import { Webhook } from 'npm:standardwebhooks@1.0.0';
 import { adminClient } from '../_shared/http.ts';
 import { normaliseUkMobile } from '../_shared/phone.ts';
 
+/** Secrets pasted from other apps can pick up spaces, quotes or line breaks; strip them. */
+function cleanSecret(value: string | undefined) {
+  return (value ?? '').trim().replace(/^["'<]+|["'>]+$/g, '').trim();
+}
+
 function hookError(status: number, message: string) {
   return new Response(JSON.stringify({ error: { http_code: status, message } }), {
     status,
@@ -39,9 +44,9 @@ Deno.serve(async (req) => {
   if (!allowed) return hookError(429, 'Please request your code from the Backed. website.');
 
   const body = `Your Backed. code is ${event.sms.otp}. Don't share it with anyone.`;
-  const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
-  const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
-  const messagingServiceSid = Deno.env.get('TWILIO_MESSAGING_SERVICE_SID');
+  const accountSid = cleanSecret(Deno.env.get('TWILIO_ACCOUNT_SID'));
+  const authToken = cleanSecret(Deno.env.get('TWILIO_AUTH_TOKEN'));
+  const messagingServiceSid = cleanSecret(Deno.env.get('TWILIO_MESSAGING_SERVICE_SID'));
 
   if (!accountSid || !authToken || !messagingServiceSid) {
     console.log(`[send-sms] Twilio not set up; code for +${phone}: ${event.sms.otp}`);
@@ -57,7 +62,10 @@ Deno.serve(async (req) => {
     body: new URLSearchParams({ To: `+${phone}`, MessagingServiceSid: messagingServiceSid, Body: body }),
   });
   if (!response.ok) {
-    console.error('Twilio error', response.status, await response.text());
+    // Twilio's own explanation, e.g. code 20003 "Primary compliance profile is not approved"
+    // (the account's Trust Hub check isn't finished) or 21608 (trial account).
+    const failure = (await response.json().catch(() => ({}))) as { code?: number; message?: string };
+    console.error(`Twilio refused the text (HTTP ${response.status}, code ${failure.code}): ${failure.message}`);
     return hookError(502, 'Could not send the text. Please check the number and try again.');
   }
 
