@@ -662,11 +662,17 @@ isOneToOne: true
             "accept_offer":
 { Args: { "p_offer_id": string }; Returns: string
                            },
+"allow_sms_code":
+{ Args: { "p_ip": string,"p_phone": string }; Returns: string
+                           },
 "approve_trade":
 { Args: { "p_trade_id": string }; Returns: undefined
                            },
 "cancel_job":
 { Args: { "p_job_id": string }; Returns: undefined
+                           },
+"claim_sms_code":
+{ Args: { "p_phone": string }; Returns: boolean
                            },
 "decline_offer":
 { Args: { "p_note"?: string,"p_offer_id": string,"p_reason": Database["public"]['Enums']["decline_reason"] }; Returns: undefined

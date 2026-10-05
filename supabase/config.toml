@@ -261,13 +261,13 @@ content_path = "./supabase/templates/confirmation.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.
-enable_signup = false
+enable_signup = true
 # If enabled, users need to confirm their phone number before signing in.
 enable_confirmations = false
 # Template for sending OTP to users
-template = "Your code is {{ .Code }}"
+template = "Your Backed. code is {{ .Code }}"
 # Controls the minimum amount of time that must pass before sending another sms otp.
-max_frequency = "5s"
+max_frequency = "1m0s"
 
 # Use pre-defined map of phone number to OTP for testing.
 # [auth.sms.test_otp]
@@ -291,12 +291,14 @@ max_frequency = "5s"
 # uri = "pg-functions://<database>/<schema>/<hook_name>"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
+# Phone sign-in needs a provider switched on, but the send-sms hook (below)
+# does the actual sending. Locally these are placeholders from supabase/.env.
 [auth.sms.twilio]
-enabled = false
-account_sid = ""
-message_service_sid = ""
+enabled = true
+account_sid = "env(TWILIO_ACCOUNT_SID)"
+message_service_sid = "env(TWILIO_MESSAGING_SERVICE_SID)"
 # DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
-auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
+auth_token = "env(TWILIO_AUTH_TOKEN)"
 
 # Multi-factor-authentication is available to Supabase Pro plan.
 [auth.mfa]
@@ -417,3 +419,18 @@ enabled = true
 # formatted with uppercase keywords, indent 2, max width 180, trailing commas,
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
+
+# Texts go through our send-sms Edge Function, which only sends codes that the
+# website requested through request-phone-code (Turnstile check + limits).
+[auth.hook.send_sms]
+enabled = true
+uri = "env(SEND_SMS_HOOK_URI)"
+secrets = "env(SEND_SMS_HOOK_SECRET)"
+
+# Called by Supabase Auth and by signed-out customers, so they check the
+# request themselves instead of requiring a signed-in user.
+[functions.send-sms]
+verify_jwt = false
+
+[functions.request-phone-code]
+verify_jwt = false

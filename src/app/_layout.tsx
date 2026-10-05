@@ -8,6 +8,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 
 import { LoadingScreen } from '@/components/screen';
 import { Colors } from '@/constants/theme';
@@ -55,13 +56,16 @@ export default function RootLayout() {
 
 /**
  * Who sees what:
- *   signed out          -> (auth): welcome, sign in, sign up
- *   trade               -> (trade): application, then their home
- *   admin or customer   -> (other): admins go to /admin; customers are pointed to the website
- *   /admin              -> founders' website, with its own sign-in (see admin/_layout)
+ *   website, signed out or customer -> (site): home "/", post a job, my jobs
+ *   signed out                      -> (auth): trade welcome, sign in, sign up (on phones "/"
+ *                                      falls through to the welcome screen)
+ *   trade                           -> (trade): application, then their home
+ *   anyone else signed in           -> (other): admins go to /admin; customers on the phone
+ *                                      app are pointed to the website
+ *   /admin                          -> founders' website, with its own sign-in (admin/_layout)
  */
 function RootNavigator() {
-  const { session, profile, loading } = useAuth();
+  const { session, role, loading } = useAuth();
   const colors = Colors[useColorScheme() === 'dark' ? 'dark' : 'light'];
 
   useEffect(() => {
@@ -70,17 +74,22 @@ function RootNavigator() {
 
   if (loading) return <LoadingScreen />;
 
-  const isTrade = !!session && profile?.role === 'trade';
+  const isWeb = Platform.OS === 'web';
+  const isTrade = !!session && role === 'trade';
+  const onCustomerSite = isWeb && (!session || role === 'customer');
 
   return (
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
+      <Stack.Protected guard={onCustomerSite}>
+        <Stack.Screen name="(site)" />
+      </Stack.Protected>
       <Stack.Protected guard={isTrade}>
         <Stack.Screen name="(trade)" />
       </Stack.Protected>
-      <Stack.Protected guard={!!session && !isTrade}>
+      <Stack.Protected guard={!!session && !isTrade && !onCustomerSite}>
         <Stack.Screen name="(other)" />
       </Stack.Protected>
       <Stack.Screen name="admin" />

@@ -17,6 +17,7 @@ import { useAuth } from '@/lib/auth';
 import { formatDate, todayInUk } from '@/lib/dates';
 import { friendlyError } from '@/lib/errors';
 import { BUSINESS_TYPE_NAMES, SCHEME_NAMES } from '@/lib/labels';
+import { formatUkPhone } from '@/lib/phone';
 import { supabase } from '@/lib/supabase';
 import { signedUrl } from '@/lib/upload';
 import type { Tables } from '@/types/database';
@@ -166,7 +167,7 @@ export default function AdminApplicationScreen() {
       <Section title="Business">
         <Detail label="Applicant" value={trade.profiles?.full_name || '—'} />
         <Detail label="Email" value={trade.profiles?.email ?? '—'} />
-        <Detail label="Phone" value={trade.contact_phone ?? '—'} />
+        <Detail label="Phone" value={trade.contact_phone ? formatUkPhone(trade.contact_phone) : '—'} />
         <Detail label="Type" value={BUSINESS_TYPE_NAMES[trade.business_type]} />
         <Detail label="Trades" value={data.categories.join(', ') || '—'} />
         <Detail label="Towns" value={data.towns.join(', ') || '—'} />

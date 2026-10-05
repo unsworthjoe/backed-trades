@@ -5,11 +5,18 @@ import { supabase } from '@/lib/supabase';
 import type { Tables } from '@/types/database';
 
 type Profile = Tables<'profiles'>;
+type Role = Profile['role'];
 
 type AuthState = {
   session: Session | null;
   profile: Profile | null;
-  /** True until the stored session (and its profile) have been loaded. */
+  /**
+   * Known straight away for customers (they sign in with a phone number only), so signing in
+   * mid-way through posting a job doesn't reload the page. Trades and admins (email) wait for
+   * their profile.
+   */
+  role: Role | null;
+  /** True until the stored session (and, for email accounts, the profile) has loaded. */
   loading: boolean;
   signOut: () => Promise<void>;
 };
@@ -24,6 +31,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const userId = session?.user.id;
   const profileLoaded = !userId || loadedProfile?.userId === userId;
   const profile = userId && loadedProfile?.userId === userId ? loadedProfile.profile : null;
+  const isPhoneOnly = !!session && !session.user.email;
+  const role: Role | null = profile?.role ?? (isPhoneOnly ? 'customer' : null);
+  const loading = !sessionLoaded || (!isPhoneOnly && !profileLoaded);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -57,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, profile, loading: !sessionLoaded || !profileLoaded, signOut }}>
+    <AuthContext.Provider value={{ session, profile, role, loading, signOut }}>
       {children}
     </AuthContext.Provider>
   );
