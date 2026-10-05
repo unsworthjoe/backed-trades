@@ -636,13 +636,13 @@ isOneToOne: false
                   ]
                 },"trades": {
                   Row: {
-                    "accepts_callouts": boolean,"applied_at": string,"approved_at": string | null,"approved_by": string | null,"bio": string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs": boolean,"company_checked_at": string | null,"company_number": string | null,"consecutive_misses": number,"created_at": string,"id": string,"paused_at": string | null,"paused_reason": Database["public"]['Enums']["pause_reason"] | null,"rejection_reason": string | null,"status": Database["public"]['Enums']["trade_status"],"updated_at": string
+                    "accepts_callouts": boolean,"applied_at": string,"approved_at": string | null,"approved_by": string | null,"bio": string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs": boolean,"company_checked_at": string | null,"company_number": string | null,"consecutive_misses": number,"contact_phone": string | null,"created_at": string,"id": string,"paused_at": string | null,"paused_reason": Database["public"]['Enums']["pause_reason"] | null,"rejection_reason": string | null,"status": Database["public"]['Enums']["trade_status"],"submitted_at": string | null,"updated_at": string
                   }
                   Insert: {
-                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"created_at"?: string,"id": string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"updated_at"?: string
+                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"contact_phone"?: string | null,"created_at"?: string,"id": string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"submitted_at"?: string | null,"updated_at"?: string
                   }
                   Update: {
-                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name"?: string,"business_type"?: Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"created_at"?: string,"id"?: string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"updated_at"?: string
+                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name"?: string,"business_type"?: Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"contact_phone"?: string | null,"created_at"?: string,"id"?: string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"submitted_at"?: string | null,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -696,6 +696,9 @@ isOneToOne: true
 "mark_done":
 { Args: { "p_match_id": string }; Returns: undefined
                            },
+"my_application_problems":
+{ Args: Record<PropertyKey, never>; Returns: (string)[]
+                           },
 "normalise_key":
 { Args: { "value": string }; Returns: string
                            },
@@ -729,6 +732,9 @@ isOneToOne: true
 "sign_off":
 { Args: { "p_job_id": string }; Returns: undefined
                            },
+"submit_application":
+{ Args: Record<PropertyKey, never>; Returns: undefined
+                           },
 "sync_my_queues":
 { Args: Record<PropertyKey, never>; Returns: undefined
                            },
@@ -737,7 +743,7 @@ isOneToOne: true
                            }
           }
           Enums: {
-            "admin_alert_kind": "job_unmatched"|"no_contact"|"low_customer_rating"|"trade_paused"|"insurance_expiring","business_type": "sole_trader"|"partnership"|"limited_company","decline_reason": "too_busy"|"too_far"|"not_my_kind_of_work"|"too_small"|"too_big"|"other","document_type": "public_liability_insurance"|"other","id_check_result": "pending"|"passed"|"failed"|"refer","job_budget": "under_250"|"250_to_1000"|"1000_to_5000"|"5000_to_15000"|"over_15000"|"not_sure","job_size": "small"|"large","job_status": "offering"|"matched"|"done"|"completed"|"cancelled","job_timing": "asap"|"within_a_week"|"within_a_month"|"flexible","match_end_reason": "customer_requested_another"|"cancelled"|"admin","notification_channel": "push"|"sms"|"email"|"whatsapp","offer_status": "pending"|"accepted"|"declined"|"expired"|"withdrawn","pause_reason": "self"|"missed_offers"|"admin","queue_member_status": "active"|"waiting","registration_scheme": "gas_safe"|"niceic"|"napit"|"fensa"|"certass"|"oftec"|"other","report_status": "open"|"resolved"|"dismissed","review_status": "pending"|"approved"|"rejected","subscription_plan": "monthly"|"yearly","subscription_status": "incomplete"|"trialing"|"active"|"past_due"|"canceled"|"unpaid","trade_status": "applied"|"approved"|"rejected"|"suspended","user_role": "customer"|"trade"|"admin"
+            "admin_alert_kind": "job_unmatched"|"no_contact"|"low_customer_rating"|"trade_paused"|"insurance_expiring"|"application_submitted","business_type": "sole_trader"|"partnership"|"limited_company","decline_reason": "too_busy"|"too_far"|"not_my_kind_of_work"|"too_small"|"too_big"|"other","document_type": "public_liability_insurance"|"other","id_check_result": "pending"|"passed"|"failed"|"refer","job_budget": "under_250"|"250_to_1000"|"1000_to_5000"|"5000_to_15000"|"over_15000"|"not_sure","job_size": "small"|"large","job_status": "offering"|"matched"|"done"|"completed"|"cancelled","job_timing": "asap"|"within_a_week"|"within_a_month"|"flexible","match_end_reason": "customer_requested_another"|"cancelled"|"admin","notification_channel": "push"|"sms"|"email"|"whatsapp","offer_status": "pending"|"accepted"|"declined"|"expired"|"withdrawn","pause_reason": "self"|"missed_offers"|"admin","queue_member_status": "active"|"waiting","registration_scheme": "gas_safe"|"niceic"|"napit"|"fensa"|"certass"|"oftec"|"other","report_status": "open"|"resolved"|"dismissed","review_status": "pending"|"approved"|"rejected","subscription_plan": "monthly"|"yearly","subscription_status": "incomplete"|"trialing"|"active"|"past_due"|"canceled"|"unpaid","trade_status": "applied"|"approved"|"rejected"|"suspended","user_role": "customer"|"trade"|"admin"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -853,7 +859,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "admin_alert_kind": ["job_unmatched", "no_contact", "low_customer_rating", "trade_paused", "insurance_expiring"],"business_type": ["sole_trader", "partnership", "limited_company"],"decline_reason": ["too_busy", "too_far", "not_my_kind_of_work", "too_small", "too_big", "other"],"document_type": ["public_liability_insurance", "other"],"id_check_result": ["pending", "passed", "failed", "refer"],"job_budget": ["under_250", "250_to_1000", "1000_to_5000", "5000_to_15000", "over_15000", "not_sure"],"job_size": ["small", "large"],"job_status": ["offering", "matched", "done", "completed", "cancelled"],"job_timing": ["asap", "within_a_week", "within_a_month", "flexible"],"match_end_reason": ["customer_requested_another", "cancelled", "admin"],"notification_channel": ["push", "sms", "email", "whatsapp"],"offer_status": ["pending", "accepted", "declined", "expired", "withdrawn"],"pause_reason": ["self", "missed_offers", "admin"],"queue_member_status": ["active", "waiting"],"registration_scheme": ["gas_safe", "niceic", "napit", "fensa", "certass", "oftec", "other"],"report_status": ["open", "resolved", "dismissed"],"review_status": ["pending", "approved", "rejected"],"subscription_plan": ["monthly", "yearly"],"subscription_status": ["incomplete", "trialing", "active", "past_due", "canceled", "unpaid"],"trade_status": ["applied", "approved", "rejected", "suspended"],"user_role": ["customer", "trade", "admin"]
+            "admin_alert_kind": ["job_unmatched", "no_contact", "low_customer_rating", "trade_paused", "insurance_expiring", "application_submitted"],"business_type": ["sole_trader", "partnership", "limited_company"],"decline_reason": ["too_busy", "too_far", "not_my_kind_of_work", "too_small", "too_big", "other"],"document_type": ["public_liability_insurance", "other"],"id_check_result": ["pending", "passed", "failed", "refer"],"job_budget": ["under_250", "250_to_1000", "1000_to_5000", "5000_to_15000", "over_15000", "not_sure"],"job_size": ["small", "large"],"job_status": ["offering", "matched", "done", "completed", "cancelled"],"job_timing": ["asap", "within_a_week", "within_a_month", "flexible"],"match_end_reason": ["customer_requested_another", "cancelled", "admin"],"notification_channel": ["push", "sms", "email", "whatsapp"],"offer_status": ["pending", "accepted", "declined", "expired", "withdrawn"],"pause_reason": ["self", "missed_offers", "admin"],"queue_member_status": ["active", "waiting"],"registration_scheme": ["gas_safe", "niceic", "napit", "fensa", "certass", "oftec", "other"],"report_status": ["open", "resolved", "dismissed"],"review_status": ["pending", "approved", "rejected"],"subscription_plan": ["monthly", "yearly"],"subscription_status": ["incomplete", "trialing", "active", "past_due", "canceled", "unpaid"],"trade_status": ["applied", "approved", "rejected", "suspended"],"user_role": ["customer", "trade", "admin"]
           }
         }
 } as const

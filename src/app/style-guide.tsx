@@ -12,7 +12,7 @@ import { useTheme } from '@/hooks/use-theme';
 
 /**
  * Temporary style guide for judging the Backed. theme on a real phone.
- * Replaced by the real home screen once the founders approve the look.
+ * Kept at /style-guide for checking the theme; not linked from the app.
  */
 
 const SWATCHES: { token: ThemeColor; name: string }[] = [
