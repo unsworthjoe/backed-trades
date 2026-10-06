@@ -277,13 +277,13 @@ isOneToOne: false
                   ]
                 },"notification_outbox": {
                   Row: {
-                    "attempts": number,"cancelled_at": string | null,"channel": Database["public"]['Enums']["notification_channel"],"created_at": string,"data": NonNullable<Json>,"failed_at": string | null,"id": number,"last_error": string | null,"scheduled_for": string,"sent_at": string | null,"template": string,"urgent": boolean,"user_id": string
+                    "attempts": number,"cancelled_at": string | null,"channel": Database["public"]['Enums']["notification_channel"],"claimed_at": string | null,"created_at": string,"data": NonNullable<Json>,"failed_at": string | null,"id": number,"last_error": string | null,"scheduled_for": string,"sent_at": string | null,"template": string,"urgent": boolean,"user_id": string
                   }
                   Insert: {
-                    "attempts"?: number,"cancelled_at"?: string | null,"channel": Database["public"]['Enums']["notification_channel"],"created_at"?: string,"data"?: NonNullable<Json>,"failed_at"?: string | null,"id"?: never,"last_error"?: string | null,"scheduled_for"?: string,"sent_at"?: string | null,"template": string,"urgent"?: boolean,"user_id": string
+                    "attempts"?: number,"cancelled_at"?: string | null,"channel": Database["public"]['Enums']["notification_channel"],"claimed_at"?: string | null,"created_at"?: string,"data"?: NonNullable<Json>,"failed_at"?: string | null,"id"?: never,"last_error"?: string | null,"scheduled_for"?: string,"sent_at"?: string | null,"template": string,"urgent"?: boolean,"user_id": string
                   }
                   Update: {
-                    "attempts"?: number,"cancelled_at"?: string | null,"channel"?: Database["public"]['Enums']["notification_channel"],"created_at"?: string,"data"?: NonNullable<Json>,"failed_at"?: string | null,"id"?: never,"last_error"?: string | null,"scheduled_for"?: string,"sent_at"?: string | null,"template"?: string,"urgent"?: boolean,"user_id"?: string
+                    "attempts"?: number,"cancelled_at"?: string | null,"channel"?: Database["public"]['Enums']["notification_channel"],"claimed_at"?: string | null,"created_at"?: string,"data"?: NonNullable<Json>,"failed_at"?: string | null,"id"?: never,"last_error"?: string | null,"scheduled_for"?: string,"sent_at"?: string | null,"template"?: string,"urgent"?: boolean,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -671,6 +671,11 @@ isOneToOne: true
 "cancel_job":
 { Args: { "p_job_id": string }; Returns: undefined
                            },
+"claim_notifications":
+{ Args: { "p_limit"?: number }; Returns: {
+              "attempts": number,"channel": Database["public"]['Enums']["notification_channel"],"data": Json,"email": string,"full_name": string,"id": number,"phone": string,"push_tokens": (string)[],"role": Database["public"]['Enums']["user_role"],"template": string,"urgent": boolean,"user_id": string
+            }[]
+                           },
 "claim_sms_code":
 { Args: { "p_phone": string }; Returns: boolean
                            },
@@ -679,6 +684,12 @@ isOneToOne: true
                            },
 "delete_my_account":
 { Args: Record<PropertyKey, never>; Returns: undefined
+                           },
+"finish_notification":
+{ Args: { "p_error"?: string,"p_id": number,"p_outcome": string }; Returns: undefined
+                           },
+"forget_push_tokens":
+{ Args: { "p_tokens": (string)[] }; Returns: undefined
                            },
 "get_match_contact":
 { Args: { "p_match_id": string }; Returns: {
@@ -725,6 +736,9 @@ isOneToOne: true
 "rate_customer":
 { Args: { "p_comment"?: string,"p_match_id": string,"p_stars": number,"p_tags"?: (string)[] }; Returns: string
                            },
+"register_push_token":
+{ Args: { "p_platform": string,"p_token": string }; Returns: undefined
+                           },
 "reject_trade":
 { Args: { "p_reason": string,"p_trade_id": string }; Returns: undefined
                            },
@@ -751,6 +765,9 @@ isOneToOne: true
                            },
 "tune_back_in":
 { Args: { "p_queue_id": string }; Returns: undefined
+                           },
+"unregister_push_token":
+{ Args: { "p_token": string }; Returns: undefined
                            }
           }
           Enums: {

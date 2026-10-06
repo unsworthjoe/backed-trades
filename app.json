@@ -36,6 +36,14 @@
       "expo-font",
       "expo-sqlite",
       [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/android-icon-monochrome.png",
+          "color": "#8A3FFC",
+          "defaultChannel": "default"
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "photosPermission": "Backed. needs your photos so you can upload your ID, insurance certificate and photos of your work.",

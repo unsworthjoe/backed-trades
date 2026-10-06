@@ -1,10 +1,15 @@
-import { Stack } from 'expo-router';
+import { router, Stack, type Href } from 'expo-router';
+import { useEffect } from 'react';
 
 import { Fonts } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { observeNotificationTaps } from '@/lib/push';
 
 export default function TradeLayout() {
   const theme = useTheme();
+
+  // Tapping a notification opens its offer, job or queue.
+  useEffect(() => observeNotificationTaps((url) => router.push(url as Href)), []);
 
   return (
     <Stack

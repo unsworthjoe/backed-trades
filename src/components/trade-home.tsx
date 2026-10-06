@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
-import { useState, type ReactNode } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { useEffect, useState, type ReactNode } from 'react';
+import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { OfferCountdown } from '@/components/offer-countdown';
 import { LoadingScreen, Screen } from '@/components/screen';
@@ -16,6 +16,7 @@ import { useNow } from '@/hooks/use-now';
 import { useAuth } from '@/lib/auth';
 import { formatTimeOfDay, ordinal } from '@/lib/dates';
 import { friendlyError } from '@/lib/errors';
+import { pushPermission, registerForPush, type PushPermission } from '@/lib/push';
 import { supabase } from '@/lib/supabase';
 import { useTradeHome, type TradeHome } from '@/lib/use-trade-home';
 
@@ -57,6 +58,7 @@ export function ApprovedTradeHome() {
       <ThemedText type="subtitle">{firstName ? `Hi, ${firstName}` : 'Hi'}</ThemedText>
 
       <Blockers home={home} />
+      <NotificationsPrompt />
       {actionError && <Notice message={actionError} />}
 
       <Section title={offers.length ? `New offers (${offers.length})` : 'New offers'}>
@@ -257,7 +259,60 @@ const styles = StyleSheet.create({
   blocker: {
     gap: Spacing.two,
   },
+  inline: {
+    alignSelf: 'flex-start',
+  },
   pressed: {
     opacity: 0.7,
   },
 });
+
+/** Asks for notifications (offers are time-limited), and registers the phone once allowed. */
+function NotificationsPrompt() {
+  const [permission, setPermission] = useState<PushPermission | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    pushPermission()
+      .then(async (status) => setPermission(status === 'granted' ? await registerForPush({ ask: false }) : status))
+      .catch((e) => setError(friendlyError(e)));
+  }, []);
+
+  async function turnOn() {
+    setError(null);
+    try {
+      setPermission(await registerForPush({ ask: true }));
+    } catch (e) {
+      setError(friendlyError(e));
+    }
+  }
+
+  if (error) return <Notice tone="warning" title="Notifications aren’t working" message={error} />;
+
+  if (permission === 'undetermined') {
+    return (
+      <Card>
+        <ThemedText type="heading">Get offers the moment they arrive</ThemedText>
+        <ThemedText themeColor="textSecondary">
+          You have a limited time to reply to each offer. Turn on notifications so you don’t miss one.
+        </ThemedText>
+        <Button label="Turn on notifications" onPress={turnOn} style={styles.inline} />
+      </Card>
+    );
+  }
+
+  if (permission === 'denied') {
+    return (
+      <View style={styles.blocker}>
+        <Notice
+          tone="warning"
+          title="Notifications are off"
+          message="We’ll email you new offers instead, but you may miss the time to reply. You can turn notifications on in Settings."
+        />
+        <Button label="Open Settings" variant="outline" onPress={() => Linking.openSettings()} />
+      </View>
+    );
+  }
+
+  return null;
+}

@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 
+import { unregisterPush } from '@/lib/push';
 import { supabase } from '@/lib/supabase';
 import type { Tables } from '@/types/database';
 
@@ -63,6 +64,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [userId]);
 
   const signOut = useCallback(async () => {
+    // While still signed in: stop this phone getting the account's notifications.
+    await unregisterPush().catch(() => {});
     await supabase.auth.signOut();
   }, []);
 
