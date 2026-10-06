@@ -58,3 +58,14 @@ export const CUSTOMER_RATING_TAGS = [
   { value: 'good_access', label: 'Good access' },
   { value: 'paid_promptly', label: 'Paid promptly' },
 ];
+
+/** The founders' alerts, as shown on the admin site (the emails use the same wording). */
+export const ALERT_NAMES: Record<string, string> = {
+  job_unmatched: 'A job hasn’t been taken after 24 hours',
+  no_contact: 'A trade hasn’t contacted their customer within 24 hours',
+  low_customer_rating: 'A customer has a low rating from trades',
+  trade_paused: 'A trade was paused for missing offers',
+  insurance_expiring: 'A trade’s insurance is about to expire',
+  application_submitted: 'A trade has sent their application',
+  report_filed: 'Someone has reported a problem',
+};

@@ -58,7 +58,7 @@ const ALERT_NAMES: Record<string, string> = {
   report_filed: 'Someone has reported a problem',
 };
 
-/** The admin page for an alert: the report or application itself where there is one. */
+/** The admin page for an alert: the report or application itself, otherwise the alerts list. */
 function alertLink(data: Record<string, unknown>, adminLink: string): string {
   const details = (data.details ?? {}) as Record<string, unknown>;
   if (data.kind === 'report_filed' && typeof details.report_id === 'string') {
@@ -67,7 +67,7 @@ function alertLink(data: Record<string, unknown>, adminLink: string): string {
   if (data.kind === 'application_submitted' && typeof data.user_id === 'string') {
     return `${adminLink}/trades/${data.user_id}`;
   }
-  return adminLink;
+  return `${adminLink}/alerts`;
 }
 
 /** The message for a template, or null if the template isn't known. */

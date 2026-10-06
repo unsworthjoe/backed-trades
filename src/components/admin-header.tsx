@@ -11,6 +11,7 @@ import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 
 const SECTIONS = [
+  { href: '/admin/alerts', label: 'Alerts', match: (path: string) => path.startsWith('/admin/alerts') },
   { href: '/admin', label: 'Applications', match: (path: string) => path === '/admin' || path.startsWith('/admin/trades') },
   { href: '/admin/reports', label: 'Reports', match: (path: string) => path.startsWith('/admin/reports') },
   { href: '/admin/reviews', label: 'Reviews', match: (path: string) => path.startsWith('/admin/reviews') },
@@ -20,15 +21,16 @@ const SECTIONS = [
 export function AdminHeader() {
   const { profile, signOut } = useAuth();
   const path = usePathname();
-  const [openReports, setOpenReports] = useState<number | null>(null);
+  const [open, setOpen] = useState<Record<string, number>>({});
 
   useFocusEffect(
     useCallback(() => {
-      supabase
-        .from('reports')
-        .select('id', { count: 'exact', head: true })
-        .eq('status', 'open')
-        .then(({ count }) => setOpenReports(count ?? null));
+      Promise.all([
+        supabase.from('admin_alerts').select('id', { count: 'exact', head: true }).is('resolved_at', null),
+        supabase.from('reports').select('id', { count: 'exact', head: true }).eq('status', 'open'),
+      ]).then(([alerts, reports]) =>
+        setOpen({ '/admin/alerts': alerts.count ?? 0, '/admin/reports': reports.count ?? 0 }),
+      );
     }, []),
   );
 
@@ -54,7 +56,7 @@ export function AdminHeader() {
             key={section.href}
             accessibilityRole="tab"
             accessibilityState={{ selected: section.match(path) }}
-            label={section.href === '/admin/reports' && openReports ? `${section.label} (${openReports} open)` : section.label}
+            label={open[section.href] ? `${section.label} (${open[section.href]} open)` : section.label}
             variant={section.match(path) ? 'primary' : 'outline'}
             onPress={() => router.navigate(section.href)}
           />

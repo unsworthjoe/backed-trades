@@ -20,6 +20,7 @@ export default function AdminLayout() {
         <Stack.Screen name="reports/index" options={{ title: 'Reports · Backed. admin' }} />
         <Stack.Screen name="reports/[id]" options={{ title: 'Report · Backed. admin' }} />
         <Stack.Screen name="reviews" options={{ title: 'Reviews · Backed. admin' }} />
+        <Stack.Screen name="alerts" options={{ title: 'Alerts · Backed. admin' }} />
       </Stack.Protected>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="sign-in" options={{ title: 'Sign in · Backed. admin' }} />
