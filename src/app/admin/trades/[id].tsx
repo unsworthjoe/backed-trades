@@ -1,14 +1,15 @@
 import { Image } from 'expo-image';
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { useCallback, useState, type ReactNode } from 'react';
+import { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { Detail, Section } from '@/components/admin-detail';
 import { AdminHeader } from '@/components/admin-header';
+import { ReportList, type ReportRow, REPORT_LIST_SELECT } from '@/components/admin-report-list';
 import { LoadingScreen, Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Chip, type ChipTone } from '@/components/ui/chip';
 import { Notice } from '@/components/ui/notice';
 import { TextField } from '@/components/ui/text-field';
@@ -33,7 +34,7 @@ const REGISTER_SITES: Record<string, string> = {
 };
 
 async function loadApplication(id: string) {
-  const [trade, categories, towns, documents, registrations, idCheck] = await Promise.all([
+  const [trade, categories, towns, documents, registrations, idCheck, reports] = await Promise.all([
     supabase.from('trades').select('*, profiles(full_name, email, phone)').eq('id', id).single(),
     supabase.from('trade_category_links').select('trade_categories(name)').eq('trade_id', id),
     supabase.from('trade_towns').select('towns(name)').eq('trade_id', id),
@@ -45,8 +46,9 @@ async function loadApplication(id: string) {
       .order('created_at', { ascending: false }),
     supabase.from('trade_registrations').select('*').eq('trade_id', id).order('created_at'),
     supabase.from('id_checks').select('*').eq('trade_id', id).order('created_at', { ascending: false }).limit(1).maybeSingle(),
+    supabase.from('reports').select(REPORT_LIST_SELECT).eq('about_user_id', id).order('created_at', { ascending: false }),
   ]);
-  const failed = [trade, categories, towns, documents, registrations, idCheck].find((r) => r.error);
+  const failed = [trade, categories, towns, documents, registrations, idCheck, reports].find((r) => r.error);
   if (failed) throw failed.error;
 
   const idImages = await Promise.all(
@@ -61,6 +63,7 @@ async function loadApplication(id: string) {
     registrations: registrations.data ?? [],
     idCheck: idCheck.data,
     idImages,
+    reports: (reports.data ?? []) as ReportRow[],
   };
 }
 
@@ -80,6 +83,7 @@ export default function AdminApplicationScreen() {
   const [busy, setBusy] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
   const [docNote, setDocNote] = useState('');
+  const [suspendReason, setSuspendReason] = useState('');
 
   const reload = useCallback(async () => {
     try {
@@ -108,7 +112,7 @@ export default function AdminApplicationScreen() {
   if (!data) {
     return error ? (
       <Screen>
-        <AdminHeader back />
+        <AdminHeader />
         <Notice message={error} />
       </Screen>
     ) : (
@@ -144,7 +148,7 @@ export default function AdminApplicationScreen() {
 
   return (
     <Screen>
-      <AdminHeader back />
+      <AdminHeader />
 
       <View style={styles.title}>
         <ThemedText type="subtitle">{trade.business_name}</ThemedText>
@@ -152,13 +156,15 @@ export default function AdminApplicationScreen() {
           label={
             trade.status === 'approved'
               ? 'Approved'
-              : trade.status === 'rejected'
+              : trade.status === 'suspended'
+                ? 'Suspended'
+                : trade.status === 'rejected'
                 ? 'Sent back'
                 : waiting
                   ? 'Waiting for review'
                   : 'Still filling in'
           }
-          tone={trade.status === 'approved' ? 'success' : trade.status === 'rejected' ? 'danger' : waiting ? 'warning' : 'neutral'}
+          tone={trade.status === 'approved' ? 'success' : trade.status === 'rejected' || trade.status === 'suspended' ? 'danger' : waiting ? 'warning' : 'neutral'}
         />
       </View>
 
@@ -384,48 +390,57 @@ export default function AdminApplicationScreen() {
       {trade.status === 'rejected' && trade.rejection_reason && (
         <Notice tone="warning" title="Sent back" message={trade.rejection_reason} />
       )}
+
+      {(trade.status === 'approved' || trade.status === 'suspended') && (
+        <Section title="Suspension">
+          <ThemedText type="small" themeColor="textSecondary">
+            {trade.status === 'suspended'
+              ? 'Suspended: they get no offers, but keep their place in their queues. Their jobs in progress carry on.'
+              : 'Suspending stops all offers straight away. They keep their place in their queues, and their jobs in progress carry on. The trade isn’t told automatically, so get in touch with them.'}
+          </ThemedText>
+          {trade.status === 'approved' ? (
+            <>
+              <TextField
+                label="Reason (for the audit log)"
+                value={suspendReason}
+                onChangeText={setSuspendReason}
+                multiline
+              />
+              <Button
+                label="Suspend this trade"
+                variant="outline"
+                disabled={busy || !suspendReason.trim()}
+                onPress={() =>
+                  act(() => supabase.rpc('set_trade_suspended', { p_trade_id: trade.id, p_suspended: true, p_reason: suspendReason.trim() })).then(
+                    () => setSuspendReason(''),
+                  )
+                }
+              />
+            </>
+          ) : (
+            <Button
+              label="Lift the suspension"
+              disabled={busy}
+              onPress={() => act(() => supabase.rpc('set_trade_suspended', { p_trade_id: trade.id, p_suspended: false }))}
+            />
+          )}
+        </Section>
+      )}
+
+      <Section title="Reports about this trade">
+        {data.reports.length === 0 ? (
+          <ThemedText themeColor="textSecondary">None.</ThemedText>
+        ) : (
+          <ReportList reports={data.reports} />
+        )}
+      </Section>
     </Screen>
   );
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <Card>
-      <ThemedText type="heading">{title}</ThemedText>
-      {children}
-    </Card>
-  );
-}
-
-function Detail({ label, value }: { label: string; value: string }) {
-  return (
-    <View style={styles.detail}>
-      <ThemedText type="small" themeColor="textSecondary" style={styles.detailLabel}>
-        {label}
-      </ThemedText>
-      <ThemedText type="small" style={styles.detailValue} selectable>
-        {value}
-      </ThemedText>
-    </View>
-  );
-}
-
-
 const styles = StyleSheet.create({
   title: {
     gap: Spacing.two,
-  },
-  detail: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.two,
-  },
-  detailLabel: {
-    width: 130,
-  },
-  detailValue: {
-    flex: 1,
-    minWidth: 180,
   },
   buttons: {
     flexDirection: 'row',

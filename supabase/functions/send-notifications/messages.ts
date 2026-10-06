@@ -54,7 +54,21 @@ const ALERT_NAMES: Record<string, string> = {
   low_customer_rating: 'A customer has a low rating from trades',
   trade_paused: 'A trade was paused for missing offers',
   insurance_expiring: 'A trade’s insurance is about to expire',
+  application_submitted: 'A trade has sent their application',
+  report_filed: 'Someone has reported a problem',
 };
+
+/** The admin page for an alert: the report or application itself where there is one. */
+function alertLink(data: Record<string, unknown>, adminLink: string): string {
+  const details = (data.details ?? {}) as Record<string, unknown>;
+  if (data.kind === 'report_filed' && typeof details.report_id === 'string') {
+    return `${adminLink}/reports/${details.report_id}`;
+  }
+  if (data.kind === 'application_submitted' && typeof data.user_id === 'string') {
+    return `${adminLink}/trades/${data.user_id}`;
+  }
+  return adminLink;
+}
 
 /** The message for a template, or null if the template isn't known. */
 export function render(template: string, data: Record<string, unknown>, ctx: Context): Message | null {
@@ -189,11 +203,15 @@ export function render(template: string, data: Record<string, unknown>, ctx: Con
           };
 
     // Founders (email)
-    case 'admin_alert':
+    case 'admin_alert': {
+      const name = ALERT_NAMES[String(data.kind)] ?? String(data.kind);
+      const details = (data.details ?? {}) as Record<string, unknown>;
+      const reason = data.kind === 'report_filed' && typeof details.reason === 'string' ? `\n\nReason: ${details.reason}.` : '';
       return {
-        title: `Backed. alert: ${ALERT_NAMES[String(data.kind)] ?? String(data.kind)}`,
-        body: `${ALERT_NAMES[String(data.kind)] ?? String(data.kind)}.${job ? `\n\nJob: ${where}.` : ''}\n\nOpen the admin site to look into it: ${ctx.adminLink}`,
+        title: `Backed. alert: ${name}`,
+        body: `${name}.${reason}${job ? `\n\nJob: ${where}.` : ''}\n\nOpen the admin site to look into it: ${alertLink(data, ctx.adminLink)}`,
       };
+    }
   }
   return null;
 }
