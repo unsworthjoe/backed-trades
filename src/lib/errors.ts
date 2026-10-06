@@ -29,6 +29,8 @@ const MESSAGES: Record<string, string> = {
   'Email not confirmed': 'Please confirm your email first.',
   'User already registered': 'There’s already an account with that email. Try signing in.',
   'Token has expired or is invalid': 'That code is wrong or has expired. Check the email or send a new code.',
+  'you can only request this after': 'Please wait a minute before asking for another code.',
+  'should be different from the old password': 'That’s your current password. Choose a new one.',
 };
 
 export function friendlyError(error: unknown): string {

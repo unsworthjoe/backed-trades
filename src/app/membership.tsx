@@ -37,6 +37,7 @@ export default function MembershipScreen() {
           <SignInForm
             onNeedsCode={(email) => router.push({ pathname: '/verify', params: { email } })}
             onCreateAccount={() => router.push('/sign-up')}
+            onForgotPassword={(email) => router.push({ pathname: '/reset-password', params: { email } })}
           />
         </>
       ) : role !== 'trade' ? (

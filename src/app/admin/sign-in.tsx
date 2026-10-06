@@ -15,6 +15,7 @@ export default function AdminSignInScreen() {
       <SignInForm
         onNeedsCode={(email) => router.push({ pathname: '/admin/verify', params: { email } })}
         onCreateAccount={() => router.replace('/admin/sign-up')}
+        onForgotPassword={(email) => router.push({ pathname: '/admin/reset-password', params: { email } })}
       />
     </Screen>
   );

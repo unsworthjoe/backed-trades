@@ -13,6 +13,7 @@ export default function SignInScreen() {
       <SignInForm
         onNeedsCode={(email) => router.push({ pathname: '/verify', params: { email } })}
         onCreateAccount={() => router.replace('/sign-up')}
+        onForgotPassword={(email) => router.push({ pathname: '/reset-password', params: { email } })}
       />
     </Screen>
   );

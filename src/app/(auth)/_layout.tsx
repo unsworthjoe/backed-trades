@@ -8,6 +8,7 @@ export default function AuthLayout() {
       <Stack.Screen name="sign-up" options={{ title: 'Create your account · Backed.' }} />
       <Stack.Screen name="sign-in" options={{ title: 'Sign in · Backed.' }} />
       <Stack.Screen name="verify" options={{ title: 'Check your email · Backed.' }} />
+      <Stack.Screen name="reset-password" options={{ title: 'Reset your password · Backed.' }} />
     </Stack>
   );
 }
