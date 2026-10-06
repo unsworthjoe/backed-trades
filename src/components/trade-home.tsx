@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useState, type ReactNode } from 'react';
-import { Linking, Pressable, StyleSheet, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { OfferCountdown } from '@/components/offer-countdown';
 import { LoadingScreen, Screen } from '@/components/screen';
@@ -189,13 +189,25 @@ function Blockers({ home }: { home: TradeHome }) {
   }
   return (
     <>
-      {!home.subscribed && (
-        <Notice
-          tone="info"
-          title="Offers start once you’ve subscribed"
-          message="You’ll set up your subscription on the Backed. website. We’ll let you know when it’s ready. You’re already in your queues."
-        />
-      )}
+      {!home.subscribed &&
+        // In the app this stays neutral: Apple's rules don't allow pointing people to paying
+        // outside the App Store. The membership email links to the website instead.
+        (Platform.OS === 'web' ? (
+          <View style={styles.blocker}>
+            <Notice
+              tone="info"
+              title="Your membership isn’t active yet"
+              message="Offers start as soon as it is. You’re already in your queues."
+            />
+            <Button label="Set up my membership" onPress={() => router.push('/membership')} />
+          </View>
+        ) : (
+          <Notice
+            tone="info"
+            title="Your membership isn’t active yet"
+            message="Offers start as soon as it is. We’ve emailed you how to set it up. You’re already in your queues."
+          />
+        ))}
       {!home.insured && (
         <View style={styles.blocker}>
           <Notice

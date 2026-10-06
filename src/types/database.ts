@@ -58,13 +58,13 @@ isOneToOne: false
                   ]
                 },"app_settings": {
                   Row: {
-                    "auto_close_hours": number,"callout_wave_minutes": number,"callout_window_minutes": number,"contact_due_hours": number,"customer_rating_min_count": number,"decline_limit": number,"default_queue_cap": number,"id": boolean,"id_image_retention_days": number,"low_rating_min_count": number,"low_rating_threshold": number,"miss_limit": number,"not_my_kind_limit": number,"offer_reminder_minutes": number,"offers_per_wave": number,"reply_window_minutes": number,"review_window_days": number,"signoff_reminder_hours": (number)[],"unmatched_alert_hours": number,"updated_at": string,"working_day_end": string,"working_day_start": string
+                    "auto_close_hours": number,"callout_wave_minutes": number,"callout_window_minutes": number,"contact_due_hours": number,"customer_rating_min_count": number,"decline_limit": number,"default_queue_cap": number,"founding_pricing_open": boolean,"id": boolean,"id_image_retention_days": number,"low_rating_min_count": number,"low_rating_threshold": number,"miss_limit": number,"not_my_kind_limit": number,"offer_reminder_minutes": number,"offers_per_wave": number,"reply_window_minutes": number,"review_window_days": number,"signoff_reminder_hours": (number)[],"unmatched_alert_hours": number,"updated_at": string,"working_day_end": string,"working_day_start": string
                   }
                   Insert: {
-                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"id"?: boolean,"id_image_retention_days"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
+                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
                   }
                   Update: {
-                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"id"?: boolean,"id_image_retention_days"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
+                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
                   }
                   Relationships: [
                     
@@ -462,7 +462,7 @@ isOneToOne: false
                     "cancel_at_period_end": boolean,"created_at": string,"current_period_end": string | null,"id": string,"is_founding": boolean,"plan": Database["public"]['Enums']["subscription_plan"],"price_pence": number,"status": Database["public"]['Enums']["subscription_status"],"stripe_customer_id": string,"stripe_subscription_id": string | null,"trade_id": string,"updated_at": string
                   }
                   Insert: {
-                    "cancel_at_period_end"?: boolean,"created_at"?: string,"current_period_end"?: string | null,"id"?: string,"is_founding"?: boolean,"plan": Database["public"]['Enums']["subscription_plan"],"price_pence": number,"status": Database["public"]['Enums']["subscription_status"],"stripe_customer_id": string,"stripe_subscription_id"?: string | null,"trade_id": string,"updated_at"?: string
+                    "cancel_at_period_end"?: boolean,"created_at"?: string,"current_period_end"?: string | null,"id"?: string,"is_founding"?: boolean,"plan": Database["public"]['Enums']["subscription_plan"],"price_pence": number,"status"?: Database["public"]['Enums']["subscription_status"],"stripe_customer_id": string,"stripe_subscription_id"?: string | null,"trade_id": string,"updated_at"?: string
                   }
                   Update: {
                     "cancel_at_period_end"?: boolean,"created_at"?: string,"current_period_end"?: string | null,"id"?: string,"is_founding"?: boolean,"plan"?: Database["public"]['Enums']["subscription_plan"],"price_pence"?: number,"status"?: Database["public"]['Enums']["subscription_status"],"stripe_customer_id"?: string,"stripe_subscription_id"?: string | null,"trade_id"?: string,"updated_at"?: string
@@ -713,6 +713,11 @@ isOneToOne: true
 "mark_done":
 { Args: { "p_match_id": string }; Returns: undefined
                            },
+"membership_prices":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "is_founding": boolean,"lookup_key": string,"plan": Database["public"]['Enums']["subscription_plan"],"price_pence": number
+            }[]
+                           },
 "my_application_problems":
 { Args: Record<PropertyKey, never>; Returns: (string)[]
                            },
@@ -762,6 +767,9 @@ isOneToOne: true
                            },
 "sync_my_queues":
 { Args: Record<PropertyKey, never>; Returns: undefined
+                           },
+"sync_subscription":
+{ Args: { "p_cancel_at_period_end": boolean,"p_current_period_end": string,"p_customer_id": string,"p_lookup_key": string,"p_price_pence": number,"p_status": string,"p_subscription_id": string,"p_trade_id": string }; Returns: undefined
                            },
 "trade_profile":
 { Args: { "p_trade_id": string }; Returns: Json

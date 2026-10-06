@@ -63,6 +63,7 @@ export default function RootLayout() {
  *   anyone else signed in           -> (other): admins go to /admin; customers on the phone
  *                                      app are pointed to the website
  *   /admin                          -> founders' website, with its own sign-in (admin/_layout)
+ *   /membership                     -> website only: trades start and manage their Stripe membership
  */
 function RootNavigator() {
   const { session, role, loading } = useAuth();
@@ -93,6 +94,7 @@ function RootNavigator() {
         <Stack.Screen name="(other)" />
       </Stack.Protected>
       <Stack.Screen name="admin" />
+      <Stack.Screen name="membership" options={{ title: 'Membership · Backed.' }} />
       <Stack.Screen name="style-guide" />
     </Stack>
   );

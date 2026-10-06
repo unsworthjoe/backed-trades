@@ -8,6 +8,7 @@ import { ThemedText } from '@/components/themed-text';
 import { Card } from '@/components/ui/card';
 import { ChoiceChip } from '@/components/ui/choice-chip';
 import { Notice } from '@/components/ui/notice';
+import { ToggleRow } from '@/components/ui/toggle-row';
 import { Spacing, TouchTarget } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { formatDate } from '@/lib/dates';
@@ -110,7 +111,50 @@ export default function AdminApplicationsScreen() {
           ))}
         </Card>
       )}
+
+      <FoundingPricing />
     </Screen>
+  );
+}
+
+/** The founding price switch: on, new members get £14.99 a month and keep it while they stay. */
+function FoundingPricing() {
+  const [open, setOpen] = useState<boolean | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      supabase
+        .from('app_settings')
+        .select('founding_pricing_open')
+        .single()
+        .then(({ data }) => setOpen(data?.founding_pricing_open ?? null));
+    }, []),
+  );
+
+  async function change(value: boolean) {
+    setError(null);
+    const { error } = await supabase.from('app_settings').update({ founding_pricing_open: value }).eq('id', true);
+    if (error) setError(friendlyError(error));
+    else setOpen(value);
+  }
+
+  if (open === null) return null;
+  return (
+    <Card>
+      <ThemedText type="heading">Memberships</ThemedText>
+      <ToggleRow
+        label="Founding member price"
+        hint={
+          open
+            ? 'On: new members pay £14.99 a month or £149.90 a year, and keep that price while they stay a member.'
+            : 'Off: new members pay £19.99 a month or £199.90 a year. Existing founding members keep their price.'
+        }
+        value={open}
+        onValueChange={change}
+      />
+      {error && <Notice message={error} />}
+    </Card>
   );
 }
 

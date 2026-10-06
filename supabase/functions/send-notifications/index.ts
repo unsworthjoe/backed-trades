@@ -101,7 +101,7 @@ async function deliver(row: Claimed): Promise<Outcome> {
 
 /** Looks up the names and links a message needs. */
 async function loadContext(row: Claimed): Promise<Context> {
-  const ctx: Context = { adminLink: `${SITE_URL}/admin` };
+  const ctx: Context = { adminLink: `${SITE_URL}/admin`, membershipLink: `${SITE_URL}/membership` };
   const jobId = typeof row.data.job_id === 'string' ? row.data.job_id : null;
   const queueId = typeof row.data.queue_id === 'string' ? row.data.queue_id : null;
   const matchId = typeof row.data.match_id === 'string' ? row.data.match_id : null;

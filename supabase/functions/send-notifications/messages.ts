@@ -15,6 +15,8 @@ export type Context = {
   messagesLink?: string;
   /** The founders' admin website. */
   adminLink: string;
+  /** Where trades set up and manage their membership (website). */
+  membershipLink: string;
 };
 
 export type Message = {
@@ -131,6 +133,25 @@ export function render(template: string, data: Record<string, unknown>, ctx: Con
       return {
         title: 'You have a new review',
         body: `${Number(data.overall).toFixed(1)} out of 5 for ${what}. Open the app to read it.`,
+      };
+
+    // Memberships. Anything about paying goes by email with a website link, never in the app.
+    case 'membership_invite':
+      return {
+        title: 'Set up your Backed. membership',
+        body: `You’re approved, welcome to Backed.\n\nThe last step is your membership. Once it’s active, job offers start arriving in the app.\n\nSet it up here: ${ctx.membershipLink}`,
+      };
+    case 'membership_active':
+      return { title: 'You’re a Backed. member', body: 'Your membership is active. Job offers start now.' };
+    case 'payment_failed':
+      return {
+        title: 'Your Backed. payment didn’t go through',
+        body: `We couldn’t take your latest membership payment, so job offers are paused.\n\nUpdate your card here and we’ll try again straight away: ${ctx.membershipLink}`,
+      };
+    case 'membership_ended':
+      return {
+        title: 'Your Backed. membership has ended',
+        body: `Your membership has ended, so you won’t get any more job offers. You keep your place in your queues for now.\n\nYou can rejoin any time: ${ctx.membershipLink}`,
       };
 
     // Customers (text)

@@ -50,9 +50,11 @@ select private.notify(pg_temp.v('trade'), 'new_offer', '{}', now());
 select private.notify(pg_temp.v('trade'), 'new_callout', '{}', now(), true);
 select private.notify(pg_temp.v('trade'), 'offer_reminder', '{}', now() + interval '1 hour');
 
-create temp table claimed as select * from public.claim_notifications(10);
+-- With room for one, the call-out is taken first, though it was queued second.
+create temp table claimed as select * from public.claim_notifications(1);
+select is((select template from claimed), 'new_callout', 'call-outs go first');
+insert into claimed select * from public.claim_notifications(10);
 select is((select count(*)::integer from claimed), 2, 'only messages that are due are claimed');
-select is((select template from claimed limit 1), 'new_callout', 'call-outs go first');
 select is((select push_tokens from claimed limit 1), array['ExponentPushToken[bbb]'], 'with the trade''s phones');
 select is((select count(*)::integer from public.claim_notifications(10)), 0, 'claimed messages aren''t claimed twice');
 
