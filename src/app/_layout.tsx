@@ -62,7 +62,9 @@ export default function RootLayout() {
 /**
  * Before launch, backedtrades.co.uk shows a "coming soon" page on every address. It's the same
  * website exported with the switch on:
- *   EXPO_PUBLIC_HOLDING_PAGE=1 npx expo export --platform web --output-dir dist-holding
+ *   EXPO_PUBLIC_HOLDING_PAGE=1 npx expo export --platform web --output-dir dist-holding --clear
+ * Always export with --clear when switching between the two: the build cache doesn't notice the
+ * setting change, and a real-site build once came out showing "coming soon".
  */
 const HOLDING_PAGE = Platform.OS === 'web' && process.env.EXPO_PUBLIC_HOLDING_PAGE === '1';
 
