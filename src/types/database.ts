@@ -696,6 +696,11 @@ isOneToOne: true
               "address_line": string,"customer_name": string,"customer_phone": string,"job_id": string,"postcode": string,"trade_business_name": string,"trade_phone": string
             }[]
                            },
+"id_images_due_for_purge":
+{ Args: { "p_limit"?: number }; Returns: {
+              "id": string,"image_paths": (string)[]
+            }[]
+                           },
 "job_customer_rating":
 { Args: { "p_job_id": string }; Returns: {
               "average_stars": number,"is_new_customer": boolean,"rating_count": number
@@ -712,6 +717,9 @@ isOneToOne: true
                            },
 "mark_done":
 { Args: { "p_match_id": string }; Returns: undefined
+                           },
+"mark_id_images_purged":
+{ Args: { "p_ids": (string)[] }; Returns: number
                            },
 "membership_prices":
 { Args: Record<PropertyKey, never>; Returns: {

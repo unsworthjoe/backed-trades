@@ -219,6 +219,17 @@ export default function AdminApplicationScreen() {
       <Section title="ID check">
         {!data.idCheck ? (
           <ThemedText themeColor="textSecondary">Not uploaded yet.</ThemedText>
+        ) : data.idCheck.images_purged_at ? (
+          <>
+            <ThemedText themeColor="textSecondary">
+              {data.idCheck.result === 'passed'
+                ? `Passed. The photos were deleted on ${formatDate(data.idCheck.images_purged_at)}, 30 days after the decision.`
+                : `The photos were deleted on ${formatDate(data.idCheck.images_purged_at)} before the ID was passed. The trade needs to upload new ones.`}
+            </ThemedText>
+            <View style={styles.buttons}>
+              <Chip {...reviewChip(data.idCheck.result === 'passed' ? 'approved' : data.idCheck.result === 'failed' ? 'rejected' : 'pending')} />
+            </View>
+          </>
         ) : (
           <>
             <ThemedText type="small" themeColor="textSecondary">

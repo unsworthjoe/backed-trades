@@ -72,13 +72,16 @@ export default function IdCheckScreen() {
       }>
       <ThemedText themeColor="textSecondary">
         So customers know who’s turning up, a founder checks your photo ID against a selfie. Your photos are kept
-        private and deleted 30 days after you’re approved.
+        private and deleted 30 days after we’ve made a decision on your application.
       </ThemedText>
 
       {current?.result === 'failed' && (
         <Notice tone="warning" title="Please try again" message="We couldn’t match your photos. Make sure both are clear, well lit and not cropped." />
       )}
-      {current?.result === 'pending' && (
+      {current?.result === 'pending' && current.images_purged_at && (
+        <Notice tone="info" title="Please upload your photos again" message="Your earlier photos were deleted after 30 days, so a founder can’t check them now." />
+      )}
+      {current?.result === 'pending' && !current.images_purged_at && (
         <Notice tone="info" title="Uploaded, waiting for review" message="You only need to upload again if a founder asks you to." />
       )}
 

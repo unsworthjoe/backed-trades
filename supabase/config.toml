@@ -444,6 +444,10 @@ verify_jwt = false
 [functions.send-notifications]
 verify_jwt = false
 
+# Woken by the database each night with the sender's secret.
+[functions.purge-id-images]
+verify_jwt = false
+
 # Auth is checked inside (the caller's sign-in token), so it works with the new API keys.
 [functions.create-checkout]
 verify_jwt = false

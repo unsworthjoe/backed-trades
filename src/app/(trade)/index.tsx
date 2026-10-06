@@ -83,7 +83,7 @@ const STEPS: Step[] = [
         ? { label: 'Passed', tone: 'success' }
         : app.idCheck?.result === 'failed'
           ? { label: 'Try again', tone: 'danger' }
-          : app.idCheck
+          : app.idCheck && !app.idCheck.images_purged_at
             ? { label: 'Waiting for review', tone: 'neutral' }
             : null,
   },
