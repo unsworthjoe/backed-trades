@@ -40,3 +40,13 @@ export const JOB_STATUS: Record<string, { label: string; tone: 'brand' | 'succes
   completed: { label: 'Completed', tone: 'neutral' },
   cancelled: { label: 'Cancelled', tone: 'neutral' },
 };
+
+/** Reasons a trade can give for declining an offer, in the order they're shown. */
+export const DECLINE_REASONS: { value: 'too_busy' | 'too_far' | 'not_my_kind_of_work' | 'too_small' | 'too_big' | 'other'; label: string }[] = [
+  { value: 'too_busy', label: 'Too busy' },
+  { value: 'too_far', label: 'Too far away' },
+  { value: 'not_my_kind_of_work', label: 'Not my kind of work' },
+  { value: 'too_small', label: 'Too small' },
+  { value: 'too_big', label: 'Too big' },
+  { value: 'other', label: 'Something else' },
+];

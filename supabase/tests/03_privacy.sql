@@ -14,7 +14,8 @@ insert into v values
   ('offered', tests.trade('Offered Plumber')),
   ('electrician', tests.trade('Some Electrician', p_categories => '{electrician}')),
   ('admin', tests.admin());
-insert into v values ('job', tests.post(pg_temp.v('customer'), 'plumber'));
+-- Posted now (not tests.t0()): the offer is accepted below through the real API, at now().
+insert into v values ('job', tests.post(pg_temp.v('customer'), 'plumber', p_now => now()));
 insert into v select 'offer', tests.offer_id(pg_temp.v('job'), pg_temp.v('offered'));
 create temp table customer_phone as select phone from auth.users where id = pg_temp.v('customer');
 grant select on customer_phone to authenticated;

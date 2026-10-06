@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Chip, type ChipTone } from '@/components/ui/chip';
 import { Notice } from '@/components/ui/notice';
+import { ApprovedTradeHome } from '@/components/trade-home';
 import { Wordmark } from '@/components/wordmark';
 import { Fonts, Radius, Spacing, TouchTarget } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
@@ -115,19 +116,8 @@ export default function TradeHomeScreen() {
   const { trade, problems } = application;
   const firstName = profile?.full_name.split(' ')[0];
 
-  if (trade?.status === 'approved') {
-    return (
-      <Screen>
-        <Wordmark size={32} />
-        <ThemedText type="subtitle">You’re approved{firstName ? `, ${firstName}` : ''}!</ThemedText>
-        <Notice
-          tone="success"
-          title="Welcome to Backed."
-          message="You’ve joined your queues in the order you were approved. The next step is your subscription, which you’ll set up on the Backed. website. We’ll let you know when it’s ready."
-        />
-        <Button label="Sign out" variant="outline" onPress={signOut} />
-      </Screen>
-    );
+  if (trade?.status === 'approved' || trade?.status === 'suspended') {
+    return <ApprovedTradeHome />;
   }
 
   const underReview = trade?.status === 'applied' && !!trade.submitted_at;

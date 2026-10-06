@@ -705,6 +705,11 @@ isOneToOne: true
 "my_application_problems":
 { Args: Record<PropertyKey, never>; Returns: (string)[]
                            },
+"my_queue_places":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "cap": number,"category_name": string,"consecutive_declines": number,"jobs_last_30_days": number,"list_size": number,"place": number,"queue_id": string,"status": Database["public"]['Enums']["queue_member_status"],"town_name": string,"tuned_out": boolean
+            }[]
+                           },
 "normalise_key":
 { Args: { "value": string }; Returns: string
                            },

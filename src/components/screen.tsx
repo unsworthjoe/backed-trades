@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { useState, type ReactNode } from 'react';
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 import { MaxContentWidth, Spacing } from '@/constants/theme';
@@ -13,19 +13,31 @@ type ScreenProps = {
   edges?: Edge[];
   /** Wider content for the admin website. */
   wide?: boolean;
+  /** Turns on pull to refresh. */
+  onRefresh?: () => Promise<void>;
 };
 
 /** Scrolling page with the standard background, padding and maximum width. */
-export function Screen({ children, footer, edges = ['top', 'left', 'right'], wide = false }: ScreenProps) {
+export function Screen({ children, footer, edges = ['top', 'left', 'right'], wide = false, onRefresh }: ScreenProps) {
   const theme = useTheme();
   const maxWidth = wide ? 1100 : MaxContentWidth;
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function refresh() {
+    setRefreshing(true);
+    await onRefresh?.();
+    setRefreshing(false);
+  }
 
   return (
     <SafeAreaView style={[styles.flex, { backgroundColor: theme.background }]} edges={edges}>
       <ScrollView
         contentContainerStyle={styles.scroll}
         keyboardShouldPersistTaps="handled"
-        automaticallyAdjustKeyboardInsets>
+        automaticallyAdjustKeyboardInsets
+        refreshControl={
+          onRefresh ? <RefreshControl refreshing={refreshing} onRefresh={refresh} tintColor={theme.primary} /> : undefined
+        }>
         <View style={[styles.content, { maxWidth }]}>{children}</View>
       </ScrollView>
       {footer && (

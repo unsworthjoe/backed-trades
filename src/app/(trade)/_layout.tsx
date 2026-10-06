@@ -23,6 +23,9 @@ export default function TradeLayout() {
       <Stack.Screen name="apply/registrations" options={{ title: 'Registrations' }} />
       <Stack.Screen name="apply/insurance" options={{ title: 'Insurance' }} />
       <Stack.Screen name="apply/id" options={{ title: 'ID check' }} />
+      <Stack.Screen name="offers/[id]" options={{ title: 'Job offer' }} />
+      <Stack.Screen name="jobs/[id]" options={{ title: 'Your job' }} />
+      <Stack.Screen name="queues" options={{ title: 'Your queues' }} />
     </Stack>
   );
 }
