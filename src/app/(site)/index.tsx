@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { PageMeta } from '@/components/page-meta';
 import { Screen } from '@/components/screen';
+import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -70,6 +71,8 @@ export default function HomeScreen() {
           <ThemedText type="link">Join Backed. →</ThemedText>
         </Link>
       </View>
+
+      <SiteFooter />
     </Screen>
   );
 }

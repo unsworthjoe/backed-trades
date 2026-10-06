@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { PageMeta } from '@/components/page-meta';
 import { Screen } from '@/components/screen';
+import { SiteFooter } from '@/components/site-footer';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -44,6 +45,7 @@ export default function WelcomeScreen() {
       <ThemedText type="small" themeColor="textSecondary">
         Applying is free. You only subscribe once you’ve been approved.
       </ThemedText>
+      <SiteFooter />
     </Screen>
   );
 }

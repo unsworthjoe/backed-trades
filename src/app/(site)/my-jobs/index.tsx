@@ -2,8 +2,10 @@ import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { DeleteAccount } from '@/components/delete-account';
 import { PhoneSignIn } from '@/components/phone-sign-in';
 import { Screen } from '@/components/screen';
+import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -37,13 +39,19 @@ export default function MyJobsScreen() {
       <SiteHeader />
       <ThemedText type="subtitle">My jobs</ThemedText>
       {session ? (
-        <JobList />
+        <>
+          <JobList />
+          <View style={styles.account}>
+            <DeleteAccount isTrade={false} />
+          </View>
+        </>
       ) : (
         <Card>
           <ThemedText themeColor="textSecondary">Sign in with the mobile number you used when you posted.</ThemedText>
           <PhoneSignIn onSignedIn={() => {}} submitLabel="Sign in" />
         </Card>
       )}
+      <SiteFooter />
     </Screen>
   );
 }
@@ -103,6 +111,9 @@ function JobList() {
 }
 
 const styles = StyleSheet.create({
+  account: {
+    marginTop: Spacing.four,
+  },
   empty: {
     gap: Spacing.three,
   },

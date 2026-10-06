@@ -455,6 +455,9 @@ verify_jwt = false
 [functions.create-portal]
 verify_jwt = false
 
+[functions.delete-account]
+verify_jwt = false
+
 # Stripe signs its requests; the function checks the signature.
 [functions.stripe-webhook]
 verify_jwt = false

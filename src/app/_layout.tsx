@@ -10,7 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
-import { ComingSoon } from '@/components/coming-soon';
+import { ComingSoon, HOLDING_PAGE, HOLDING_PAGE_EXCEPTIONS } from '@/components/coming-soon';
 import { NoIndex } from '@/components/page-meta';
 import { LoadingScreen } from '@/components/screen';
 import { Colors } from '@/constants/theme';
@@ -60,24 +60,18 @@ export default function RootLayout() {
   );
 }
 
-/**
- * Before launch, backedtrades.co.uk shows a "coming soon" page on every address. It's the same
- * website exported with the switch on:
- *   EXPO_PUBLIC_HOLDING_PAGE=1 npx expo export --platform web --output-dir dist-holding --clear
- * Always export with --clear when switching between the two: the build cache doesn't notice the
- * setting change, and a real-site build once came out showing "coming soon".
- */
-const HOLDING_PAGE = Platform.OS === 'web' && process.env.EXPO_PUBLIC_HOLDING_PAGE === '1';
 
 function HoldingPage() {
+  const pathname = usePathname();
   useEffect(() => {
     SplashScreen.hideAsync();
   }, []);
+  if (HOLDING_PAGE_EXCEPTIONS.has(pathname)) return <Stack screenOptions={{ headerShown: false }} />;
   return <ComingSoon />;
 }
 
 /** Website pages for everyone, shown without waiting for the sign-in check (see RootNavigator). */
-const PUBLIC_WEB_PAGES = new Set(['/', '/welcome']);
+const PUBLIC_WEB_PAGES = new Set(['/', '/welcome', '/privacy', '/terms']);
 
 /**
  * Who sees what:
@@ -89,6 +83,7 @@ const PUBLIC_WEB_PAGES = new Set(['/', '/welcome']);
  *                                      app are pointed to the website
  *   /admin                          -> founders' website, with its own sign-in (admin/_layout)
  *   /membership                     -> website only: trades start and manage their Stripe membership
+ *   /privacy, /terms                -> everyone; in the app they open with a back button
  */
 function RootNavigator() {
   const { session, role, loading } = useAuth();
@@ -145,6 +140,8 @@ function RootNavigator() {
         </Stack.Protected>
         <Stack.Screen name="admin" />
         <Stack.Screen name="membership" options={{ title: 'Membership · Backed.' }} />
+        <Stack.Screen name="privacy" options={{ title: 'Privacy policy', headerShown: !isWeb }} />
+        <Stack.Screen name="terms" options={{ title: 'Terms', headerShown: !isWeb }} />
         <Stack.Screen name="style-guide" />
       </Stack>
     </>

@@ -1,11 +1,25 @@
 import Head from 'expo-router/head';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { Screen } from '@/components/screen';
+import { SiteFooter } from '@/components/site-footer';
 import { ThemedText } from '@/components/themed-text';
 import { Card } from '@/components/ui/card';
 import { Wordmark } from '@/components/wordmark';
 import { Spacing } from '@/constants/theme';
+
+/**
+ * Before launch, backedtrades.co.uk shows a "coming soon" page on every address except the
+ * privacy policy and terms (the app stores need those). It's the same website exported with the
+ * switch on:
+ *   EXPO_PUBLIC_HOLDING_PAGE=1 npx expo export --platform web --output-dir dist-holding --clear
+ * Always export with --clear when switching between the two: the build cache doesn't notice the
+ * setting change, and a real-site build once came out showing "coming soon".
+ */
+export const HOLDING_PAGE = Platform.OS === 'web' && process.env.EXPO_PUBLIC_HOLDING_PAGE === '1';
+
+/** Pages shown as normal on the holding site. */
+export const HOLDING_PAGE_EXCEPTIONS = new Set(['/privacy', '/terms']);
 
 /**
  * The holding page on backedtrades.co.uk before launch. The website build shows it on every
@@ -51,6 +65,7 @@ export function ComingSoon() {
             </ThemedText>
           </Card>
         </View>
+        <SiteFooter />
       </Screen>
     </>
   );

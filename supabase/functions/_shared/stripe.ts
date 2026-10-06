@@ -42,7 +42,11 @@ function encode(params: Params, prefix = '', out = new URLSearchParams()) {
   return out;
 }
 
-export async function stripe<T = Record<string, unknown>>(method: 'GET' | 'POST', path: string, params: Params = {}) {
+export async function stripe<T = Record<string, unknown>>(
+  method: 'GET' | 'POST' | 'DELETE',
+  path: string,
+  params: Params = {},
+) {
   const key = cleanSecret(Deno.env.get('STRIPE_SECRET_KEY'));
   const body = encode(params);
   const url = method === 'GET' && body.size ? `${API_BASE}${path}?${body}` : `${API_BASE}${path}`;

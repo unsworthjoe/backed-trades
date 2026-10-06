@@ -1,5 +1,6 @@
 import { Redirect } from 'expo-router';
 
+import { DeleteAccount } from '@/components/delete-account';
 import { Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,7 @@ export default function OtherAccountScreen() {
         Customers post and manage jobs on the Backed. website, which is coming soon.
       </ThemedText>
       <Button label="Sign out" variant="outline" onPress={signOut} />
+      <DeleteAccount isTrade={false} />
     </Screen>
   );
 }

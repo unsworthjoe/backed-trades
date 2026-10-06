@@ -682,9 +682,6 @@ isOneToOne: true
 "decline_offer":
 { Args: { "p_note"?: string,"p_offer_id": string,"p_reason": Database["public"]['Enums']["decline_reason"] }; Returns: undefined
                            },
-"delete_my_account":
-{ Args: Record<PropertyKey, never>; Returns: undefined
-                           },
 "finish_notification":
 { Args: { "p_error"?: string,"p_id": number,"p_outcome": string }; Returns: undefined
                            },

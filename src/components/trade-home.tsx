@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 
+import { DeleteAccount } from '@/components/delete-account';
 import { OfferCountdown } from '@/components/offer-countdown';
 import { LoadingScreen, Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
@@ -172,6 +173,7 @@ export function ApprovedTradeHome() {
       </Section>
 
       <Button label="Sign out" variant="outline" onPress={signOut} />
+      <DeleteAccount isTrade />
     </Screen>
   );
 }

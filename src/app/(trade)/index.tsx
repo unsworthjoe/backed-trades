@@ -2,6 +2,7 @@ import { router, type Href } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { DeleteAccount } from '@/components/delete-account';
 import { LoadingScreen, Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -191,6 +192,7 @@ export default function TradeHomeScreen() {
       </Card>
 
       <Button label="Sign out" variant="outline" onPress={signOut} />
+      <DeleteAccount isTrade />
     </Screen>
   );
 }

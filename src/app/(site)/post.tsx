@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { PhoneSignIn } from '@/components/phone-sign-in';
 import { LoadingScreen, Screen } from '@/components/screen';
+import { AgreeToTerms, SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -273,6 +274,8 @@ function PostJobForm({ categories }: { categories: Tables<'trade_categories'>[] 
 
       {error && <Notice message={error} />}
       <Button label={session ? 'Post my job' : 'Next: confirm your mobile'} size="large" onPress={next} />
+      <AgreeToTerms action="posting a job" />
+      <SiteFooter />
     </Screen>
   );
 }

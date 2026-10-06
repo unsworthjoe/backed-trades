@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { AgreeToTerms } from '@/components/site-footer';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
 import { Notice } from '@/components/ui/notice';
@@ -121,6 +122,7 @@ export function SignUpForm({ onCodeSent, onSignIn }: {
         disabled={busy || !name.trim() || !email || !password}
         onPress={signUp}
       />
+      <AgreeToTerms action="creating an account" />
       <Button label="I already have an account" variant="outline" onPress={onSignIn} />
     </View>
   );
