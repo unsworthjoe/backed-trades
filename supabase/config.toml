@@ -270,8 +270,10 @@ template = "Your Backed. code is {{ .Code }}"
 max_frequency = "1m0s"
 
 # Use pre-defined map of phone number to OTP for testing.
-# [auth.sms.test_otp]
-# 4152127777 = "123456"
+# 07700 900456 (an Ofcom drama number, never a real phone) signs in with 123456 and no text is sent:
+# the founders' test customer. Remove before launch.
+[auth.sms.test_otp]
+447700900456 = "123456"
 
 # Configure logged in session timeouts.
 # [auth.sessions]
