@@ -121,6 +121,7 @@ async function loadContext(row: Claimed): Promise<Context> {
       };
     }
     ctx.jobLink = `${SITE_URL}/my-jobs/${jobId}`;
+    ctx.messagesLink = `${SITE_URL}/my-jobs/${jobId}/messages`;
   }
 
   if (matchId && row.role === 'customer') {
@@ -171,6 +172,8 @@ async function tradeAppPath(row: Claimed, jobId: string | null, matchId: string 
       .maybeSingle();
     if (match) return `/jobs/${match.id}`;
   }
+  if (row.template === 'new_message' && matchId) return `/jobs/${matchId}/messages`;
+  if (row.template === 'review_released') return '/reviews';
   if (['moved_to_back', 'tuned_out_of_queue', 'left_waiting_list'].includes(row.template)) return '/queues';
   if (row.template === 'insurance_expiring') return '/apply/insurance';
   return '/';

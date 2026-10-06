@@ -763,6 +763,9 @@ isOneToOne: true
 "sync_my_queues":
 { Args: Record<PropertyKey, never>; Returns: undefined
                            },
+"trade_profile":
+{ Args: { "p_trade_id": string }; Returns: Json
+                           },
 "tune_back_in":
 { Args: { "p_queue_id": string }; Returns: undefined
                            },

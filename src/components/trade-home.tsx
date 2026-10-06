@@ -100,12 +100,17 @@ export function ApprovedTradeHome() {
               label={`Job: ${match.jobs.title}`}
               onPress={() => router.push({ pathname: '/jobs/[id]', params: { id: match.id } })}>
               <View style={styles.chips}>
-                {match.jobs.status === 'done' ? (
+                {match.jobs.status === 'completed' ? (
+                  <Chip label="Completed: rate the customer" tone="brand" />
+                ) : match.jobs.status === 'done' ? (
                   <Chip label="Waiting for sign-off" tone="neutral" />
                 ) : match.contacted_at ? (
                   <Chip label="Customer contacted" tone="success" />
                 ) : (
                   <Chip label={`Contact by ${formatTimeOfDay(match.contact_due_at, now)}`} tone="warning" />
+                )}
+                {match.unread > 0 && (
+                  <Chip label={`${match.unread} new message${match.unread === 1 ? '' : 's'}`} tone="info" />
                 )}
               </View>
               <ThemedText type="heading">{match.jobs.title}</ThemedText>
@@ -119,9 +124,15 @@ export function ApprovedTradeHome() {
         </Section>
       )}
 
-      <Section title="Your queues">
+      <Section title="Queues and reviews">
         <PressableCard label="Your queues" onPress={() => router.push('/queues')}>
           <QueueSummary queues={home.queues} />
+        </PressableCard>
+        <PressableCard label="Your reviews" onPress={() => router.push('/reviews')}>
+          <ThemedText type="heading">Your reviews</ThemedText>
+          <ThemedText type="small" themeColor="textSecondary">
+            Your rating, reviews and the checks customers see · tap to open
+          </ThemedText>
         </PressableCard>
       </Section>
 

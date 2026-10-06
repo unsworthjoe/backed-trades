@@ -11,6 +11,8 @@ export type Context = {
   appPath?: string;
   /** The customer's job page on the website. */
   jobLink?: string;
+  /** The customer's messages with their trade, on the website. */
+  messagesLink?: string;
   /** The founders' admin website. */
   adminLink: string;
 };
@@ -113,6 +115,22 @@ export function render(template: string, data: Record<string, unknown>, ctx: Con
       return {
         title: `Your insurance expires on ${date(String(data.expires_on))}`,
         body: 'Upload your new certificate in the app so your offers don’t stop.',
+      };
+
+    case 'new_message':
+      return data.for_trade
+        ? {
+            title: `${String(data.sender_name || 'Your customer')}${job ? ` · ${job.title}` : ''}`,
+            body: String(data.preview ?? 'Sent you a message.'),
+          }
+        : {
+            title: `New message from ${trade}`,
+            body: `Backed.: ${trade} sent you a message about ${what}. Read and reply: ${ctx.messagesLink ?? ctx.jobLink ?? ''}`.trim(),
+          };
+    case 'review_released':
+      return {
+        title: 'You have a new review',
+        body: `${Number(data.overall).toFixed(1)} out of 5 for ${what}. Open the app to read it.`,
       };
 
     // Customers (text)

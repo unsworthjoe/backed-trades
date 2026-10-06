@@ -34,12 +34,12 @@ select is((select user_id from public.push_tokens where token = 'ExponentPushTok
 select tests.as_user(pg_temp.v('trade'));
 select public.unregister_push_token('ExponentPushToken[aaa]');
 reset role;
-select is((select count(*)::integer from public.push_tokens), 1, 'you can''t remove someone else''s phone');
+select is((select count(*)::integer from public.push_tokens where token = 'ExponentPushToken[aaa]'), 1, 'you can''t remove someone else''s phone');
 
 select tests.as_user(pg_temp.v('other'));
 select public.unregister_push_token('ExponentPushToken[aaa]');
 reset role;
-select is((select count(*)::integer from public.push_tokens), 0, 'signing out removes your phone');
+select is((select count(*)::integer from public.push_tokens where token = 'ExponentPushToken[aaa]'), 0, 'signing out removes your phone');
 
 -- ---------------------------------------------------------------------------
 -- Claiming and finishing
@@ -74,7 +74,7 @@ select is((select template from public.claim_notifications(10)), 'offer_reminder
   'a claim abandoned for 5 minutes is picked up again');
 
 select public.forget_push_tokens(array['ExponentPushToken[bbb]']);
-select is((select count(*)::integer from public.push_tokens), 0, 'gone phones are forgotten');
+select is((select count(*)::integer from public.push_tokens where token = 'ExponentPushToken[bbb]'), 0, 'gone phones are forgotten');
 
 -- ---------------------------------------------------------------------------
 -- Founders' alerts

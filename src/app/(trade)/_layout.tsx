@@ -30,7 +30,9 @@ export default function TradeLayout() {
       <Stack.Screen name="apply/id" options={{ title: 'ID check' }} />
       <Stack.Screen name="offers/[id]" options={{ title: 'Job offer' }} />
       <Stack.Screen name="jobs/[id]" options={{ title: 'Your job' }} />
+      <Stack.Screen name="jobs/[id]/messages" options={{ title: 'Messages' }} />
       <Stack.Screen name="queues" options={{ title: 'Your queues' }} />
+      <Stack.Screen name="reviews" options={{ title: 'Your reviews' }} />
     </Stack>
   );
 }

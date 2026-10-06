@@ -50,3 +50,11 @@ export const DECLINE_REASONS: { value: 'too_busy' | 'too_far' | 'not_my_kind_of_
   { value: 'too_big', label: 'Too big' },
   { value: 'other', label: 'Something else' },
 ];
+
+/** Tick-boxes when a trade rates a customer (customer_ratings.tags). */
+export const CUSTOMER_RATING_TAGS = [
+  { value: 'clear_brief', label: 'Clear about the job' },
+  { value: 'easy_to_reach', label: 'Easy to reach' },
+  { value: 'good_access', label: 'Good access' },
+  { value: 'paid_promptly', label: 'Paid promptly' },
+];

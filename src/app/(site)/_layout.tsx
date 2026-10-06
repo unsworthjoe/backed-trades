@@ -8,6 +8,7 @@ export default function SiteLayout() {
       <Stack.Screen name="post" options={{ title: 'Post a job · Backed.' }} />
       <Stack.Screen name="my-jobs/index" options={{ title: 'My jobs · Backed.' }} />
       <Stack.Screen name="my-jobs/[id]" options={{ title: 'Your job · Backed.' }} />
+      <Stack.Screen name="my-jobs/[id]/messages" options={{ title: 'Messages · Backed.' }} />
     </Stack>
   );
 }
