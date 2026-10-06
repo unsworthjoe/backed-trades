@@ -1,6 +1,7 @@
 import { Link, router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
+import { PageMeta } from '@/components/page-meta';
 import { Screen } from '@/components/screen';
 import { SiteHeader } from '@/components/site-header';
 import { ThemedText } from '@/components/themed-text';
@@ -24,6 +25,11 @@ const TRUST = [
 export default function HomeScreen() {
   return (
     <Screen>
+      <PageMeta
+        title="Backed. · Vetted local trades in Runcorn, Widnes and Warrington"
+        description="Post your job once and Backed. matches you with one vetted, insured local tradesperson in Runcorn, Widnes or Warrington. Free for customers, with no competing quotes or sales calls."
+        path="/"
+      />
       <SiteHeader />
 
       <View style={styles.hero}>

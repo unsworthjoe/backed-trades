@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
+import { PageMeta } from '@/components/page-meta';
 import { Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
@@ -23,6 +24,11 @@ export default function WelcomeScreen() {
           <Button label="Sign in" variant="outline" onPress={() => router.push('/sign-in')} />
         </>
       }>
+      <PageMeta
+        title="Join Backed. · Local jobs for tradespeople in Runcorn, Widnes and Warrington"
+        description="Backed. is built by tradespeople, for tradespeople: one flat monthly price, no paying per lead, and a fair queue so every vetted local trade gets a turn at jobs."
+        path="/welcome"
+      />
       <View style={styles.hero}>
         <Wordmark size={56} />
         <ThemedText type="title">By tradespeople, for tradespeople.</ThemedText>

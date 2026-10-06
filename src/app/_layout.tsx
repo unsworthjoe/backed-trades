@@ -4,13 +4,14 @@ import { DMSans_700Bold } from '@expo-google-fonts/dm-sans/700Bold';
 import { SpaceGrotesk_500Medium } from '@expo-google-fonts/space-grotesk/500Medium';
 import { SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk/700Bold';
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
 import { ComingSoon } from '@/components/coming-soon';
+import { NoIndex } from '@/components/page-meta';
 import { LoadingScreen } from '@/components/screen';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -75,6 +76,9 @@ function HoldingPage() {
   return <ComingSoon />;
 }
 
+/** Website pages for everyone, shown without waiting for the sign-in check (see RootNavigator). */
+const PUBLIC_WEB_PAGES = new Set(['/', '/welcome']);
+
 /**
  * Who sees what:
  *   website, signed out or customer -> (site): home "/", post a job, my jobs
@@ -89,40 +93,60 @@ function HoldingPage() {
 function RootNavigator() {
   const { session, role, loading } = useAuth();
   const colors = Colors[useColorScheme() === 'dark' ? 'dark' : 'light'];
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!loading) SplashScreen.hideAsync();
   }, [loading]);
 
-  if (loading) return <LoadingScreen />;
-
   const isWeb = Platform.OS === 'web';
+  const isPublicPage = isWeb && PUBLIC_WEB_PAGES.has(pathname);
+  // Every other page (sign-in, admin, a customer's or trade's own pages) stays out of search results.
+  const noIndex = isWeb && !isPublicPage && <NoIndex />;
+
+  // The website's public pages are drawn straight away as for a signed-out visitor, rather than
+  // waiting for the sign-in check. The website is built by drawing each page ahead of time,
+  // where there's no sign-in to check, so this puts the real page (not a spinner) in the HTML
+  // that search engines read, and the browser's first draw matches it. A signed-in trade is
+  // moved to their own pages a moment later, once the check finishes.
+  if (loading && !isPublicPage) {
+    return (
+      <>
+        {noIndex}
+        <LoadingScreen />
+      </>
+    );
+  }
+
   const isTrade = !!session && role === 'trade';
   const onCustomerSite = isWeb && (!session || role === 'customer');
 
   return (
-    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
-      {/*
-        The customer website comes first. Several groups have a page at "/", and the hosted
-        website can open the wrong one (e.g. the trade home); a visitor who can't see it is sent
-        to the first group they can. On the web that must be the customer site, not the trade
-        welcome page. Phones never show (site), so they still fall through to (auth).
-      */}
-      <Stack.Protected guard={onCustomerSite}>
-        <Stack.Screen name="(site)" />
-      </Stack.Protected>
-      <Stack.Protected guard={!session}>
-        <Stack.Screen name="(auth)" />
-      </Stack.Protected>
-      <Stack.Protected guard={isTrade}>
-        <Stack.Screen name="(trade)" />
-      </Stack.Protected>
-      <Stack.Protected guard={!!session && !isTrade && !onCustomerSite}>
-        <Stack.Screen name="(other)" />
-      </Stack.Protected>
-      <Stack.Screen name="admin" />
-      <Stack.Screen name="membership" options={{ title: 'Membership · Backed.' }} />
-      <Stack.Screen name="style-guide" />
-    </Stack>
+    <>
+      {noIndex}
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
+        {/*
+          The customer website comes first. Several groups have a page at "/", and the hosted
+          website can open the wrong one (e.g. the trade home); a visitor who can't see it is sent
+          to the first group they can. On the web that must be the customer site, not the trade
+          welcome page. Phones never show (site), so they still fall through to (auth).
+        */}
+        <Stack.Protected guard={onCustomerSite}>
+          <Stack.Screen name="(site)" />
+        </Stack.Protected>
+        <Stack.Protected guard={!session}>
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+        <Stack.Protected guard={isTrade}>
+          <Stack.Screen name="(trade)" />
+        </Stack.Protected>
+        <Stack.Protected guard={!!session && !isTrade && !onCustomerSite}>
+          <Stack.Screen name="(other)" />
+        </Stack.Protected>
+        <Stack.Screen name="admin" />
+        <Stack.Screen name="membership" options={{ title: 'Membership · Backed.' }} />
+        <Stack.Screen name="style-guide" />
+      </Stack>
+    </>
   );
 }
