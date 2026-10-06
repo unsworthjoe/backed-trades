@@ -102,11 +102,17 @@ function RootNavigator() {
 
   return (
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
-      <Stack.Protected guard={!session}>
-        <Stack.Screen name="(auth)" />
-      </Stack.Protected>
+      {/*
+        The customer website comes first. Several groups have a page at "/", and the hosted
+        website can open the wrong one (e.g. the trade home); a visitor who can't see it is sent
+        to the first group they can. On the web that must be the customer site, not the trade
+        welcome page. Phones never show (site), so they still fall through to (auth).
+      */}
       <Stack.Protected guard={onCustomerSite}>
         <Stack.Screen name="(site)" />
+      </Stack.Protected>
+      <Stack.Protected guard={!session}>
+        <Stack.Screen name="(auth)" />
       </Stack.Protected>
       <Stack.Protected guard={isTrade}>
         <Stack.Screen name="(trade)" />
