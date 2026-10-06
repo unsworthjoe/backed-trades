@@ -10,6 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
+import { ComingSoon } from '@/components/coming-soon';
 import { LoadingScreen } from '@/components/screen';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -47,11 +48,29 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={navigationTheme}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-      <AuthProvider>
-        <RootNavigator />
-      </AuthProvider>
+      {HOLDING_PAGE ? (
+        <HoldingPage />
+      ) : (
+        <AuthProvider>
+          <RootNavigator />
+        </AuthProvider>
+      )}
     </ThemeProvider>
   );
+}
+
+/**
+ * Before launch, backedtrades.co.uk shows a "coming soon" page on every address. It's the same
+ * website exported with the switch on:
+ *   EXPO_PUBLIC_HOLDING_PAGE=1 npx expo export --platform web --output-dir dist-holding
+ */
+const HOLDING_PAGE = Platform.OS === 'web' && process.env.EXPO_PUBLIC_HOLDING_PAGE === '1';
+
+function HoldingPage() {
+  useEffect(() => {
+    SplashScreen.hideAsync();
+  }, []);
+  return <ComingSoon />;
 }
 
 /**

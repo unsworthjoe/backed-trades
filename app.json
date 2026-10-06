@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "Backed.",
-    "slug": "trades-marketplace",
+    "slug": "backed",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "tradesmarketplace",
+    "scheme": "backed",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
@@ -20,7 +20,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -55,6 +55,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9a6ed9ed-b7d8-4fca-861a-8637711b8df1"
+      }
+    },
+    "owner": "unsworthjoe"
   }
 }
