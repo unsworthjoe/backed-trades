@@ -58,26 +58,26 @@ isOneToOne: false
                   ]
                 },"app_settings": {
                   Row: {
-                    "auto_close_hours": number,"callout_wave_minutes": number,"callout_window_minutes": number,"contact_due_hours": number,"customer_rating_min_count": number,"decline_limit": number,"default_queue_cap": number,"founding_pricing_open": boolean,"id": boolean,"id_image_retention_days": number,"low_rating_min_count": number,"low_rating_threshold": number,"miss_limit": number,"not_my_kind_limit": number,"offer_reminder_minutes": number,"offers_per_wave": number,"reply_window_minutes": number,"review_window_days": number,"signoff_reminder_hours": (number)[],"unmatched_alert_hours": number,"updated_at": string,"working_day_end": string,"working_day_start": string
+                    "auto_close_hours": number,"callout_wave_minutes": number,"callout_window_minutes": number,"contact_due_hours": number,"customer_rating_min_count": number,"decline_limit": number,"default_queue_cap": number,"founding_pricing_open": boolean,"id": boolean,"id_image_retention_days": number,"job_retention_months": number,"low_rating_min_count": number,"low_rating_threshold": number,"miss_limit": number,"not_my_kind_limit": number,"offer_reminder_minutes": number,"offers_per_wave": number,"outbox_retention_days": number,"reply_window_minutes": number,"review_window_days": number,"signoff_reminder_hours": (number)[],"unmatched_alert_hours": number,"updated_at": string,"working_day_end": string,"working_day_start": string
                   }
                   Insert: {
-                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
+                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"job_retention_months"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"outbox_retention_days"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
                   }
                   Update: {
-                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
+                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"job_retention_months"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"outbox_retention_days"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
                   }
                   Relationships: [
                     
                   ]
                 },"customer_ratings": {
                   Row: {
-                    "comment": string,"created_at": string,"customer_id": string,"id": string,"match_id": string,"released_at": string | null,"stars": number,"tags": (string)[],"trade_id": string
+                    "comment": string,"created_at": string,"customer_id": string,"id": string,"match_id": string | null,"released_at": string | null,"stars": number,"tags": (string)[],"trade_id": string
                   }
                   Insert: {
-                    "comment"?: string,"created_at"?: string,"customer_id": string,"id"?: string,"match_id": string,"released_at"?: string | null,"stars": number,"tags"?: (string)[],"trade_id": string
+                    "comment"?: string,"created_at"?: string,"customer_id": string,"id"?: string,"match_id"?: string | null,"released_at"?: string | null,"stars": number,"tags"?: (string)[],"trade_id": string
                   }
                   Update: {
-                    "comment"?: string,"created_at"?: string,"customer_id"?: string,"id"?: string,"match_id"?: string,"released_at"?: string | null,"stars"?: number,"tags"?: (string)[],"trade_id"?: string
+                    "comment"?: string,"created_at"?: string,"customer_id"?: string,"id"?: string,"match_id"?: string | null,"released_at"?: string | null,"stars"?: number,"tags"?: (string)[],"trade_id"?: string
                   }
                   Relationships: [
                     {
@@ -428,13 +428,13 @@ isOneToOne: false
                   ]
                 },"reviews": {
                   Row: {
-                    "comment": string,"created_at": string,"customer_id": string,"hidden_at": string | null,"hidden_reason": string | null,"id": string,"match_id": string,"overall": number | null,"quality": number,"released_at": string | null,"reliability": number,"tidiness": number,"trade_id": string,"value": number
+                    "comment": string,"created_at": string,"customer_id": string,"hidden_at": string | null,"hidden_reason": string | null,"id": string,"match_id": string | null,"overall": number | null,"quality": number,"released_at": string | null,"reliability": number,"tidiness": number,"trade_id": string,"value": number
                   }
                   Insert: {
-                    "comment"?: string,"created_at"?: string,"customer_id": string,"hidden_at"?: string | null,"hidden_reason"?: string | null,"id"?: string,"match_id": string,"overall"?: never,"quality": number,"released_at"?: string | null,"reliability": number,"tidiness": number,"trade_id": string,"value": number
+                    "comment"?: string,"created_at"?: string,"customer_id": string,"hidden_at"?: string | null,"hidden_reason"?: string | null,"id"?: string,"match_id"?: string | null,"overall"?: never,"quality": number,"released_at"?: string | null,"reliability": number,"tidiness": number,"trade_id": string,"value": number
                   }
                   Update: {
-                    "comment"?: string,"created_at"?: string,"customer_id"?: string,"hidden_at"?: string | null,"hidden_reason"?: string | null,"id"?: string,"match_id"?: string,"overall"?: never,"quality"?: number,"released_at"?: string | null,"reliability"?: number,"tidiness"?: number,"trade_id"?: string,"value"?: number
+                    "comment"?: string,"created_at"?: string,"customer_id"?: string,"hidden_at"?: string | null,"hidden_reason"?: string | null,"id"?: string,"match_id"?: string | null,"overall"?: never,"quality"?: number,"released_at"?: string | null,"reliability"?: number,"tidiness"?: number,"trade_id"?: string,"value"?: number
                   }
                   Relationships: [
                     {
@@ -636,13 +636,13 @@ isOneToOne: false
                   ]
                 },"trades": {
                   Row: {
-                    "accepts_callouts": boolean,"applied_at": string,"approved_at": string | null,"approved_by": string | null,"bio": string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs": boolean,"company_checked_at": string | null,"company_number": string | null,"consecutive_misses": number,"contact_phone": string | null,"created_at": string,"id": string,"paused_at": string | null,"paused_reason": Database["public"]['Enums']["pause_reason"] | null,"rejection_reason": string | null,"status": Database["public"]['Enums']["trade_status"],"submitted_at": string | null,"updated_at": string
+                    "accepts_callouts": boolean,"applied_at": string,"approved_at": string | null,"approved_by": string | null,"bio": string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs": boolean,"company_checked_at": string | null,"company_number": string | null,"consecutive_misses": number,"contact_phone": string | null,"created_at": string,"deleted_jobs_completed": number,"id": string,"paused_at": string | null,"paused_reason": Database["public"]['Enums']["pause_reason"] | null,"rejection_reason": string | null,"status": Database["public"]['Enums']["trade_status"],"submitted_at": string | null,"updated_at": string
                   }
                   Insert: {
-                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"contact_phone"?: string | null,"created_at"?: string,"id": string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"submitted_at"?: string | null,"updated_at"?: string
+                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name": string,"business_type": Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"contact_phone"?: string | null,"created_at"?: string,"deleted_jobs_completed"?: number,"id": string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"submitted_at"?: string | null,"updated_at"?: string
                   }
                   Update: {
-                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name"?: string,"business_type"?: Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"contact_phone"?: string | null,"created_at"?: string,"id"?: string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"submitted_at"?: string | null,"updated_at"?: string
+                    "accepts_callouts"?: boolean,"applied_at"?: string,"approved_at"?: string | null,"approved_by"?: string | null,"bio"?: string,"business_name"?: string,"business_type"?: Database["public"]['Enums']["business_type"],"can_take_large_jobs"?: boolean,"company_checked_at"?: string | null,"company_number"?: string | null,"consecutive_misses"?: number,"contact_phone"?: string | null,"created_at"?: string,"deleted_jobs_completed"?: number,"id"?: string,"paused_at"?: string | null,"paused_reason"?: Database["public"]['Enums']["pause_reason"] | null,"rejection_reason"?: string | null,"status"?: Database["public"]['Enums']["trade_status"],"submitted_at"?: string | null,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -681,6 +681,14 @@ isOneToOne: true
                            },
 "decline_offer":
 { Args: { "p_note"?: string,"p_offer_id": string,"p_reason": Database["public"]['Enums']["decline_reason"] }; Returns: undefined
+                           },
+"delete_ended_jobs":
+{ Args: { "p_ids": (string)[] }; Returns: number
+                           },
+"ended_jobs_due_for_cleanup":
+{ Args: { "p_limit"?: number }; Returns: {
+              "id": string
+            }[]
                            },
 "finish_notification":
 { Args: { "p_error"?: string,"p_id": number,"p_outcome": string }; Returns: undefined

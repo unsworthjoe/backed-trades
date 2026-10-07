@@ -10,6 +10,7 @@
 
 import { callerId } from '../_shared/auth.ts';
 import { adminClient, corsHeaders, json } from '../_shared/http.ts';
+import { removeFolder } from '../_shared/storage.ts';
 import { stripe, StripeError, stripeConfigured } from '../_shared/stripe.ts';
 
 type Db = ReturnType<typeof adminClient>;
@@ -81,17 +82,5 @@ async function deleteFiles(db: Db, userId: string) {
     ...(jobs ?? []).map((job): [string, string] => ['job-photos', job.id]),
   ];
 
-  for (const [bucket, folder] of folders) {
-    const storage = db.storage.from(bucket);
-    // Removing a page of files shifts the next ones up, so keep reading the first page. Entries
-    // without an id are sub-folders, which we never create; they can't be removed this way.
-    for (let page = 0; page < 20; page++) {
-      const { data: entries, error: listError } = await storage.list(folder, { limit: 1000 });
-      if (listError) throw listError;
-      const files = (entries ?? []).filter((entry) => entry.id);
-      if (!files.length) break;
-      const { error: removeError } = await storage.remove(files.map((file) => `${folder}/${file.name}`));
-      if (removeError) throw removeError;
-    }
-  }
+  for (const [bucket, folder] of folders) await removeFolder(db, bucket, folder);
 }

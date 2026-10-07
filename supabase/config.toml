@@ -458,6 +458,9 @@ verify_jwt = false
 [functions.delete-account]
 verify_jwt = false
 
+[functions.cleanup-ended-jobs]
+verify_jwt = false
+
 # Stripe signs its requests; the function checks the signature.
 [functions.stripe-webhook]
 verify_jwt = false

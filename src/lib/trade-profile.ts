@@ -28,8 +28,8 @@ export type TradeProfile = {
     comment: string;
     created_at: string;
     first_name: string;
-    job_title: string;
-    town: string;
+    job_title: string | null;
+    town: string | null;
   }[];
 };
 
