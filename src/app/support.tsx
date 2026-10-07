@@ -67,6 +67,7 @@ const SECTIONS: LegalSection[] = [
     heading: 'Deleting your account',
     body: [
       'Trades: tap “Delete my account” at the bottom of your home screen in the app. Customers: tap it on your My jobs page on the website.',
+      `No longer have the app? Email ${Company.supportEmail} from your account’s email address (customers: tell us your mobile number) and we’ll delete it within 30 days.`,
       'Your details are removed straight away. The privacy policy explains what we keep and for how long.',
     ],
   },
