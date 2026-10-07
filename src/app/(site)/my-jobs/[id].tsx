@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 
 import { PhoneSignIn } from '@/components/phone-sign-in';
+import { BlockUser } from '@/components/block-user';
 import { ReportProblem } from '@/components/report-problem';
 import { LoadingScreen, Screen } from '@/components/screen';
 import { SiteHeader } from '@/components/site-header';
@@ -317,6 +318,15 @@ function JobDetails({ userId }: { userId: string }) {
         ))}
 
       {match && <ReportProblem jobId={job.id} aboutUserId={match.trade_id} from="customer" />}
+      {match && (
+        <BlockUser
+          matchId={match.id}
+          otherId={match.trade_id}
+          from="customer"
+          inProgress={job.status === 'matched'}
+          onBlocked={reload}
+        />
+      )}
     </Screen>
   );
 }

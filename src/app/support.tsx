@@ -60,6 +60,7 @@ const SECTIONS: LegalSection[] = [
     heading: 'Reporting a problem',
     body: [
       'Tap “Report a problem” on the job, in the app or on the website. One of us reads every report and will contact you.',
+      'To stop someone contacting you, tap “Block this customer” or “Block this trade” on the job. You won’t be able to message each other or be matched again, and they aren’t told.',
       'If anyone is in danger, call 999 first.',
     ],
   },

@@ -68,6 +68,10 @@ function explain(alert: Alert): string {
       return 'Waiting for review. This clears when you approve it or send it back.';
     case 'report_filed':
       return `${typeof details.reason === 'string' ? `“${details.reason}”. ` : ''}This clears when you resolve or dismiss the report.`;
+    case 'user_blocked':
+      return details.by === 'trade'
+        ? 'The trade blocked this customer. They won’t be matched again, and if the job was in progress it went back out to other trades.'
+        : 'The customer blocked this trade. They won’t be matched again, and if the job was in progress it went back out to other trades.';
     default:
       return '';
   }

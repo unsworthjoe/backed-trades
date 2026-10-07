@@ -3,6 +3,7 @@ import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 
+import { BlockUser } from '@/components/block-user';
 import { ReportProblem } from '@/components/report-problem';
 import { LoadingScreen, Screen } from '@/components/screen';
 import { StarInput, Stars } from '@/components/stars';
@@ -142,7 +143,9 @@ export default function TradeJobScreen() {
           tone="info"
           title="This job has ended"
           message={
-            match.end_reason === 'customer_requested_another'
+            match.end_reason === 'trade_blocked_customer'
+              ? 'You blocked this customer, so the job has gone to another trade.'
+              : match.end_reason === 'customer_requested_another'
               ? 'The customer asked for a different trade.'
               : match.end_reason === 'cancelled'
                 ? 'The customer cancelled the job.'
@@ -280,6 +283,15 @@ export default function TradeJobScreen() {
       </Card>
 
       {live && <ReportProblem jobId={job.id} aboutUserId={job.customer_id} from="trade" />}
+      {live && (
+        <BlockUser
+          matchId={match.id}
+          otherId={job.customer_id}
+          from="trade"
+          inProgress={job.status === 'matched'}
+          onBlocked={reload}
+        />
+      )}
     </Screen>
   );
 }

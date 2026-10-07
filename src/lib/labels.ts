@@ -68,4 +68,5 @@ export const ALERT_NAMES: Record<string, string> = {
   insurance_expiring: 'A trade’s insurance is about to expire',
   application_submitted: 'A trade has sent their application',
   report_filed: 'Someone has reported a problem',
+  user_blocked: 'Someone has blocked someone',
 };

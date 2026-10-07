@@ -34,7 +34,13 @@ export function MessageThread({ matchId, myId, otherName, canSend, header }: Mes
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Either side has blocked the other: the history stays readable, nothing new can be sent.
+  const [blocked, setBlocked] = useState(false);
   const scroll = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    supabase.rpc('match_messaging_blocked', { p_match_id: matchId }).then(({ data }) => setBlocked(data === true));
+  }, [matchId]);
 
   const markRead = useCallback(async () => {
     await supabase
@@ -164,7 +170,7 @@ export function MessageThread({ matchId, myId, otherName, canSend, header }: Mes
         <View style={[styles.composerBar, { backgroundColor: theme.surface, borderTopColor: theme.border }]}>
           <View style={styles.composer}>
             {error && messages !== null && <Notice message={error} />}
-            {canSend ? (
+            {canSend && !blocked ? (
               <View style={styles.row}>
                 <TextInput
                   accessibilityLabel={`Message ${otherName}`}
@@ -180,7 +186,9 @@ export function MessageThread({ matchId, myId, otherName, canSend, header }: Mes
               </View>
             ) : (
               <ThemedText type="small" themeColor="textSecondary">
-                This job has ended, so you can’t send new messages.
+                {blocked
+                  ? 'You can’t message each other on Backed. any more.'
+                  : 'This job has ended, so you can’t send new messages.'}
               </ThemedText>
             )}
           </View>
