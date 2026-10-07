@@ -71,7 +71,7 @@ function HoldingPage() {
 }
 
 /** Website pages for everyone, shown without waiting for the sign-in check (see RootNavigator). */
-const PUBLIC_WEB_PAGES = new Set(['/', '/welcome', '/privacy', '/terms']);
+const PUBLIC_WEB_PAGES = new Set(['/', '/welcome', '/privacy', '/terms', '/support']);
 
 /**
  * Who sees what:
@@ -83,7 +83,7 @@ const PUBLIC_WEB_PAGES = new Set(['/', '/welcome', '/privacy', '/terms']);
  *                                      app are pointed to the website
  *   /admin                          -> founders' website, with its own sign-in (admin/_layout)
  *   /membership                     -> website only: trades start and manage their Stripe membership
- *   /privacy, /terms                -> everyone; in the app they open with a back button
+ *   /privacy, /terms, /support      -> everyone; in the app they open with a back button
  */
 function RootNavigator() {
   const { session, role, loading } = useAuth();
@@ -142,6 +142,7 @@ function RootNavigator() {
         <Stack.Screen name="membership" options={{ title: 'Membership · Backed.' }} />
         <Stack.Screen name="privacy" options={{ title: 'Privacy policy', headerShown: !isWeb }} />
         <Stack.Screen name="terms" options={{ title: 'Terms', headerShown: !isWeb }} />
+        <Stack.Screen name="support" options={{ title: 'Help', headerShown: !isWeb }} />
         <Stack.Screen name="style-guide" />
       </Stack>
     </>

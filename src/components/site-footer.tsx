@@ -14,6 +14,11 @@ export function SiteFooter() {
   return (
     <View style={[styles.footer, { borderTopColor: theme.border }]}>
       <View style={styles.links}>
+        <Link href="/support" style={styles.link}>
+          <ThemedText type="small" themeColor="textSecondary">
+            Help and contact
+          </ThemedText>
+        </Link>
         <Link href="/privacy" style={styles.link}>
           <ThemedText type="small" themeColor="textSecondary">
             Privacy policy

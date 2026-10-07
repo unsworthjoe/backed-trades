@@ -21,14 +21,26 @@ type LegalPageProps = {
   path: string;
   intro: string;
   sections: LegalSection[];
+  /** "Last updated" date; null hides it (the help page). */
+  updated?: string | null;
+  /** Number the section headings, as legal pages do. */
+  numbered?: boolean;
 };
 
 /**
- * The privacy policy and terms. On the website it has the site's header and footer (just the logo
+ * The privacy policy, terms and help page. On the website it has the site's header and footer (just the logo
  * while the coming-soon page is up, as there's no sign-in then); in the app it opens over the
  * current screen with a back button (see the root layout).
  */
-export function LegalPage({ title, description, path, intro, sections }: LegalPageProps) {
+export function LegalPage({
+  title,
+  description,
+  path,
+  intro,
+  sections,
+  updated = LegalUpdated,
+  numbered = true,
+}: LegalPageProps) {
   const isWeb = Platform.OS === 'web';
   return (
     <Screen edges={isWeb ? undefined : ['left', 'right']}>
@@ -43,15 +55,17 @@ export function LegalPage({ title, description, path, intro, sections }: LegalPa
         ))}
       <View style={styles.top}>
         <ThemedText type="title">{title}</ThemedText>
-        <ThemedText type="small" themeColor="textSecondary">
-          Last updated {LegalUpdated}
-        </ThemedText>
+        {updated && (
+          <ThemedText type="small" themeColor="textSecondary">
+            Last updated {updated}
+          </ThemedText>
+        )}
         <ThemedText themeColor="textSecondary">{intro}</ThemedText>
       </View>
       {sections.map((section, index) => (
         <View key={section.heading} style={styles.section}>
           <ThemedText type="heading" accessibilityRole="header">
-            {index + 1}. {section.heading}
+            {numbered ? `${index + 1}. ${section.heading}` : section.heading}
           </ThemedText>
           {section.body.map((block, i) =>
             typeof block === 'string' ? (
