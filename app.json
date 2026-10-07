@@ -8,9 +8,15 @@
     "scheme": "backed",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "uk.co.backedtrades.app",
+      "supportsTablet": false,
+      "icon": "./assets/expo.icon",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "uk.co.backedtrades.app",
       "adaptiveIcon": {
         "backgroundColor": "#8A3FFC",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
