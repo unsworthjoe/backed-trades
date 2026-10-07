@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { PageMeta } from '@/components/page-meta';
 import { Screen } from '@/components/screen';
@@ -10,8 +10,14 @@ import { Card } from '@/components/ui/card';
 import { Wordmark } from '@/components/wordmark';
 import { Spacing } from '@/constants/theme';
 
+// Phones never mention the price or paying: Apple only lets us sell the membership outside the app
+// if the app has no calls to buy it (App Review guideline 3.1.3(f)). The website can say both.
+const IS_WEB = Platform.OS === 'web';
+
 const POINTS = [
-  ['One flat price', '£14.99 a month for founding members in Runcorn, Widnes and Warrington. No paying per lead.'],
+  IS_WEB
+    ? ['One flat price', '£14.99 a month for founding members in Runcorn, Widnes and Warrington. No paying per lead.']
+    : ['Local jobs, no paying per lead', 'Real jobs from customers in Runcorn, Widnes and Warrington, sent straight to your phone.'],
   ['A fair queue', 'Jobs go to the front of the queue. Win one and you go to the back, so everyone gets a turn.'],
   ['Every trade vetted', 'ID, insurance and registrations checked by hand, so customers can trust who turns up.'],
 ] as const;
@@ -42,9 +48,11 @@ export default function WelcomeScreen() {
           </Card>
         ))}
       </View>
-      <ThemedText type="small" themeColor="textSecondary">
-        Applying is free. You only subscribe once you’ve been approved.
-      </ThemedText>
+      {IS_WEB && (
+        <ThemedText type="small" themeColor="textSecondary">
+          Applying is free. You only subscribe once you’ve been approved.
+        </ThemedText>
+      )}
       <SiteFooter />
     </Screen>
   );
