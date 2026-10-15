@@ -57,7 +57,8 @@
           "cameraPermission": "Backed. needs your camera so you can take a photo of your ID and a selfie for your ID check.",
           "microphonePermission": false
         }
-      ]
+      ],
+      "./plugins/with-gradle-project-name"
     ],
     "experiments": {
       "typedRoutes": true,
