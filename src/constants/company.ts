@@ -7,11 +7,8 @@ export const Company = {
   number: '17504288',
   registeredIn: 'England and Wales',
   registeredOffice: '12 New Albert Terrace, Runcorn, WA7 1DD' as string | null,
-  /**
-   * TODO: the ICO registration number once the ICO confirms it. Applied 2026-10-07 (case ref
-   * C2053592) — that's the application reference, not the registration number, so it isn't shown.
-   */
-  icoNumber: null as string | null,
+  /** Registration number with the Information Commissioner's Office (data protection fee). */
+  icoNumber: 'ZC268855' as string | null,
   privacyEmail: 'privacy@backedtrades.co.uk',
   supportEmail: 'hello@backedtrades.co.uk',
   website: 'https://backedtrades.co.uk',
