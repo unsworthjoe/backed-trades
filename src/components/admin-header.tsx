@@ -15,6 +15,7 @@ const SECTIONS = [
   { href: '/admin', label: 'Applications', match: (path: string) => path === '/admin' || path.startsWith('/admin/trades') },
   { href: '/admin/reports', label: 'Reports', match: (path: string) => path.startsWith('/admin/reports') },
   { href: '/admin/reviews', label: 'Reviews', match: (path: string) => path.startsWith('/admin/reviews') },
+  { href: '/admin/interest', label: 'Interest', match: (path: string) => path.startsWith('/admin/interest') },
 ] as const;
 
 /** Top bar for the admin website: logo, the sections, who's signed in, and sign out. */

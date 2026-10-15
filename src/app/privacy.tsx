@@ -54,10 +54,16 @@ const SECTIONS: LegalSection[] = [
     ],
   },
   {
+    heading: 'If you register your interest',
+    body: [
+      `Before we launch, you can leave your email address on our website to be told when Backed. is live. We ask whether you’re a customer or a tradesperson, your trade, and your town, so we know where people want us. We only use this to email you that we’re live, and we don’t share it with anyone except the companies that run our database and send our emails. You can ask us to remove it at any time by emailing ${Company.privacyEmail}.`,
+    ],
+  },
+  {
     heading: 'What we collect from everyone',
     body: [
       'When you use the website or app, our providers record technical details such as your IP address, device and browser type, and the date and time. We use these to keep the service running, find faults, and stop abuse, for example by limiting how many text codes can be sent from one place.',
-      'The job form uses Cloudflare Turnstile to check you’re a person, not a bot. It looks at signals from your browser to do this.',
+      'The job form and the register-your-interest form use Cloudflare Turnstile to check you’re a person, not a bot. It looks at signals from your browser to do this.',
     ],
   },
   {
@@ -69,6 +75,7 @@ const SECTIONS: LegalSection[] = [
           'To provide the service you signed up for (contract): your account, sending jobs to trades, matching you with one trade, messages, notifications, reviews and memberships.',
           'To keep Backed. safe and trustworthy (legitimate interests): checking every trade before they’re approved, checking insurance stays in date, dealing with reports and complaints, checking reviews are genuine, and preventing fraud and abuse.',
           'To meet our legal duties (legal obligation): keeping payment records for tax, and answering lawful requests from the authorities.',
+          'To tell you we’re live, if you registered your interest (consent). You can withdraw your consent at any time.',
           'To improve Backed. (legitimate interests): understanding how the service is used, so we can fix problems and make it better.',
         ],
       },
@@ -101,7 +108,7 @@ const SECTIONS: LegalSection[] = [
           'Twilio: text messages, such as sign-in codes and job updates.',
           'Resend: emails, such as sign-in codes and alerts.',
           'Expo: hosting the website, and sending notifications to the app.',
-          'Cloudflare: the Turnstile check on the job form, and delivering the website.',
+          'Cloudflare: the Turnstile check on our forms, and delivering the website.',
           'Apple and Google: delivering notifications to iPhones and Android phones.',
         ],
       },
@@ -124,6 +131,7 @@ const SECTIONS: LegalSection[] = [
           'Jobs, messages and reports: 2 years after the job ends, then deleted.',
           'Reviews: shown for as long as the trade is on Backed. They’re removed if the customer or the trade deletes their account.',
           'Payment records: 6 years, because tax law requires it. Stripe keeps its own records for the same reason.',
+          'Registered interest: deleted 12 months after you sign up, or sooner if you ask.',
           'Technical logs: a few weeks.',
         ],
       },

@@ -1,6 +1,7 @@
 import Head from 'expo-router/head';
 import { Platform, StyleSheet, View } from 'react-native';
 
+import { RegisterInterest } from '@/components/register-interest';
 import { Screen } from '@/components/screen';
 import { SiteFooter } from '@/components/site-footer';
 import { ThemedText } from '@/components/themed-text';
@@ -65,6 +66,7 @@ export function ComingSoon() {
             </ThemedText>
           </Card>
         </View>
+        <RegisterInterest />
         <SiteFooter />
       </Screen>
     </>

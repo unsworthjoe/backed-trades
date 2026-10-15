@@ -15,4 +15,4 @@ export const Company = {
 };
 
 /** When the privacy policy and terms last changed (shown at the top of each). */
-export const LegalUpdated = '7 October 2026';
+export const LegalUpdated = '15 October 2026';

@@ -441,6 +441,9 @@ verify_jwt = false
 [functions.request-phone-code]
 verify_jwt = false
 
+[functions.register-interest]
+verify_jwt = false
+
 [functions.send-notifications]
 verify_jwt = false
 

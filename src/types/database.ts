@@ -150,6 +150,31 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"interest_signups": {
+                  Row: {
+                    "category_id": number | null,"email": string,"id": string,"kind": string,"signed_up_at": string,"town_id": number | null
+                  }
+                  Insert: {
+                    "category_id"?: number | null,"email": string,"id"?: string,"kind": string,"signed_up_at"?: string,"town_id"?: number | null
+                  }
+                  Update: {
+                    "category_id"?: number | null,"email"?: string,"id"?: string,"kind"?: string,"signed_up_at"?: string,"town_id"?: number | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "interest_signups_category_id_fkey"
+      columns: ["category_id"]
+isOneToOne: false
+      referencedRelation: "trade_categories"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "interest_signups_town_id_fkey"
+      columns: ["town_id"]
+isOneToOne: false
+      referencedRelation: "towns"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"job_addresses": {
                   Row: {
                     "address_line": string,"job_id": string,"postcode": string
