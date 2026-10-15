@@ -22,6 +22,7 @@
   "submit": {
     "production": {
       "android": {
+        "serviceAccountKeyPath": "./keys/backed-191c8-6dbd0ec12da3.json",
         "track": "internal",
         "releaseStatus": "draft"
       }
