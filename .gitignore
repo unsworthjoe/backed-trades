@@ -43,3 +43,6 @@ example
 # generated native folders
 /ios
 /android
+
+# Private service account keys (Google Play, Firebase). Upload them to EAS; never commit them.
+/keys/
