@@ -90,7 +90,7 @@ export function useReferenceData() {
     useCallback(() => {
       if (cachedReference) return;
       Promise.all([
-        supabase.from('trade_categories').select('*').eq('active', true).order('sort_order'),
+        supabase.from('trade_categories').select('*').eq('active', true).order('name'),
         supabase.from('towns').select('*').eq('active', true).order('name'),
       ]).then(([categories, towns]) => {
         if (categories.error || towns.error) return;

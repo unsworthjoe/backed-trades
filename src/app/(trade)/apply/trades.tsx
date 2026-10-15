@@ -6,10 +6,11 @@ import { LoadingScreen, Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ChoiceChip } from '@/components/ui/choice-chip';
 import { Notice } from '@/components/ui/notice';
+import { SelectField } from '@/components/ui/select-field';
 import { ToggleRow } from '@/components/ui/toggle-row';
 import { Spacing } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
 import { friendlyError } from '@/lib/errors';
 import { saveChoices } from '@/lib/save-choices';
 import { supabase } from '@/lib/supabase';
@@ -32,15 +33,15 @@ function TradesForm({
   trade: Tables<'trades'>;
   categories: Tables<'trade_categories'>[];
 }) {
+  const theme = useTheme();
   const [chosen, setChosen] = useState<number[]>(application.categoryIds);
   const [largeJobs, setLargeJobs] = useState(trade.can_take_large_jobs);
   const [callouts, setCallouts] = useState(trade.accepts_callouts);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function toggle(id: number) {
-    setChosen((current) => (current.includes(id) ? current.filter((c) => c !== id) : [...current, id]));
-  }
+  const picked = categories.filter((category) => chosen.includes(category.id));
+  const unpicked = categories.filter((category) => !chosen.includes(category.id));
 
   async function save() {
     if (!chosen.length) return setError('Pick at least one trade.');
@@ -66,16 +67,31 @@ function TradesForm({
         <ThemedText themeColor="textSecondary">
           Pick every trade you do. You’ll join a queue for each one, in each town you cover.
         </ThemedText>
-        <View style={styles.chips}>
-          {categories.map((category) => (
-            <ChoiceChip
-              key={category.id}
-              label={category.name}
-              selected={chosen.includes(category.id)}
-              onPress={() => toggle(category.id)}
-            />
-          ))}
-        </View>
+        {unpicked.length > 0 && (
+          <SelectField
+            label={picked.length ? 'Add another trade' : 'Add a trade'}
+            placeholder="Choose a trade"
+            options={unpicked.map((category) => ({ value: category.id, label: category.name }))}
+            value={null}
+            onChange={(id) => setChosen((current) => [...current, id])}
+          />
+        )}
+        {picked.length > 0 && (
+          <View style={styles.picked}>
+            <ThemedText type="smallBold">Your trades</ThemedText>
+            {picked.map((category) => (
+              <View key={category.id} style={[styles.pickedRow, { borderColor: theme.border }]}>
+                <ThemedText>{category.name}</ThemedText>
+                <Button
+                  label="Remove"
+                  variant="outline"
+                  accessibilityLabel={`Remove ${category.name}`}
+                  onPress={() => setChosen((current) => current.filter((c) => c !== category.id))}
+                />
+              </View>
+            ))}
+          </View>
+        )}
       </View>
 
       <Card>
@@ -104,9 +120,15 @@ const styles = StyleSheet.create({
   group: {
     gap: Spacing.three,
   },
-  chips: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  picked: {
     gap: Spacing.two,
+  },
+  pickedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: Spacing.two,
+    paddingVertical: Spacing.two,
+    borderBottomWidth: 1,
   },
 });

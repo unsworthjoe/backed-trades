@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ChoiceChip } from '@/components/ui/choice-chip';
 import { Notice } from '@/components/ui/notice';
+import { SelectField } from '@/components/ui/select-field';
 import { TextField } from '@/components/ui/text-field';
 import { Spacing } from '@/constants/theme';
 import { supabase } from '@/lib/supabase';
@@ -96,16 +97,13 @@ export function RegisterInterest() {
       </Group>
 
       {kind === 'trade' && (
-        <Group label="Your trade">
-          {reference?.categories.map((category) => (
-            <ChoiceChip
-              key={category.id}
-              label={category.name}
-              selected={categoryId === category.id}
-              onPress={() => setCategoryId(category.id)}
-            />
-          ))}
-        </Group>
+        <SelectField
+          label="Your trade"
+          placeholder="Choose your trade"
+          options={(reference?.categories ?? []).map((category) => ({ value: category.id, label: category.name }))}
+          value={categoryId}
+          onChange={setCategoryId}
+        />
       )}
 
       <Group label={kind === 'trade' ? 'Where you mostly work' : 'Where you live'}>

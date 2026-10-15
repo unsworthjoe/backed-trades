@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ChoiceChip } from '@/components/ui/choice-chip';
 import { Notice } from '@/components/ui/notice';
+import { SelectField } from '@/components/ui/select-field';
 import { TextField } from '@/components/ui/text-field';
 import { ToggleRow } from '@/components/ui/toggle-row';
 import { Radius, Spacing } from '@/constants/theme';
@@ -161,16 +162,13 @@ function PostJobForm({ categories }: { categories: Tables<'trade_categories'>[] 
       </View>
 
       <Section title="What do you need?">
-        <View style={styles.chips}>
-          {categories.map((category) => (
-            <ChoiceChip
-              key={category.id}
-              label={category.name}
-              selected={categoryId === category.id}
-              onPress={() => setCategoryId(category.id)}
-            />
-          ))}
-        </View>
+        <SelectField
+          label="Type of trade"
+          placeholder="Choose a trade"
+          options={categories.map((category) => ({ value: category.id, label: category.name }))}
+          value={categoryId}
+          onChange={setCategoryId}
+        />
         <TextField
           label="Job title"
           hint="A few words, like “Leaking kitchen tap” or “New fence panels”."
