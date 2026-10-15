@@ -46,3 +46,6 @@ example
 
 # Private service account keys (Google Play, Firebase). Upload them to EAS; never commit them.
 /keys/
+
+# Personal Claude Code settings
+/.claude/settings.local.json
