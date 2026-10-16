@@ -1,8 +1,9 @@
 # Backed. launch to-do list (updated 15 Oct 2026)
 
-1. Test the Android app with your tester
-   a. Tester opens the opt-in link, taps "Become a tester", installs Backed. from the Play Store
-   b. Tester signs up as a trade (real email) and completes the application (trades, towns, insurance, ID photo + selfie)
+1. Test the Android app (on the Pixel 8 emulator in Android Studio, signed in to Google)
+   a. Add your Google email as an internal tester in Play Console; on the emulator open the opt-in link,
+      tap "Become a tester", install Backed. from the Play Store
+   b. Sign up as a trade (real email) and completes the application (trades, towns, insurance, ID photo + selfie)
    c. You approve them on /admin
    d. Tester buys a membership on the website (backed--demo.expo.app), test card 4242 4242 4242 4242, any future date, any CVC
    e. Post a test job from the website in their town; check the offer push notification arrives; try accept, decline, messaging, blocking and pausing
@@ -32,10 +33,13 @@
    d. Get them on the register-interest list now to email at launch
 
 6. Store listing assets
-   a. Phone screenshots for both stores (after step 3's changes)
-   b. Google Play feature graphic (1024x500)
-   c. Google Play Store listing: name, short + full description, icon, screenshots, feature graphic (text in store doc)
-   d. Google Play App content: privacy policy URL (backedtrades.co.uk/privacy), app access (demo trade login), ads (none),
+   a. DONE for Google Play (16 Oct, current branding): 6 screenshots, feature graphic and 512 icon in
+      social-media/output/store/ (designs in social-media/designs/backed/store/). Still to do: the Apple
+      set (1320x2868, iPhone frame), and re-render both if step 3 changes the design or colour
+   b. DONE: Google Play feature graphic (1024x500)
+   c. DONE (16 Oct): Google Play Store listing: name, short + full description, icon, screenshots, feature graphic (text in store doc)
+   d. Google Play App content (privacy policy, app access, ads, content rating, data safety and
+      financial features DONE 16 Oct; check target audience, news, government, health, advertising ID): privacy policy URL (backedtrades.co.uk/privacy), app access (demo trade login), ads (none),
       content rating questionnaire, target audience (18+), data safety (answers in store doc)
    e. Apple App Store Connect: description, keywords, subtitle, support URL (backedtrades.co.uk/support), privacy URL,
       App Privacy answers, age rating, reviewer notes with the demo login (all in store doc)
