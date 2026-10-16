@@ -91,6 +91,9 @@ export function SignUpForm({ onCodeSent, onSignIn }: {
     });
     setBusy(false);
     if (error) setError(friendlyError(error));
+    // An email that already has an account comes back with no identities and no email is sent
+    // (Supabase hides which emails are registered), so don't wait for a code that won't come.
+    else if (data.user?.identities?.length === 0) setError('There’s already an account with that email. Try signing in.');
     else if (!data.session) onCodeSent(email.trim());
   }
 
@@ -153,6 +156,7 @@ export function VerifyEmailForm({ email }: { email: string }) {
     <View style={styles.form}>
       <ThemedText themeColor="textSecondary">
         We’ve emailed a 6-digit code to <ThemedText type="smallBold">{email}</ThemedText>. It works for an hour.
+        It can take a few minutes to arrive, so check your junk folder too.
       </ThemedText>
       <TextField
         label="Code"

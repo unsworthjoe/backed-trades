@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Notice } from '@/components/ui/notice';
 import { TextField } from '@/components/ui/text-field';
-import { formatDate, parseUkDate, todayInUk } from '@/lib/dates';
+import { formatDate, formatDateInput, parseUkDate, todayInUk } from '@/lib/dates';
 import { friendlyError } from '@/lib/errors';
 import { pickDocument, pickPhoto } from '@/lib/pickers';
 import { supabase } from '@/lib/supabase';
@@ -97,8 +97,8 @@ export default function InsuranceScreen() {
           label="Expiry date"
           hint="Day/month/year, e.g. 31/03/2027. We’ll remind you before it runs out."
           value={expiry}
-          onChangeText={setExpiry}
-          keyboardType="numbers-and-punctuation"
+          onChangeText={(text) => setExpiry(formatDateInput(text))}
+          keyboardType="number-pad"
           placeholder="DD/MM/YYYY"
           maxLength={10}
         />

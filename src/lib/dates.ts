@@ -8,6 +8,12 @@ export function parseUkDate(text: string): string | null {
   return date.toISOString().slice(0, 10);
 }
 
+/** Adds the slashes while someone types a date: "3103" -> "31/03", "31032027" -> "31/03/2027". */
+export function formatDateInput(text: string): string {
+  const digits = text.replace(/\D/g, '').slice(0, 8);
+  return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4)].filter(Boolean).join('/');
+}
+
 /** "2026-12-31" -> "31 Dec 2026". */
 export function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });

@@ -33,6 +33,8 @@ const MESSAGES: Record<string, string> = {
   'User already registered': 'There’s already an account with that email. Try signing in.',
   'Token has expired or is invalid': 'That code is wrong or has expired. Check the email or send a new code.',
   'you can only request this after': 'Please wait a minute before asking for another code.',
+  'rate limit exceeded': 'We’ve sent a lot of codes in the last hour. Please try again a little later.',
+  'Error sending': 'We couldn’t send the email just now. Please try again in a few minutes.',
   'should be different from the old password': 'That’s your current password. Choose a new one.',
 };
 

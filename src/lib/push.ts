@@ -20,13 +20,18 @@ export type PushPermission = 'granted' | 'denied' | 'undetermined' | 'unavailabl
 /** The token this device registered, so it can be removed again on sign-out. */
 let registeredToken: string | null = null;
 
-/** Push needs a real phone and an EAS project id (from `eas init`). */
+/** Push needs an EAS project id (from `eas init`). */
 function projectId(): string | null {
   return Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId ?? null;
 }
 
+/** A real phone, or an Android emulator (ones with Google Play can get push; iOS simulators can't). */
+function canPush(): boolean {
+  return Device.isDevice || Platform.OS === 'android';
+}
+
 export async function pushPermission(): Promise<PushPermission> {
-  if (!Device.isDevice || !projectId()) return 'unavailable';
+  if (!canPush() || !projectId()) return 'unavailable';
   const { status } = await Notifications.getPermissionsAsync();
   return status;
 }
@@ -37,7 +42,7 @@ export async function pushPermission(): Promise<PushPermission> {
  */
 export async function registerForPush({ ask }: { ask: boolean }): Promise<PushPermission> {
   const id = projectId();
-  if (!Device.isDevice || !id) return 'unavailable';
+  if (!canPush() || !id) return 'unavailable';
 
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {

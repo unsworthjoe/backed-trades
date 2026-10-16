@@ -94,7 +94,9 @@ export function useReferenceData() {
         supabase.from('towns').select('*').eq('active', true).order('name'),
       ]).then(([categories, towns]) => {
         if (categories.error || towns.error) return;
-        cachedReference = { categories: categories.data, towns: towns.data };
+        // Alphabetical, but "Other" goes last.
+        const sorted = [...categories.data].sort((a, b) => Number(a.slug === 'other') - Number(b.slug === 'other'));
+        cachedReference = { categories: sorted, towns: towns.data };
         setData(cachedReference);
       });
     }, []),
