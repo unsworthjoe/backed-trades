@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 import { VerifyEmailForm } from '@/components/auth-forms';
 import { Screen } from '@/components/screen';
@@ -12,7 +12,10 @@ export default function VerifyScreen() {
     <Screen>
       <Wordmark size={32} />
       <ThemedText type="subtitle">Check your email</ThemedText>
-      <VerifyEmailForm email={email ?? ''} />
+      <VerifyEmailForm
+        email={email ?? ''}
+        onChangeEmail={() => (router.canGoBack() ? router.back() : router.replace('/sign-up'))}
+      />
     </Screen>
   );
 }

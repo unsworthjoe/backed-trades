@@ -131,7 +131,7 @@ export function SignUpForm({ onCodeSent, onSignIn }: {
   );
 }
 
-export function VerifyEmailForm({ email }: { email: string }) {
+export function VerifyEmailForm({ email, onChangeEmail }: { email: string; onChangeEmail: () => void }) {
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -171,6 +171,7 @@ export function VerifyEmailForm({ email }: { email: string }) {
       {resent && <Notice tone="success" message="New code sent. Check your email (and your junk folder)." />}
       <Button label={busy ? 'Checking…' : 'Confirm'} size="large" disabled={busy || code.length !== 6} onPress={verify} />
       <Button label="Send a new code" variant="outline" onPress={resend} />
+      <Button label="Wrong email? Change it" variant="secondary" onPress={onChangeEmail} />
     </View>
   );
 }

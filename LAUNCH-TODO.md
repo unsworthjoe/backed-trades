@@ -1,17 +1,15 @@
-# Backed. launch to-do list (updated 16 Oct 2026)
+# Backed. launch to-do list (updated 18 Oct 2026)
 
 1. Test the Android app (Pixel 8 emulator in Android Studio)
    First run DONE 16 Oct: everything worked except push notifications (an emulator-only bug), the
    membership email (bad Resend key, now replaced) and two small form fixes. All fixed in build 5.
-   a. NEXT: check build 5's submission finished, then Play Console > Testing > Internal testing >
-      the version code 5 draft > Review release > Start rollout; update Backed. on the emulator
-   b. Retest with a NEW Gmail address (iCloud delays our emails):
-      - "Other" is last in the trades list; the insurance expiry date fills in its slashes
-      - after approval, the "Set up your Backed. membership" email arrives
-      - push notifications arrive for a new offer and for a new message
-      - signing up with your admin email says there's already an account
-   c. Post one job with a REAL mobile number (not the 07700 test number) to check customer texts arrive
-   d. Send Claude anything that looks wrong, with screenshots and the step letter
+   a. DONE 18 Oct: build 5 rolled out and installed on the emulator. Sign-up emails had stopped
+      (Supabase SMTP password was the old Resend key); fixed by putting the new key in SMTP settings
+   b. DONE 18 Oct: retest with a new email, all passed: "Other" last + expiry slashes, membership
+      email, push for offers and messages, admin email says "already an account" (checked by Claude
+      on the emulator; the first try went to the code screen but couldn't be reproduced)
+   c. DONE 18 Oct: job posted with a real mobile number; customer texts arrived
+   STEP 1 COMPLETE.
 
 2. Get Apple approved and set up iOS (enrolment W3YQUKH58U, submitted)
    a. Watch for Apple's email or phone call and answer quickly
