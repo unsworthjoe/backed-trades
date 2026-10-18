@@ -9,7 +9,7 @@
       email, push for offers and messages, admin email says "already an account" (checked by Claude
       on the emulator; the first try went to the code screen but couldn't be reproduced)
    c. DONE 18 Oct: job posted with a real mobile number; customer texts arrived
-   STEP 1 COMPLETE.
+   STEP 1 COMPLETE. Waiting for the next build: "Wrong email? Change it" button on the code screen (d2a37c0)
 
 2. Get Apple approved and set up iOS (enrolment W3YQUKH58U, submitted)
    a. Watch for Apple's email or phone call and answer quickly
@@ -24,6 +24,7 @@
    c. Send Claude the changes; Claude makes them and does a new build
 
 4. Start Stripe live activation (checks can take days)
+   PARKED 18 Oct: waiting for the business bank account to be opened
    a. In Stripe, "Activate payments": BACKED TRADE LIMITED (17504288), registered office, director ID, business bank account
    b. Wait for verification; don't switch the app to live keys until launch day
 
@@ -35,8 +36,10 @@
 
 6. Store listing assets
    a. DONE for Google Play (16 Oct, current branding): 6 screenshots, feature graphic and 512 icon in
-      social-media/output/store/ (designs in social-media/designs/backed/store/). Still to do: the Apple
-      set (1320x2868, iPhone frame), and re-render both if step 3 changes the design or colour
+      social-media/output/store/ (designs in social-media/designs/backed/store/). DONE 18 Oct: Apple set
+      (1320x2868, iPhone frame) in social-media/output/store-ios/, made from the Play designs.
+      If step 3 changes the design or colour: edit designs/backed/store, then run
+      `node tools/store-ios.mjs && node tools/render.mjs designs/backed/store designs/backed/store-ios`
    b. DONE: Google Play feature graphic (1024x500)
    c. DONE (16 Oct): Google Play Store listing: name, short + full description, icon, screenshots, feature graphic (text in store doc)
    d. DONE (16 Oct): Google Play App content (privacy policy, app access, ads, content rating,
@@ -53,7 +56,12 @@
 8. The week before launch
    a. Pick the launch date (after both approvals)
    b. Upgrade Supabase to the Pro plan
-   c. Ask Claude to check iCloud email delivery (codes to iCloud addresses were delayed on 16 Oct)
+   c. iCloud email delivery (codes to iCloud addresses were delayed on 16 Oct)
+      Checked 18 Oct: DNS fine, all Resend records verified, the 16 Oct emails now show delivered.
+      Likely iCloud being cautious with a new sending domain, which should ease with time.
+      TO DO 19 Oct: start a password reset in the app with an iCloud address and time the code.
+      Under a minute or two = fine, tick this off. Still slow = send Claude the event text from
+      Resend > Emails for that email
    d. Marketing drop (flyers, Facebook groups) pointing at the register-interest page
       (ask Claude to build ?from= source tracking first if you want to compare areas or flyers)
 
