@@ -152,13 +152,13 @@ isOneToOne: false
                   ]
                 },"interest_signups": {
                   Row: {
-                    "category_id": number | null,"email": string,"id": string,"kind": string,"signed_up_at": string,"town_id": number | null
+                    "category_id": number | null,"email": string,"id": string,"kind": string,"signed_up_at": string,"source": string | null,"town_id": number | null
                   }
                   Insert: {
-                    "category_id"?: number | null,"email": string,"id"?: string,"kind": string,"signed_up_at"?: string,"town_id"?: number | null
+                    "category_id"?: number | null,"email": string,"id"?: string,"kind": string,"signed_up_at"?: string,"source"?: string | null,"town_id"?: number | null
                   }
                   Update: {
-                    "category_id"?: number | null,"email"?: string,"id"?: string,"kind"?: string,"signed_up_at"?: string,"town_id"?: number | null
+                    "category_id"?: number | null,"email"?: string,"id"?: string,"kind"?: string,"signed_up_at"?: string,"source"?: string | null,"town_id"?: number | null
                   }
                   Relationships: [
                     {

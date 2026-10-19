@@ -2,7 +2,8 @@
 // email address (signing up again with the same address updates it and restarts the 12 months).
 //
 // Body: { email: string, kind: 'customer' | 'trade', categoryId?: number, townId?: number | null,
-//         captchaToken: string }
+//         source?: string, captchaToken: string }
+// source is the ?from= tag on the link they followed; anything that isn't a short tag is ignored.
 // Returns 200 { ok: true } or 4xx { error: CODE }.
 
 import { adminClient, corsHeaders, json } from '../_shared/http.ts';
@@ -13,7 +14,7 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') return json(405, { error: 'METHOD_NOT_ALLOWED' });
 
-  let body: { email?: string; kind?: string; categoryId?: number; townId?: number | null; captchaToken?: string };
+  let body: { email?: string; kind?: string; categoryId?: number; townId?: number | null; source?: string; captchaToken?: string };
   try {
     body = await req.json();
   } catch {
@@ -27,6 +28,7 @@ Deno.serve(async (req) => {
   if (body.kind === 'trade' && !Number.isInteger(categoryId)) return json(400, { error: 'PICK_A_TRADE' });
   const townId = body.townId ?? null;
   if (townId !== null && !Number.isInteger(townId)) return json(400, { error: 'BAD_REQUEST' });
+  const source = typeof body.source === 'string' && /^[a-z0-9_-]{1,40}$/.test(body.source) ? body.source : null;
   if (!body.captchaToken) return json(400, { error: 'CAPTCHA_FAILED' });
 
   const ip = req.headers.get('cf-connecting-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? null;
@@ -42,7 +44,15 @@ Deno.serve(async (req) => {
   const { error } = await adminClient()
     .from('interest_signups')
     .upsert(
-      { email, kind: body.kind, category_id: categoryId, town_id: townId, signed_up_at: new Date().toISOString() },
+      {
+        email,
+        kind: body.kind,
+        category_id: categoryId,
+        town_id: townId,
+        signed_up_at: new Date().toISOString(),
+        // Signing up again without a tag keeps the earlier one.
+        ...(source ? { source } : {}),
+      },
       { onConflict: 'email' },
     );
   if (error) {

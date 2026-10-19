@@ -26,7 +26,7 @@ const FILTERS: { key: Filter; label: string }[] = [
 async function loadSignups() {
   const { data, error } = await supabase
     .from('interest_signups')
-    .select('id, email, kind, signed_up_at, trade_categories(name), towns(name)')
+    .select('id, email, kind, source, signed_up_at, trade_categories(name), towns(name)')
     .order('signed_up_at', { ascending: false });
   if (error) throw error;
   return data;
@@ -93,6 +93,11 @@ export default function AdminInterestScreen() {
           <ThemedText type="small" themeColor="textSecondary">
             By town: {tally(rows, (row) => row.towns?.name ?? 'Somewhere else')}
           </ThemedText>
+          {rows.some((row) => row.source) && (
+            <ThemedText type="small" themeColor="textSecondary">
+              By source: {tally(rows, (row) => row.source ?? 'No tag')}
+            </ThemedText>
+          )}
           {trades.length > 0 && (
             <ThemedText type="small" themeColor="textSecondary">
               Trades: {tally(trades, (row) => row.trade_categories?.name ?? 'Not given')}
@@ -141,7 +146,7 @@ function SignupRow({ row, onRemoved }: { row: Signup; onRemoved: () => Promise<v
         <Chip label={row.kind === 'trade' ? 'Trade' : 'Customer'} tone={row.kind === 'trade' ? 'brand' : 'neutral'} />
       </View>
       <ThemedText type="small" themeColor="textSecondary">
-        {[row.trade_categories?.name, row.towns?.name ?? 'Somewhere else', `added ${formatDate(row.signed_up_at)}`]
+        {[row.trade_categories?.name, row.towns?.name ?? 'Somewhere else', row.source && `from ${row.source}`, `added ${formatDate(row.signed_up_at)}`]
           .filter(Boolean)
           .join(' · ')}
       </ThemedText>

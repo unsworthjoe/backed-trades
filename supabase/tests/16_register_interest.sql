@@ -2,7 +2,7 @@
 -- sign-ups after 12 months.
 
 begin;
-select plan(11);
+select plan(12);
 
 create temp table v (k text primary key, id uuid);
 grant select on v to anon, authenticated;
@@ -26,6 +26,9 @@ select throws_ok($$insert into public.interest_signups (email, kind) values ('ne
 select throws_ok(format($$insert into public.interest_signups (email, kind, category_id)
   values ('c@example.com', 'customer', %s)$$, tests.category('roofer')),
   '23514', null, 'only trades have a trade');
+
+select throws_ok($ into public.interest_signups (email, kind, source) values ('s@example.com', 'customer', 'Bad Tag!')$,
+  '23514', null, 'source tags are short lower-case words');
 
 -- Who can see it
 set local role anon;

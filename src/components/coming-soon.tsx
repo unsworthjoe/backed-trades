@@ -6,6 +6,7 @@ import { Screen } from '@/components/screen';
 import { SiteFooter } from '@/components/site-footer';
 import { ThemedText } from '@/components/themed-text';
 import { Card } from '@/components/ui/card';
+import { Company } from '@/constants/company';
 import { Wordmark } from '@/components/wordmark';
 import { Spacing } from '@/constants/theme';
 
@@ -30,10 +31,10 @@ export function ComingSoon() {
   return (
     <>
       <Head>
-        <title>Backed. · Coming soon to Runcorn, Widnes and Warrington</title>
+        <title>Backed. · Vetted local trades in Runcorn, Widnes and Warrington</title>
         <meta
           name="description"
-          content="Backed. matches you with one vetted local tradesperson. Coming soon to Runcorn, Widnes and Warrington."
+          content="Backed. matches you with one vetted local tradesperson, checked by a real person. Launching soon in Runcorn, Widnes and Warrington."
         />
       </Head>
       <Screen>
@@ -66,6 +67,50 @@ export function ComingSoon() {
             </ThemedText>
           </Card>
         </View>
+        <Section title="How it works">
+          <Card style={styles.card}>
+            <ThemedText type="heading">For customers</ThemedText>
+            <Step n={1} text="Tell us what you need doing, where, and when. It’s free and takes a couple of minutes." />
+            <Step n={2} text="We offer your job to local tradespeople in turn and match you with the first one who accepts." />
+            <Step n={3} text="Chat in the app, get the job done, then sign it off and leave an honest review." />
+          </Card>
+          <Card style={styles.card}>
+            <ThemedText type="heading">For tradespeople</ThemedText>
+            <Step n={1} text="Apply and get checked: ID, insurance and any registrations you hold." />
+            <Step n={2} text="Join for one flat monthly membership. No paying per lead and no commission on your work." />
+            <Step n={3} text="Jobs near you are offered in a fair queue. Accept the ones you want and get the customer’s details." />
+          </Card>
+        </Section>
+
+        <Section title="Checked by a real person">
+          <Card style={styles.wide}>
+            <ThemedText themeColor="textSecondary">
+              Before a tradesperson can take any work, a member of our team checks their ID and their public
+              liability insurance, plus registrations such as Gas Safe, NICEIC, NAPIT, FENSA, CERTASS or OFTEC where
+              they apply. We keep checking: offers stop if insurance runs out. Reviews can only be left by customers
+              the trade has actually worked for.
+            </ThemedText>
+          </Card>
+        </Section>
+
+        <Section title="Where we’re starting">
+          <Card style={styles.wide}>
+            <ThemedText themeColor="textSecondary">
+              Runcorn, Widnes and Warrington. We’re a small local team, made by tradespeople for tradespeople, and
+              we’d rather get it right in three towns than rush into thirty.
+            </ThemedText>
+          </Card>
+        </Section>
+
+        <Section title="About us">
+          <Card style={styles.wide}>
+            <ThemedText themeColor="textSecondary">
+              Backed. is run by {Company.name}, a company registered in {Company.registeredIn} (company number{' '}
+              {Company.number}). Questions? Email us at {Company.supportEmail}.
+            </ThemedText>
+          </Card>
+        </Section>
+
         <RegisterInterest />
         <SiteFooter />
       </Screen>
@@ -73,7 +118,43 @@ export function ComingSoon() {
   );
 }
 
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.section}>
+      <ThemedText type="subtitle">{title}</ThemedText>
+      <View style={styles.cards}>{children}</View>
+    </View>
+  );
+}
+
+function Step({ n, text }: { n: number; text: string }) {
+  return (
+    <View style={styles.step}>
+      <ThemedText type="smallBold" themeColor="primaryText">
+        {n}.
+      </ThemedText>
+      <ThemedText themeColor="textSecondary" style={styles.stepText}>
+        {text}
+      </ThemedText>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  section: {
+    gap: Spacing.three,
+  },
+  wide: {
+    flexGrow: 1,
+    flexBasis: '100%',
+  },
+  step: {
+    flexDirection: 'row',
+    gap: Spacing.two,
+  },
+  stepText: {
+    flex: 1,
+  },
   hero: {
     gap: Spacing.three,
     marginTop: Spacing.four,

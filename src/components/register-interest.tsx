@@ -1,5 +1,5 @@
 import { FunctionsHttpError } from '@supabase/supabase-js';
-import { Link } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -28,9 +28,16 @@ const MESSAGES: Record<string, string> = {
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/** The ?from= tag on the link, tidied to the form the database accepts (e.g. "FB Runcorn" becomes "fb-runcorn"). */
+function cleanSource(value: string | string[] | undefined) {
+  const text = (Array.isArray(value) ? value[0] : value) ?? '';
+  return text.toLowerCase().replace(/[^a-z0-9_-]+/g, '-').slice(0, 40) || undefined;
+}
+
 /** The coming-soon page's sign-up: an email address to be told when Backed. is live nearby. */
 export function RegisterInterest() {
   const reference = useReferenceData();
+  const { from } = useLocalSearchParams<{ from?: string }>();
   const [kind, setKind] = useState<Kind | null>(null);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const [town, setTown] = useState<TownChoice | null>(null);
@@ -55,6 +62,7 @@ export function RegisterInterest() {
         kind,
         categoryId: kind === 'trade' ? categoryId : undefined,
         townId: town === 'elsewhere' ? null : town,
+        source: cleanSource(from),
         captchaToken,
       },
     });
