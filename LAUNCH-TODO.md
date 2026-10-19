@@ -5,7 +5,7 @@ Apple screenshots made. Founders' feedback done, no changes.
 
 1. Get Apple approved and set up iOS (enrolment W3YQUKH58U)
    0. 19 Oct: Apple REJECTED the enrolment: website had minimal content. Home page expanded (how it works,
-      checks, about us) and LIVE. TO DO: resubmit the enrolment with https://backedtrades.co.uk
+      checks, about us) and LIVE. DONE 19 Oct: enrolment resubmitted with https://backedtrades.co.uk
    a. Watch for Apple's email or phone call and answer quickly
    b. Once approved, tell Claude: it sets up iOS signing + push through EAS (you log in when asked)
    c. Claude makes the first iOS build; install it on your iPhone with the TestFlight app
@@ -46,7 +46,7 @@ Apple screenshots made. Founders' feedback done, no changes.
       Under a minute or two = fine, tick this off. Still slow = send Claude the event text from
       Resend > Emails for that email
    d. Marketing drop (flyers, Facebook groups) pointing at the register-interest page
-      (ask Claude to build ?from= source tracking first if you want to compare areas or flyers)
+      (use a separate ?from= link per flyer or area so you can compare them)
 
 7. Launch day (in this order)
    a. Switch Stripe to live and put the live keys in Supabase
