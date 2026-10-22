@@ -67,6 +67,9 @@ export function ComingSoon() {
             </ThemedText>
           </Card>
         </View>
+
+        <RegisterInterest />
+
         <Section title="How it works">
           <Card style={styles.card}>
             <ThemedText type="heading">For customers</ThemedText>
@@ -111,7 +114,6 @@ export function ComingSoon() {
           </Card>
         </Section>
 
-        <RegisterInterest />
         <SiteFooter />
       </Screen>
     </>
