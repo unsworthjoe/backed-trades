@@ -29,13 +29,18 @@ Apple screenshots made. Founders' feedback done, no changes.
    b. Wait for verification; don't switch the app to live keys until launch day
 
 3. Recruit the first trades (alongside everything else)
-   a. Agree the founding price
+   a. DONE: founding price agreed at £14.99 a month
    b. Builders' merchant counters + local trade Facebook groups
    c. Enough trades per queue that customers get offers from day one
    d. Get them on the register-interest list now to email at launch
+      22 Oct: Facebook/Instagram ads running, and the link is being shared with family and friends
    e. Source tracking is LIVE (19 Oct). Give every channel its own link,
       e.g. backedtrades.co.uk/?from=fb-runcorn-trades (the /admin/interest page shows the count per tag).
       Wording for the card and Facebook posts: RECRUITING-COPY.md
+      For ads: one tag per ad or audience in the ad's website URL (e.g. ?from=ad-plumbers-runcorn); family and friends
+      ?from=friends. Keep tags short, lowercase and consistent. Judge an ad after about 10 sign-ups per tag
+      Reels now have music (social-media/tools/add-music.mjs; the *-music.mp4 files). Tracks are Meta Reels Sound clips:
+      Facebook and Instagram only, not TikTok or YouTube
 
 4. Apple App Store Connect listing
    a. Description, keywords, subtitle, support URL (backedtrades.co.uk/support), privacy URL,
@@ -43,19 +48,14 @@ Apple screenshots made. Founders' feedback done, no changes.
 
 5. Submit the iOS app for review
    a. Claude submits the build; you send it for review in App Store Connect
-   b. Set both apps to manual release so they don't go live before launch day (Android: use managed publishing, see step 0f)
+   b. Set both apps to manual release so they don't go live before launch day (Android: use managed publishing, see step 0a)
    c. Android already has "Wrong email? Change it" (versionCode 2). The first iOS build will include it too
    d. Keep the demo trade + test login working until both stores have approved
 
 6. The week before launch
    a. Pick the launch date (after both approvals)
    b. Upgrade Supabase to the Pro plan
-   c. iCloud email delivery (codes to iCloud addresses were delayed on 16 Oct)
-      Checked 18 Oct: DNS fine, all Resend records verified, the 16 Oct emails now show delivered.
-      Likely iCloud being cautious with a new sending domain, which should ease with time.
-      TO DO 19 Oct: start a password reset in the app with an iCloud address and time the code.
-      Under a minute or two = fine, tick this off. Still slow = send Claude the event text from
-      Resend > Emails for that email
+   c. DONE: iCloud email delivery checked (the 19 Oct password-reset code test)
    d. Marketing drop (flyers, Facebook groups) pointing at the register-interest page
       (use a separate ?from= link per flyer or area so you can compare them)
 
