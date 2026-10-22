@@ -10,8 +10,8 @@ Apple screenshots made. Founders' feedback done, no changes.
 0. Android: SUBMITTED for production review (22 Oct, organisation Play Console account)
    No closed test needed on the organisation account. The build (versionCode 2) already includes "Wrong email? Change it".
    a. Watch for Google's review result in Play Console (Publishing overview); keep managed publishing ON so it waits for you
-   b. Check the Supabase auth redirect URLs for anything using the old package name
-      (Supabase dashboard > Authentication > URL Configuration; the backed:// scheme is unchanged)
+   b. DONE 22 Oct: Supabase Site URL set to https://backedtrades.co.uk and redirect URLs added. Before any
+      `supabase config push`, check the diff does not put the local site_url (localhost:3000) back on live
    c. Later builds: eas.json submit track is still 'internal'; change it before using eas submit
    d. Retire/delete the old personal-account app once the new one is live
 
