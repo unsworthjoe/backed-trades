@@ -3,28 +3,17 @@
 DONE so far: Android app tested. 22 Oct: moved Android to the new ORGANISATION Play Console account, because the personal
 account was stuck in closed testing. Package renamed to uk.co.backedtrades.backed (iOS bundle ID unchanged:
 uk.co.backedtrades.app). New Firebase Android app + google-services.json, new EAS keystore, FCM key uploaded,
-store listing created, first build (versionCode 2) uploaded by hand, SHA-1 added to Firebase.
+store listing created, first build (versionCode 2) uploaded by hand, SHA-1 added to Firebase, eas-submit service account
+invited, app SUBMITTED for production review.
 Apple screenshots made. Founders' feedback done, no changes.
 
-0. Android: new organisation Play Console account (LONGEST WAIT, start now)
-   The old personal-account app is abandoned. Check what the organisation account needs before Production:
-   it may be exempt from the "12 testers for 14 days" rule; Play Console will say what it requires.
-   If it is NOT exempt: 12 testers opted in for 14 days in a row, then apply for production access.
-   Open items from the move:
-   - Invite eas-submit@backed-191c8.iam.gserviceaccount.com to the new Play Console (release permissions),
-     so `eas submit` works for later builds
-   - Check the Supabase auth redirect URLs for anything using the old package name (the backed:// scheme is unchanged)
-   - Retire/delete the old personal-account app once the new one is live
-   a. Play Console > Testing > Closed testing > Alpha > Testers: attach a tester list or Google Group
-   b. Add 15-20 people (founders, friends, family, some trades from the recruiting list). Each needs a Google account
-      that matches the one on their Android phone's Play Store
-   c. Send them the opt-in link; they opt in and install from Play. Note the date the 12th person opts in
-   d. They must stay opted in 14 days (the count must stay at 12+). Ask them to open the app once or twice
-   e. After 14 days: Release > Production > "Apply for access to production" and answer the questions
-      (a few days for Google to review). Earliest apply date if 12 join by 20 Oct: about 3 Nov
-   f. Then create the Production release with the newest build (includes "Wrong email? Change it"),
-      and turn on managed publishing in Publishing overview so it waits for you to press publish
-   g. Meanwhile, put the newest build on the Alpha track too so testers have the latest version
+0. Android: SUBMITTED for production review (22 Oct, organisation Play Console account)
+   No closed test needed on the organisation account. The build (versionCode 2) already includes "Wrong email? Change it".
+   a. Watch for Google's review result in Play Console (Publishing overview); keep managed publishing ON so it waits for you
+   b. Check the Supabase auth redirect URLs for anything using the old package name
+      (Supabase dashboard > Authentication > URL Configuration; the backed:// scheme is unchanged)
+   c. Later builds: eas.json submit track is still 'internal'; change it before using eas submit
+   d. Retire/delete the old personal-account app once the new one is live
 
 1. Get Apple approved and set up iOS (enrolment W3YQUKH58U)
    0. 19 Oct: Apple REJECTED the enrolment: website had minimal content. Home page expanded (how it works,
@@ -55,8 +44,7 @@ Apple screenshots made. Founders' feedback done, no changes.
 5. Submit the iOS app for review
    a. Claude submits the build; you send it for review in App Store Connect
    b. Set both apps to manual release so they don't go live before launch day (Android: use managed publishing, see step 0f)
-   c. Build 5 (Alpha track) is WITHOUT the "Wrong email? Change it" button (d2a37c0). Claude makes a new build with it;
-      use it for the Android Production release and the iOS build
+   c. Android already has "Wrong email? Change it" (versionCode 2). The first iOS build will include it too
    d. Keep the demo trade + test login working until both stores have approved
 
 6. The week before launch
