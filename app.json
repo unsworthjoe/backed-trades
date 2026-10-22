@@ -16,7 +16,7 @@
       }
     },
     "android": {
-      "package": "uk.co.backedtrades.app",
+      "package": "uk.co.backedtrades.backed",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#8A3FFC",
