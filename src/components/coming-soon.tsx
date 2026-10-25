@@ -1,10 +1,12 @@
 import Head from 'expo-router/head';
+import { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
 import { RegisterInterest } from '@/components/register-interest';
 import { Screen } from '@/components/screen';
 import { SiteFooter } from '@/components/site-footer';
 import { ThemedText } from '@/components/themed-text';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Company } from '@/constants/company';
 import { Wordmark } from '@/components/wordmark';
@@ -28,6 +30,8 @@ export const HOLDING_PAGE_EXCEPTIONS = new Set(['/privacy', '/terms', '/support'
  * address when EXPO_PUBLIC_HOLDING_PAGE=1 is set at export time (see RootLayout).
  */
 export function ComingSoon() {
+  const [registerOpen, setRegisterOpen] = useState(false);
+
   return (
     <>
       <Head>
@@ -51,6 +55,16 @@ export function ComingSoon() {
           </ThemedText>
         </View>
 
+        <View style={styles.register}>
+          <Button
+            label={registerOpen ? 'Hide the sign-up form' : 'Register your interest'}
+            size="large"
+            accessibilityState={{ expanded: registerOpen }}
+            onPress={() => setRegisterOpen((open) => !open)}
+          />
+          {registerOpen && <RegisterInterest />}
+        </View>
+
         <View style={styles.cards}>
           <Card style={styles.card}>
             <ThemedText type="heading">Need a job doing?</ThemedText>
@@ -67,8 +81,6 @@ export function ComingSoon() {
             </ThemedText>
           </Card>
         </View>
-
-        <RegisterInterest />
 
         <Section title="How it works">
           <Card style={styles.card}>
@@ -164,6 +176,9 @@ const styles = StyleSheet.create({
   lead: {
     fontSize: 18,
     lineHeight: 28,
+  },
+  register: {
+    gap: Spacing.three,
   },
   cards: {
     flexDirection: 'row',
