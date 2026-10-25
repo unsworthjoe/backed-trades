@@ -34,6 +34,7 @@ Apple screenshots made. Founders' feedback done, no changes.
    c. Enough trades per queue that customers get offers from day one
    d. Get them on the register-interest list now to email at launch
       22 Oct: Facebook/Instagram ads running, and the link is being shared with family and friends
+      25 Oct: the sign-up form now sits behind a "Register your interest" button above "Need a job doing?" on the coming-soon page (live)
    e. Source tracking is LIVE (19 Oct). Give every channel its own link,
       e.g. backedtrades.co.uk/?from=fb-runcorn-trades (the /admin/interest page shows the count per tag).
       Wording for the card and Facebook posts: RECRUITING-COPY.md
