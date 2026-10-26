@@ -1,4 +1,4 @@
-# Backed. launch to-do list (updated 22 Oct 2026)
+# Backed. launch to-do list (updated 27 Oct 2026)
 
 DONE so far: Android app tested. 22 Oct: moved Android to the new ORGANISATION Play Console account, because the personal
 account was stuck in closed testing. Package renamed to uk.co.backedtrades.backed (iOS bundle ID unchanged:
@@ -6,6 +6,36 @@ uk.co.backedtrades.app). New Firebase Android app + google-services.json, new EA
 store listing created, first build (versionCode 2) uploaded by hand, SHA-1 added to Firebase, eas-submit service account
 invited, app SUBMITTED for production review.
 Apple screenshots made. Founders' feedback done, no changes.
+27 Oct: Stripe is LIVE. The launch offer is built and tested (see step 3a). Trades will use the WEBSITE while the apps are
+pending, and get job offers by email with a link to the offer page. Customers post jobs on the website.
+
+GO LIVE ON THE WEBSITE (before the apps are approved)
+   A. Before you flip the switch
+      1. Cancel the test membership (Manage membership on /membership) and check in Stripe that its invoice shows a
+         £14.99 line "covered until 1 January 2027" with a £14.99 discount from the test code
+      2. End-to-end test on backed--demo.expo.app: customer posts a job, the test trade gets the offer EMAIL, the link opens
+         the offer, the trade accepts, the customer gets their text/email, then sign off. Try the link while signed out too
+      3. Admin page: "Founding member price" switch must be ON (it closes by itself on 1 Jan 2027)
+      4. Upgrade Supabase to Pro and leave the Spend Cap on. Upgrade Resend (the free plan sends about 100 emails a day)
+      5. Spending alerts (step 10d), especially the Meta ads limit and Twilio
+      6. Demo trade ("Demo Plumbing") must not be in the real towns and trades, or real jobs get offered to it. Keep it and the
+         test customer login until both stores approve, but change the test code (test_otp in supabase/config.toml: before
+         any `supabase config push`, check the diff does not put localhost:3000 back as the Site URL)
+      7. Founders approve the first real trades in /admin. A trade must be approved and have a membership to get offers
+      8. Have your legal reviewer glance at the new launch-offer sentence in the terms
+   B. The switch (Claude prepares it; the production deploy may need you to run it with ! in the prompt)
+      1. Claude exports the full site: npx expo export --platform web --output-dir dist --clear (no holding-page setting),
+         and checks the home page is not the coming-soon page
+      2. Deploy to production: npx eas-cli deploy --export-dir dist --prod --non-interactive
+      3. Check backedtrades.co.uk: real home page, /privacy /terms /support, trade sign-up, customer job form, /admin sign-in with
+         the code, the security headers
+      4. To go back: re-export with EXPO_PUBLIC_HOLDING_PAGE=1 into dist-holding and deploy it with --prod
+   C. Straight after
+      1. Change the Facebook/Instagram ads and flyer links: they point at the coming-soon sign-up page
+      2. Post a real job yourselves and follow it through
+      3. Email everyone on the interest list ONCE to say you're live (the sign-up form promised only that). List: /admin/interest
+      4. Submit the site to Google Search Console
+      5. Watch for a few days: /admin Alerts, Stripe Webhooks (all 200), Twilio and Resend usage, Supabase function logs
 
 0. Android: SUBMITTED for production review (22 Oct, organisation Play Console account)
    No closed test needed on the organisation account. The build (versionCode 2) already includes "Wrong email? Change it".
@@ -23,13 +53,16 @@ Apple screenshots made. Founders' feedback done, no changes.
    c. Claude makes the first iOS build; install it on your iPhone with the TestFlight app
    d. Test the same journey as the Android test on your iPhone
 
-2. Start Stripe live activation (checks can take days)
-   PARKED 18 Oct: waiting for the business bank account to be opened
-   a. In Stripe, "Activate payments": BACKED TRADE LIMITED (17504288), registered office, director ID, business bank account
-   b. Wait for verification; don't switch the app to live keys until launch day
+2. Stripe live activation
+   DONE 27 Oct: business bank account opened, Stripe is LIVE (restricted key rk_live in Supabase). Tested a live checkout
+   with a 100%-off promotion code: nothing charged, membership active until 1 Jan
+   a. Delete or keep the test promotion code (BACKEDTEST) deactivated once you've finished testing
+   b. Keep two founders as Stripe owners (step 9b)
 
 3. Recruit the first trades (alongside everything else)
-   a. DONE: founding price agreed at £14.99 a month
+   a. DONE: LAUNCH OFFER built (27 Oct). Join before 1 Jan 2027: pay £14.99 once, covered until 1 Jan 2027, then £14.99 a month
+      (or £149.90 a year), kept while they stay a member. From 1 Jan 2027 new members pay £19.99 a month (£199.90 a year).
+      The last two days before 1 Jan get the founding price straight away, with no covered-until period (Stripe needs 48 hours)
    b. Builders' merchant counters + local trade Facebook groups
    c. Enough trades per queue that customers get offers from day one
    d. Get them on the register-interest list now to email at launch
@@ -61,13 +94,14 @@ Apple screenshots made. Founders' feedback done, no changes.
    d. Marketing drop (flyers, Facebook groups) pointing at the register-interest page
       (use a separate ?from= link per flyer or area so you can compare them)
 
-7. Launch day (in this order)
-   a. Switch Stripe to live and put the live keys in Supabase
-   b. Remove the test login (test_otp)
+7. Launch day for the APPS (the website goes live first, see GO LIVE above)
+   a. DONE 27 Oct: Stripe is live and the live keys are in Supabase
+   b. Remove the test login (test_otp) once both stores have approved
    c. Suspend the demo trade (don't delete: Apple needs it for reviews of future updates)
    d. Delete other test data, including the tester's account
-   e. Claude deploys the full website to backedtrades.co.uk in place of the coming-soon page
-   f. Release both apps in the stores
+   e. (Website already live from the GO LIVE steps above)
+   f. Release both apps in the stores. Trades already using the website keep getting email offers; trades who install the
+      app get push notifications as well
    g. Real smoke test: post a job, have a trade accept it, buy a membership
    h. Submit the site to Google Search Console
    i. Email everyone on the interest list
@@ -94,5 +128,5 @@ Apple screenshots made. Founders' feedback done, no changes.
    g. Later, any time: a full content security policy (needs testing in a browser), separate secrets for the three
       internal functions, npm audit warnings (wait for the next Expo patch)
 
-Steps 0, 1, 2 and 3 can all happen now while you wait on Apple and Google.
+Steps 0, 1 and 3 can all happen now while you wait on Apple and Google.
 Full runbook: https://claude.ai/artifact/GW2tTxB5Lgc92sLfNz6GWb
