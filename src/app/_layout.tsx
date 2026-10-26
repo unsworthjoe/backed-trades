@@ -5,6 +5,7 @@ import { SpaceGrotesk_500Medium } from '@expo-google-fonts/space-grotesk/500Medi
 import { SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk/700Bold';
 import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider, usePathname } from 'expo-router';
+import Head from 'expo-router/head';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -48,6 +49,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={navigationTheme}>
+      {Platform.OS === 'web' && (
+        <Head>
+          {/* Keyboard users see where they are on every page, whatever the control. */}
+          <style>{`:focus-visible { outline: 3px solid ${colors.primary}; outline-offset: 2px; }`}</style>
+        </Head>
+      )}
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
       {HOLDING_PAGE ? (
         <HoldingPage />

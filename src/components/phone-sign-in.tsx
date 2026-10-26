@@ -15,6 +15,7 @@ const MESSAGES: Record<string, string> = {
   CAPTCHA_FAILED: 'Please complete the “I’m human” check, then try again.',
   TOO_MANY_FOR_NUMBER: 'Too many codes have been sent to this number. Please try again in an hour.',
   TOO_MANY_FROM_DEVICE: 'Too many codes have been requested from here. Please try again in an hour.',
+  TEXT_LIMIT_REACHED: 'We can’t send any more codes right now. Please try again later.',
 };
 
 async function requestErrorMessage(error: unknown) {

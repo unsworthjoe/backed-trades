@@ -222,7 +222,7 @@ function PostJobForm({ categories }: { categories: Tables<'trade_categories'>[] 
                 accessibilityRole="button"
                 accessibilityLabel={`Remove photo ${index + 1}`}
                 onPress={() => setPhotos((current) => current.filter((_, i) => i !== index))}>
-                <Image source={{ uri: photo.uri }} style={styles.photo} contentFit="cover" />
+                <Image source={{ uri: photo.uri }} style={styles.photo} contentFit="cover" accessibilityLabel={`Photo ${index + 1}`} />
                 <ThemedText type="small" themeColor="textSecondary" style={styles.remove}>
                   Remove
                 </ThemedText>

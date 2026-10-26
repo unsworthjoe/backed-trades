@@ -91,7 +91,8 @@ async function deliver(row: Claimed): Promise<Outcome> {
   }
   if (row.channel === 'sms' || row.channel === 'whatsapp') {
     const phone = row.phone && normaliseUkMobile(row.phone);
-    if (phone) return text(phone, message.body);
+    // Past the daily ceiling, fall through to email like a customer with no mobile number.
+    if (phone && (await underDailyTextCap())) return text(phone, message.body);
     return row.email
       ? sendEmail(row.email, message.title, message.body.replace(/^Backed\.: /, ''))
       : { outcome: 'failed', error: 'no mobile number or email address' };
@@ -233,6 +234,19 @@ async function sendPush(row: Claimed, message: Message, ctx: Context): Promise<O
  */
 function plainText(body: string) {
   return body.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/…/g, '...');
+}
+
+/** Most texts sent in any 24 hours: a ceiling on the Twilio bill if something goes wrong. */
+const DAILY_TEXT_CAP = 200;
+
+async function underDailyTextCap() {
+  const { count, error } = await db
+    .from('notification_outbox')
+    .select('id', { count: 'exact', head: true })
+    .eq('channel', 'sms')
+    .gte('sent_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+  if (error) console.error('counting texts sent failed', error);
+  return (count ?? 0) < DAILY_TEXT_CAP;
 }
 
 async function text(phone: string, body: string): Promise<Outcome> {

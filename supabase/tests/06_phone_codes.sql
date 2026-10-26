@@ -2,7 +2,7 @@
 -- each request sends one code, and only the Edge Functions can use it.
 
 begin;
-select plan(9);
+select plan(10);
 
 select is(public.allow_sms_code('441928123456', '1.2.3.4'), 'UK_MOBILES_ONLY', 'landlines are refused');
 select is(public.allow_sms_code('14155550100', '1.2.3.4'), 'UK_MOBILES_ONLY', 'non-UK numbers are refused');
@@ -29,6 +29,10 @@ begin
 end;
 $$;
 select is(public.allow_sms_code('447700900999', '9.9.9.9'), 'TOO_MANY_FROM_DEVICE', '20 an hour per device');
+
+insert into private.sms_code_requests (phone)
+  select '4477009' || lpad(i::text, 5, '0') from generate_series(1, 300) i;
+select is(public.allow_sms_code('447700900998', '8.8.8.8'), 'TEXT_LIMIT_REACHED', '300 a day for the whole site');
 
 set local role authenticated;
 select throws_ok($$select public.allow_sms_code('447700900002', null)$$, '42501', null,
