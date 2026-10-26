@@ -2,12 +2,12 @@
 // page to send them to. Called from the website's membership page.
 
 import { callerId } from '../_shared/auth.ts';
-import { adminClient, corsHeaders, json } from '../_shared/http.ts';
+import { adminClient, corsHeaders, json, serveWithCors } from '../_shared/http.ts';
 import { ensurePrice, stripe, stripeConfigured, StripeError } from '../_shared/stripe.ts';
 
 const SITE_URL = (Deno.env.get('SITE_URL') ?? 'https://backedtrades.co.uk').replace(/\/$/, '');
 
-Deno.serve(async (req) => {
+serveWithCors(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   const userId = await callerId(req);

@@ -2,6 +2,7 @@
 // Plain fetch rather than Stripe's SDK, pinned to one API version so a
 // change on Stripe's side can't alter what we get back.
 
+import { timingSafeEqual } from './auth.ts';
 import { cleanSecret } from './twilio.ts';
 
 export const STRIPE_VERSION = '2026-09-30.endive';
@@ -102,11 +103,4 @@ export async function verifyStripeSignature(payload: string, header: string | nu
   const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${timestamp}.${payload}`));
   const expected = Array.from(new Uint8Array(mac), (b) => b.toString(16).padStart(2, '0')).join('');
   return signatures.some((s) => timingSafeEqual(s, expected));
-}
-
-function timingSafeEqual(a: string, b: string) {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
 }

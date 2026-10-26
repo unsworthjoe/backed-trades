@@ -5,10 +5,10 @@
 // Body: { phone: string, captchaToken: string }
 // Returns 200 { phone: "+447700900123" } or 4xx { error: CODE }.
 
-import { adminClient, corsHeaders, json } from '../_shared/http.ts';
+import { adminClient, corsHeaders, json, serveWithCors } from '../_shared/http.ts';
 import { normaliseUkMobile } from '../_shared/phone.ts';
 
-Deno.serve(async (req) => {
+serveWithCors(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') return json(405, { error: 'METHOD_NOT_ALLOWED' });
 

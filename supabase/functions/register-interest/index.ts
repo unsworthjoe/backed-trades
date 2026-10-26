@@ -6,11 +6,11 @@
 // source is the ?from= tag on the link they followed; anything that isn't a short tag is ignored.
 // Returns 200 { ok: true } or 4xx { error: CODE }.
 
-import { adminClient, corsHeaders, json } from '../_shared/http.ts';
+import { adminClient, corsHeaders, json, serveWithCors } from '../_shared/http.ts';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-Deno.serve(async (req) => {
+serveWithCors(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') return json(405, { error: 'METHOD_NOT_ALLOWED' });
 

@@ -3,14 +3,13 @@
 // database (see the id_image_purge migration) with the same x-sender-secret
 // header as send-notifications. Only the files go; the ID check result stays.
 
+import { hasSenderSecret } from '../_shared/auth.ts';
 import { adminClient, json } from '../_shared/http.ts';
-import { cleanSecret } from '../_shared/twilio.ts';
 
 const db = adminClient();
 
 Deno.serve(async (req) => {
-  const expected = cleanSecret(Deno.env.get('NOTIFICATION_SENDER_SECRET'));
-  if (!expected || req.headers.get('x-sender-secret') !== expected) return json(401, { error: 'Not allowed' });
+  if (!hasSenderSecret(req)) return json(401, { error: 'Not allowed' });
 
   let checks = 0;
   let files = 0;

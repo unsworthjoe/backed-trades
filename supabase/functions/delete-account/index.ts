@@ -9,13 +9,13 @@
 // Stripe keeps its own payment records (tax law), so the Stripe customer isn't deleted.
 
 import { callerId } from '../_shared/auth.ts';
-import { adminClient, corsHeaders, json } from '../_shared/http.ts';
+import { adminClient, corsHeaders, json, serveWithCors } from '../_shared/http.ts';
 import { removeFolder } from '../_shared/storage.ts';
 import { stripe, StripeError, stripeConfigured } from '../_shared/stripe.ts';
 
 type Db = ReturnType<typeof adminClient>;
 
-Deno.serve(async (req) => {
+serveWithCors(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   const userId = await callerId(req);

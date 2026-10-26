@@ -5,6 +5,7 @@
 // registered), customers get texts, founders get email. Without Twilio or
 // Resend settings (on your PC), texts and emails are written to the log.
 
+import { hasSenderSecret } from '../_shared/auth.ts';
 import { adminClient, json } from '../_shared/http.ts';
 import { normaliseUkMobile } from '../_shared/phone.ts';
 import { cleanSecret, sendText } from '../_shared/twilio.ts';
@@ -34,8 +35,7 @@ const SITE_URL = (Deno.env.get('SITE_URL') ?? 'https://backedtrades.co.uk').repl
 const EXPIRING = new Set(['new_offer', 'new_callout', 'offer_reminder']);
 
 Deno.serve(async (req) => {
-  const expected = cleanSecret(Deno.env.get('NOTIFICATION_SENDER_SECRET'));
-  if (!expected || req.headers.get('x-sender-secret') !== expected) return json(401, { error: 'Not allowed' });
+  if (!hasSenderSecret(req)) return json(401, { error: 'Not allowed' });
 
   let sent = 0;
   let other = 0;

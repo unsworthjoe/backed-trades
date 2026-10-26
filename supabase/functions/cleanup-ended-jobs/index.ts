@@ -5,15 +5,14 @@
 // takes its address, offers, matches, messages, alerts and reports with it.
 // Reviews and customer ratings stay.
 
+import { hasSenderSecret } from '../_shared/auth.ts';
 import { adminClient, json } from '../_shared/http.ts';
 import { removeFolder } from '../_shared/storage.ts';
-import { cleanSecret } from '../_shared/twilio.ts';
 
 const db = adminClient();
 
 Deno.serve(async (req) => {
-  const expected = cleanSecret(Deno.env.get('NOTIFICATION_SENDER_SECRET'));
-  if (!expected || req.headers.get('x-sender-secret') !== expected) return json(401, { error: 'Not allowed' });
+  if (!hasSenderSecret(req)) return json(401, { error: 'Not allowed' });
 
   let jobs = 0;
   // Batches of 50, up to 500 jobs a night; anything left goes the next night.

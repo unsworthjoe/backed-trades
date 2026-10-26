@@ -31,7 +31,18 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "headers": {
+            "X-Frame-Options": "DENY",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Permissions-Policy": "geolocation=(), microphone=(), payment=(), camera=(self)",
+            "Content-Security-Policy": "frame-ancestors 'none'"
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {
