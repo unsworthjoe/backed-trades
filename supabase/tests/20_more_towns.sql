@@ -2,7 +2,7 @@
 -- neighbours are the ones intended.
 
 begin;
-select plan(8);
+select plan(11);
 
 select is((select t.slug from public.postcode_districts pd join public.towns t on t.id = pd.town_id
            where pd.district = public.postcode_district('CW7 1AB')), 'winsford', 'CW7 is Winsford');
@@ -13,7 +13,13 @@ select is((select t.slug from public.postcode_districts pd join public.towns t o
 select is((select t.slug from public.postcode_districts pd join public.towns t on t.id = pd.town_id
            where pd.district = public.postcode_district('L17 2AB')), 'liverpool', 'L17 is Liverpool');
 select is((select count(*)::integer from public.postcode_districts pd join public.towns t on t.id = pd.town_id
-           where t.slug = 'liverpool'), 21, 'Liverpool has L1 to L19, L24 and L25');
+           where t.slug = 'liverpool'), 40, 'Liverpool has every district from L1 to L40');
+select is((select t.name from public.postcode_districts pd join public.towns t on t.id = pd.town_id
+           where pd.district = public.postcode_district('L20 7AB')), 'Liverpool', 'Bootle (L20) shows as Liverpool');
+select is((select t.name from public.postcode_districts pd join public.towns t on t.id = pd.town_id
+           where pd.district = public.postcode_district('L32 5AB')), 'Liverpool', 'Kirkby (L32) shows as Liverpool');
+select is((select t.name from public.postcode_districts pd join public.towns t on t.id = pd.town_id
+           where pd.district = public.postcode_district('L36 2AB')), 'Liverpool', 'Huyton (L36) shows as Liverpool');
 
 select is((select count(*)::integer from public.queues q join public.towns t on t.id = q.town_id
            where t.slug in ('liverpool', 'winsford', 'northwich')),

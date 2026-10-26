@@ -76,7 +76,7 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
       Reels now have music (social-media/tools/add-music.mjs; the *-music.mp4 files). Tracks are Meta Reels Sound clips:
       Facebook and Instagram only, not TikTok or YouTube
    f. DONE (27 Oct): Liverpool, Winsford and Northwich added (now six towns, all live for customers and trades).
-      Postcodes: Winsford CW7, Northwich CW8 and CW9, Liverpool L1 to L19 plus L24 and L25 (add more with another insert)
+      Postcodes: Winsford CW7, Northwich CW8 and CW9, Liverpool L1 to L40 (Bootle, Crosby, Kirkby, Huyton etc. show as Liverpool)
       TO DO: ask existing trades to add the new towns under "Where you work" (their queues start empty, and a job in a
       town with no trades shows as an alert after 24 hours)
       TO DO: paste the new town wording into the Play Console and App Store Connect listings (no price on iOS) and into the
