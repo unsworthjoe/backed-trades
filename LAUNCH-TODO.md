@@ -75,6 +75,12 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
       ?from=friends. Keep tags short, lowercase and consistent. Judge an ad after about 10 sign-ups per tag
       Reels now have music (social-media/tools/add-music.mjs; the *-music.mp4 files). Tracks are Meta Reels Sound clips:
       Facebook and Instagram only, not TikTok or YouTube
+   f. DONE (27 Oct): Liverpool, Winsford and Northwich added (now six towns, all live for customers and trades).
+      Postcodes: Winsford CW7, Northwich CW8 and CW9, Liverpool L1 to L19 plus L24 and L25 (add more with another insert)
+      TO DO: ask existing trades to add the new towns under "Where you work" (their queues start empty, and a job in a
+      town with no trades shows as an alert after 24 hours)
+      TO DO: paste the new town wording into the Play Console and App Store Connect listings (no price on iOS) and into the
+      ads, and add the three towns to the ad targeting (text is in RECRUITING-COPY.md)
 
 4. Apple App Store Connect listing
    a. Description, keywords, subtitle, support URL (backedtrades.co.uk/support), privacy URL,
