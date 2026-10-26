@@ -88,9 +88,11 @@ Apple screenshots made. Founders' feedback done, no changes.
    d. Set spending alerts: Meta ads spending limit, Twilio usage trigger + UK-only geo permissions, Expo hosting limit,
       Cloudflare bot fight + rate limit, Resend plan limit, Google Cloud budget alert + restrict the Firebase API key
    e. DONE: /style-guide page removed
-   f. Lower-risk items, any time: length limits on job/bio/report text, CORS limited to backedtrades.co.uk,
-      timing-safe secret check on the three internal functions, security headers (CSP, clickjacking), npm audit
-      warnings (wait for the next Expo patch)
+   f. DONE (27 Oct): CORS limited to the website addresses, timing-safe secret check on the three internal functions,
+      security headers (frame blocking, no file-type guessing, referrer and browser-feature limits)
+      TO DO: run `npx supabase db push` for the text length limits (20261027090000), then ask Claude to check it
+   g. Later, any time: a full content security policy (needs testing in a browser), separate secrets for the three
+      internal functions, npm audit warnings (wait for the next Expo patch)
 
 Steps 0, 1, 2 and 3 can all happen now while you wait on Apple and Google.
 Full runbook: https://claude.ai/artifact/GW2tTxB5Lgc92sLfNz6GWb
