@@ -90,7 +90,7 @@ Apple screenshots made. Founders' feedback done, no changes.
    e. DONE: /style-guide page removed
    f. DONE (27 Oct): CORS limited to the website addresses, timing-safe secret check on the three internal functions,
       security headers (frame blocking, no file-type guessing, referrer and browser-feature limits)
-      TO DO: run `npx supabase db push` for the text length limits (20261027090000), then ask Claude to check it
+      DONE (27 Oct): text length limits applied to the live database
    g. Later, any time: a full content security policy (needs testing in a browser), separate secrets for the three
       internal functions, npm audit warnings (wait for the next Expo patch)
 
