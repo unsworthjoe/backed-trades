@@ -150,7 +150,6 @@ function RootNavigator() {
         <Stack.Screen name="privacy" options={{ title: 'Privacy policy', headerShown: !isWeb }} />
         <Stack.Screen name="terms" options={{ title: 'Terms', headerShown: !isWeb }} />
         <Stack.Screen name="support" options={{ title: 'Help', headerShown: !isWeb }} />
-        <Stack.Screen name="style-guide" />
       </Stack>
     </>
   );

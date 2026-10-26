@@ -87,7 +87,7 @@ Apple screenshots made. Founders' feedback done, no changes.
    c. DONE: founders' second sign-in step (authenticator app) is live. Keep two founders enrolled so one can reset the other
    d. Set spending alerts: Meta ads spending limit, Twilio usage trigger + UK-only geo permissions, Expo hosting limit,
       Cloudflare bot fight + rate limit, Resend plan limit, Google Cloud budget alert + restrict the Firebase API key
-   e. Before launch day: remove /style-guide (src/app/style-guide.tsx) so it isn't public
+   e. DONE: /style-guide page removed
    f. Lower-risk items, any time: length limits on job/bio/report text, CORS limited to backedtrades.co.uk,
       timing-safe secret check on the three internal functions, security headers (CSP, clickjacking), npm audit
       warnings (wait for the next Expo patch)
