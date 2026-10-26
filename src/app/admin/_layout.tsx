@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 
+import { hasPassedSecondStep } from '@/components/admin-second-step';
 import { useTheme } from '@/hooks/use-theme';
 import { useAuth } from '@/lib/auth';
 
@@ -11,16 +12,21 @@ export default function AdminLayout() {
   const { session, profile } = useAuth();
   const theme = useTheme();
   const isAdmin = profile?.role === 'admin';
+  // Founders also enter a code from an authenticator app; the database ignores them until they do.
+  const secondStepDone = hasPassedSecondStep(session);
 
   return (
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: theme.background } }}>
-      <Stack.Protected guard={isAdmin}>
+      <Stack.Protected guard={isAdmin && secondStepDone}>
         <Stack.Screen name="index" options={{ title: 'Applications · Backed. admin' }} />
         <Stack.Screen name="trades/[id]" options={{ title: 'Application · Backed. admin' }} />
         <Stack.Screen name="reports/index" options={{ title: 'Reports · Backed. admin' }} />
         <Stack.Screen name="reports/[id]" options={{ title: 'Report · Backed. admin' }} />
         <Stack.Screen name="reviews" options={{ title: 'Reviews · Backed. admin' }} />
         <Stack.Screen name="alerts" options={{ title: 'Alerts · Backed. admin' }} />
+      </Stack.Protected>
+      <Stack.Protected guard={isAdmin && !secondStepDone}>
+        <Stack.Screen name="two-step" options={{ title: 'Second step · Backed. admin' }} />
       </Stack.Protected>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="sign-in" options={{ title: 'Sign in · Backed. admin' }} />

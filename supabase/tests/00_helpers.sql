@@ -165,13 +165,13 @@ end;
 $$;
 
 -- Acts as a signed-in user for the rest of the transaction (`reset role`
--- goes back to the test runner).
-create or replace function tests.as_user(p_user uuid)
+-- goes back to the test runner). Signed in with the second step done (aal2), as founders must be.
+create or replace function tests.as_user(p_user uuid, p_aal text default 'aal2')
 returns void
 language sql
 as $$
   select set_config('request.jwt.claims',
-    json_build_object('sub', p_user, 'role', 'authenticated')::text, true);
+    json_build_object('sub', p_user, 'role', 'authenticated', 'aal', p_aal)::text, true);
   select set_config('role', 'authenticated', true);
 $$;
 

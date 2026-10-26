@@ -36,7 +36,8 @@ export async function pickPhoto(source: 'camera' | 'library', options?: { selfie
 /** Lets the trade choose a PDF or image from their files, e.g. an insurance certificate. */
 export async function pickDocument(): Promise<PickedFile | null> {
   const result = await DocumentPicker.getDocumentAsync({
-    type: ['application/pdf', 'image/*'],
+    // The kinds of file the upload buckets accept (see the upload_limits migration).
+    type: ['application/pdf', 'image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'],
     copyToCacheDirectory: true,
     multiple: false,
   });
