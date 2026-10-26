@@ -1,6 +1,3 @@
--- ON HOLD: move this into supabase/migrations/ only once the website with the second-step screen is live
--- and every founder has enrolled an authenticator app. Pushing it earlier locks founders out of admin data.
-
 -- Founders need a second step (an authenticator-app code) as well as their password.
 -- A founder who has only typed their password has a session at level "aal1"; once they enter
 -- the code it becomes "aal2". is_admin() is what every admin policy and admin function asks,
