@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://backedtrades.co.uk/sitemap.xml
