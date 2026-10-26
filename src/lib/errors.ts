@@ -45,7 +45,7 @@ export function friendlyError(error: unknown): string {
     if (message.includes(code)) return friendly;
   }
   if (/password/i.test(message) && /(at least|characters|length)/i.test(message)) {
-    return 'Your password needs to be at least 8 characters.';
+    return 'Your password needs to be at least 12 characters.';
   }
   if (/network|fetch/i.test(message)) return 'Can’t reach Backed. right now. Check your connection and try again.';
   return 'Something went wrong. Please try again.';

@@ -42,8 +42,10 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
 0. Android: SUBMITTED for production review (22 Oct, organisation Play Console account)
    No closed test needed on the organisation account. The build (versionCode 2) already includes "Wrong email? Change it".
    a. Watch for Google's review result in Play Console (Publishing overview); keep managed publishing ON so it waits for you
-   b. DONE 22 Oct: Supabase Site URL set to https://backedtrades.co.uk and redirect URLs added. Before any
-      `supabase config push`, check the diff does not put the local site_url (localhost:3000) back on live
+   b. DONE 22 Oct: Supabase Site URL set to https://backedtrades.co.uk and redirect URLs added.
+      DO NOT run `supabase config push`: on 27 Oct `supabase config diff` showed it would overwrite the live site_url with
+      localhost:3000, remove the live redirect URLs, point the SMS hook at host.docker.internal (breaking text sign-in),
+      and change the pooler and storage analytics. Change auth settings in the Supabase dashboard instead
    c. Later builds: eas.json submit track is still 'internal'; change it before using eas submit
    d. Retire/delete the old personal-account app once the new one is live
 

@@ -78,8 +78,8 @@ export function SignUpForm({ onCodeSent, onSignIn }: {
   const [error, setError] = useState<string | null>(null);
 
   async function signUp() {
-    if (password.length < 8) {
-      setError('Your password needs to be at least 8 characters.');
+    if (password.length < 12) {
+      setError('Your password needs to be at least 12 characters.');
       return;
     }
     setBusy(true);
@@ -111,7 +111,7 @@ export function SignUpForm({ onCodeSent, onSignIn }: {
       />
       <TextField
         label="Password"
-        hint="At least 8 characters."
+        hint="At least 12 characters."
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -215,8 +215,8 @@ export function ResetPasswordForm({ initialEmail, onSignIn }: {
 
   async function savePassword() {
     if (!sentTo) return;
-    if (password.length < 8) {
-      setError('Your password needs to be at least 8 characters.');
+    if (password.length < 12) {
+      setError('Your password needs to be at least 12 characters.');
       return;
     }
     setBusy(true);
@@ -278,7 +278,7 @@ export function ResetPasswordForm({ initialEmail, onSignIn }: {
       />
       <TextField
         label="New password"
-        hint="At least 8 characters."
+        hint="At least 12 characters."
         value={password}
         onChangeText={setPassword}
         secureTextEntry
