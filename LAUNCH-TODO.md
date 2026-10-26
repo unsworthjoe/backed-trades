@@ -33,9 +33,8 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
    C. Straight after
       1. Change the Facebook/Instagram ads and flyer links: they point at the coming-soon sign-up page
       2. Post a real job yourselves and follow it through
-      3. Email everyone on the interest list ONCE to say you're live (the sign-up form promised only that). List: /admin/interest
-      4. Submit the site to Google Search Console
-      5. Watch for a few days: /admin Alerts, Stripe Webhooks (all 200), Twilio and Resend usage, Supabase function logs
+      3. Submit the site to Google Search Console
+      4. Watch for a few days: /admin Alerts, Stripe Webhooks (all 200), Twilio and Resend usage, Supabase function logs
 
 0. Android: SUBMITTED for production review (22 Oct, organisation Play Console account)
    No closed test needed on the organisation account. The build (versionCode 2) already includes "Wrong email? Change it".
@@ -65,9 +64,9 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
       The last two days before 1 Jan get the founding price straight away, with no covered-until period (Stripe needs 48 hours)
    b. Builders' merchant counters + local trade Facebook groups
    c. Enough trades per queue that customers get offers from day one
-   d. Get them on the register-interest list now to email at launch
+   d. DONE: the register-interest list is closed. Nobody had signed up, and the form went away when the full site replaced
+      the coming-soon page on 27 Oct, so there's no "we're live" email to send
       22 Oct: Facebook/Instagram ads running, and the link is being shared with family and friends
-      25 Oct: the sign-up form now sits behind a "Register your interest" button above "Need a job doing?" on the coming-soon page (live)
    e. Source tracking is LIVE (19 Oct). Give every channel its own link,
       e.g. backedtrades.co.uk/?from=fb-runcorn-trades (the /admin/interest page shows the count per tag).
       Wording for the card and Facebook posts: RECRUITING-COPY.md
@@ -77,8 +76,8 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
       Facebook and Instagram only, not TikTok or YouTube
    f. DONE (27 Oct): Liverpool, Winsford and Northwich added (now six towns, all live for customers and trades).
       Postcodes: Winsford CW7, Northwich CW8 and CW9, Liverpool L1 to L40 (Bootle, Crosby, Kirkby, Huyton etc. show as Liverpool)
-      TO DO: ask existing trades to add the new towns under "Where you work" (their queues start empty, and a job in a
-      town with no trades shows as an alert after 24 hours)
+      Note: there are no trades yet, so every town's queue starts empty. A job posted in a town with no trades shows as an
+      alert after 24 hours, so keep recruiting in each of the six towns
       TO DO: paste the new town wording into the Play Console and App Store Connect listings (no price on iOS) and into the
       ads, and add the three towns to the ad targeting (text is in RECRUITING-COPY.md)
 
@@ -97,7 +96,7 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
    b. Upgrade Supabase to the Pro plan
       On Pro: leave the Spend Cap on, raise the minimum password length to 12 and turn on leaked-password protection
    c. DONE: iCloud email delivery checked (the 19 Oct password-reset code test)
-   d. Marketing drop (flyers, Facebook groups) pointing at the register-interest page
+   d. Marketing drop (flyers, Facebook groups) pointing at the website
       (use a separate ?from= link per flyer or area so you can compare them)
 
 7. Launch day for the APPS (the website goes live first, see GO LIVE above)
@@ -110,7 +109,6 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
       app get push notifications as well
    g. Real smoke test: post a job, have a trade accept it, buy a membership
    h. Submit the site to Google Search Console
-   i. Email everyone on the interest list
 
 8. The first week
    a. Check /admin Alerts, Reports and Reviews every day
