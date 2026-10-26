@@ -1,4 +1,31 @@
-# Backed. launch to-do list (updated 27 Oct 2026)
+# Backed. launch to-do list (updated 27 Oct 2026, end of day)
+
+PICK UP HERE (end of 27 Oct)
+   Live today: the full website (coming-soon page replaced), Stripe live, the £14.99 launch offer, six towns (Liverpool covers
+   L1 to L40), Supabase Pro, security hardening, robots.txt and sitemap.xml.
+
+   FIRST THING (the 12-character password change is half done):
+   1. Supabase dashboard, Authentication > Sign In / Providers > Email: set Minimum password length to 12 and turn on
+      leaked-password protection (never run `supabase config push`, see step 0b)
+   2. Deploy the site: run `! npx eas-cli deploy --export-dir dist --prod --non-interactive` in the prompt. The export in
+      dist is ready and matches the pushed code (commit fe2c7bb); if any code changes first, ask Claude to re-export
+   3. Tell Claude: it checks the live site. Then you try signing up with an 8-character password and check it's refused
+
+   YOURS TO DO (in rough order of importance)
+   - Confirm the end-to-end test passed (offer email + link, accept, customer text/email) and the test membership is
+     cancelled and the BACKEDTEST promotion code switched off
+   - Admin page: "Founding member price" switch ON
+   - Spending alerts (step 10d), especially the Meta ads limit and Twilio. Upgrade Resend. Check the Supabase Spend Cap is on
+   - Demo trade out of the real towns and trades; change the test sign-in code (test_otp); approve the first real trades
+   - Search Console: add the Domain, verify, submit sitemap.xml, request indexing for / and /welcome, add your partner
+   - Finish updating posts, ads (new destination links, three new towns in targeting) and the store listings (no price on iOS)
+   - Recruit trades in each of the six towns (every queue starts empty)
+   - Legal reviewer: glance at the launch-offer sentence in the terms
+
+   WAITING ON OTHERS: Google's review of the Android app; Apple's decision on the enrolment
+
+   CLAUDE CAN DO NEXT (just ask): record the ?from= tag when someone signs up (it stopped when the sign-up form went away);
+   a simulation to test radius-based queues before you spread nationwide; a full content security policy (needs testing)
 
 DONE so far: Android app tested. 22 Oct: moved Android to the new ORGANISATION Play Console account, because the personal
 account was stuck in closed testing. Package renamed to uk.co.backedtrades.backed (iOS bundle ID unchanged:
