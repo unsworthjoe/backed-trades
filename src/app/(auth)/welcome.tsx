@@ -17,7 +17,7 @@ const IS_WEB = Platform.OS === 'web';
 const POINTS = [
   IS_WEB
     ? ['One flat price', 'Join before 1 January 2027: pay £14.99 once to be covered until then, then £14.99 a month. No paying per lead.']
-    : ['Local jobs, no paying per lead', 'Real jobs from customers in Runcorn, Widnes and Warrington, sent straight to your phone.'],
+    : ['Local jobs, no paying per lead', 'Real jobs from customers in Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool, sent straight to your phone.'],
   ['A fair queue', 'Jobs go to the front of the queue. Win one and you go to the back, so everyone gets a turn.'],
   ['Every trade vetted', 'ID, insurance and registrations checked by hand, so customers can trust who turns up.'],
 ] as const;
@@ -32,7 +32,7 @@ export default function WelcomeScreen() {
         </>
       }>
       <PageMeta
-        title="Join Backed. · Local jobs for tradespeople in Runcorn, Widnes and Warrington"
+        title="Join Backed. · Local jobs for tradespeople in Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool"
         description="Backed. is built by tradespeople, for tradespeople: one flat monthly price, no paying per lead, and a fair queue so every vetted local trade gets a turn at jobs."
         path="/welcome"
       />

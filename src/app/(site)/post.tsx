@@ -146,7 +146,7 @@ function PostJobForm({ categories }: { categories: Tables<'trade_categories'>[] 
     postcodeCheck?.ok === true
       ? `✓ ${postcodeCheck.town}`
       : postcodeCheck?.reason === 'not_covered'
-        ? 'Sorry, Backed. only covers Runcorn, Widnes and Warrington for now.'
+        ? 'Sorry, Backed. only covers Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool for now.'
         : postcodeCheck?.reason === 'invalid'
           ? 'That doesn’t look like a UK postcode.'
           : postcodeCheck?.reason === 'unavailable'
@@ -181,7 +181,7 @@ function PostJobForm({ categories }: { categories: Tables<'trade_categories'>[] 
       <Section title="Where is it?">
         <TextField
           label="Postcode"
-          hint={postcodeMessage ?? 'We cover Runcorn, Widnes and Warrington.'}
+          hint={postcodeMessage ?? 'We cover Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool.'}
           value={postcode}
           onChangeText={(text) => {
             setPostcode(text);
@@ -193,7 +193,7 @@ function PostJobForm({ categories }: { categories: Tables<'trade_categories'>[] 
           maxLength={8}
         />
         {postcodeCheck && !postcodeCheck.ok && postcodeCheck.reason === 'not_covered' && (
-          <Notice tone="warning" message="We’re starting in three towns and adding more soon." />
+          <Notice tone="warning" message="We’re starting in six towns and adding more soon." />
         )}
         <TextField
           label="First line of address"

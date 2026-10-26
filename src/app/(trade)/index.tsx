@@ -52,7 +52,7 @@ const STEPS: Step[] = [
     href: '/apply/areas',
     problems: ['areas'],
     detail: (app) =>
-      app.townIds.length ? `${app.townIds.length} town${app.townIds.length === 1 ? '' : 's'} picked` : 'Runcorn, Widnes, Warrington',
+      app.townIds.length ? `${app.townIds.length} town${app.townIds.length === 1 ? '' : 's'} picked` : 'Runcorn, Widnes, Warrington, Northwich, Winsford, Liverpool',
   },
   {
     title: 'Registrations',

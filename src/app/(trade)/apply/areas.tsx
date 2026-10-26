@@ -62,7 +62,7 @@ function AreasForm({
         ))}
       </View>
       <ThemedText type="small" themeColor="textSecondary">
-        Backed. is starting in these three towns. More areas are coming.
+        Backed. is starting in these six towns. More areas are coming.
       </ThemedText>
       {error && <Notice message={error} />}
     </Screen>

@@ -27,8 +27,8 @@ export default function HomeScreen() {
   return (
     <Screen>
       <PageMeta
-        title="Backed. · Vetted local trades in Runcorn, Widnes and Warrington"
-        description="Post your job once and Backed. matches you with one vetted, insured local tradesperson in Runcorn, Widnes or Warrington. Free for customers, with no competing quotes or sales calls."
+        title="Backed. · Vetted local trades in Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool"
+        description="Post your job once and Backed. matches you with one vetted, insured local tradesperson in Runcorn, Widnes, Warrington, Northwich, Winsford or Liverpool. Free for customers, with no competing quotes or sales calls."
         path="/"
       />
       <SiteHeader />
@@ -36,7 +36,7 @@ export default function HomeScreen() {
       <View style={styles.hero}>
         <ThemedText type="title">Find a vetted local trade, without the ring-round.</ThemedText>
         <ThemedText themeColor="textSecondary" style={styles.lead}>
-          Post your job once. We match you with one trusted tradesperson in Runcorn, Widnes or Warrington. No
+          Post your job once. We match you with one trusted tradesperson in Runcorn, Widnes, Warrington, Northwich, Winsford or Liverpool. No
           competing quotes, no sales calls.
         </ThemedText>
         <Button label="Post a job" size="large" onPress={() => router.push('/post')} style={styles.cta} />

@@ -35,10 +35,10 @@ export function ComingSoon() {
   return (
     <>
       <Head>
-        <title>Backed. · Vetted local trades in Runcorn, Widnes and Warrington</title>
+        <title>Backed. · Vetted local trades in Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool</title>
         <meta
           name="description"
-          content="Backed. matches you with one vetted local tradesperson, checked by a real person. Launching soon in Runcorn, Widnes and Warrington."
+          content="Backed. matches you with one vetted local tradesperson, checked by a real person. Launching soon in Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool."
         />
       </Head>
       <Screen>
@@ -50,7 +50,7 @@ export function ComingSoon() {
           </ThemedText>
           <ThemedText type="title">Vetted local trades, without the ring-round.</ThemedText>
           <ThemedText themeColor="textSecondary" style={styles.lead}>
-            Backed. is launching in Runcorn, Widnes and Warrington. Post your job once and we’ll match you with one
+            Backed. is launching in Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool. Post your job once and we’ll match you with one
             trusted tradesperson, checked by a real person.
           </ThemedText>
         </View>
@@ -111,8 +111,8 @@ export function ComingSoon() {
         <Section title="Where we’re starting">
           <Card style={styles.wide}>
             <ThemedText themeColor="textSecondary">
-              Runcorn, Widnes and Warrington. We’re a small local team, made by tradespeople for tradespeople, and
-              we’d rather get it right in three towns than rush into thirty.
+              Runcorn, Widnes, Warrington, Northwich, Winsford and Liverpool. We’re a small local team, made by tradespeople for tradespeople, and
+              we’d rather get it right in six towns than rush into thirty.
             </ThemedText>
           </Card>
         </Section>
