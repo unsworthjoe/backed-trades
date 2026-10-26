@@ -16,7 +16,8 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
       2. End-to-end test on backed--demo.expo.app: customer posts a job, the test trade gets the offer EMAIL, the link opens
          the offer, the trade accepts, the customer gets their text/email, then sign off. Try the link while signed out too
       3. Admin page: "Founding member price" switch must be ON (it closes by itself on 1 Jan 2027)
-      4. Upgrade Supabase to Pro and leave the Spend Cap on. Upgrade Resend (the free plan sends about 100 emails a day)
+      4. DONE 27 Oct: Supabase is on Pro (it's per ORGANISATION: the one holding backed-database). Check the Spend Cap is on.
+         TO DO: upgrade Resend (the free plan sends about 100 emails a day)
       5. Spending alerts (step 10d), especially the Meta ads limit and Twilio
       6. Demo trade ("Demo Plumbing") must not be in the real towns and trades, or real jobs get offered to it. Keep it and the
          test customer login until both stores approve, but change the test code (test_otp in supabase/config.toml: before
@@ -33,7 +34,9 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
    C. Straight after
       1. Change the Facebook/Instagram ads and flyer links: they point at the coming-soon sign-up page
       2. Post a real job yourselves and follow it through
-      3. Submit the site to Google Search Console
+      3. Google Search Console: robots.txt and sitemap.xml are LIVE (27 Oct). Add the Domain property backedtrades.co.uk
+         (TXT record in DNS, keep the Resend records), verify, submit sitemap.xml, request indexing for / and /welcome,
+         and add your partner as a user. Check the Pages report after a week
       4. Watch for a few days: /admin Alerts, Stripe Webhooks (all 200), Twilio and Resend usage, Supabase function logs
 
 0. Android: SUBMITTED for production review (22 Oct, organisation Play Console account)
@@ -93,8 +96,9 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
 
 6. The week before launch
    a. Pick the launch date (after both approvals)
-   b. Upgrade Supabase to the Pro plan
-      On Pro: leave the Spend Cap on, raise the minimum password length to 12 and turn on leaked-password protection
+   b. DONE 27 Oct: Supabase is on the Pro plan (per organisation: the one holding backed-database)
+      Now on Pro: check the Spend Cap is on, then raise the minimum password length to 12 and turn on leaked-password
+      protection (Claude can do the length: config.toml plus the sign-up check; check the config push diff first)
    c. DONE: iCloud email delivery checked (the 19 Oct password-reset code test)
    d. Marketing drop (flyers, Facebook groups) pointing at the website
       (use a separate ?from= link per flyer or area so you can compare them)
@@ -108,7 +112,7 @@ GO LIVE ON THE WEBSITE (before the apps are approved)
    f. Release both apps in the stores. Trades already using the website keep getting email offers; trades who install the
       app get push notifications as well
    g. Real smoke test: post a job, have a trade accept it, buy a membership
-   h. Submit the site to Google Search Console
+   h. Google Search Console (see GO LIVE step C3; the sitemap is already live)
 
 8. The first week
    a. Check /admin Alerts, Reports and Reviews every day
