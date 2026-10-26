@@ -56,6 +56,7 @@ Apple screenshots made. Founders' feedback done, no changes.
 6. The week before launch
    a. Pick the launch date (after both approvals)
    b. Upgrade Supabase to the Pro plan
+      On Pro: leave the Spend Cap on, raise the minimum password length to 12 and turn on leaked-password protection
    c. DONE: iCloud email delivery checked (the 19 Oct password-reset code test)
    d. Marketing drop (flyers, Facebook groups) pointing at the register-interest page
       (use a separate ?from= link per flyer or area so you can compare them)
@@ -79,6 +80,17 @@ Apple screenshots made. Founders' feedback done, no changes.
 9. Housekeeping (quick, any time)
    a. Back up the Play key file and the Firebase FCM key file (keys folder) to a password manager or private company drive
    b. Add a co-founder or second email as an owner on Firebase, Play Console, Apple, Expo, Supabase and Stripe
+
+10. Security (from the 26 Oct audit)
+   a. DONE: daily text caps (300 sign-in codes, 200 notification texts), keyboard focus ring, photo label
+   b. DONE: upload limits (10 MB, photos and PDFs only)
+   c. DONE: founders' second sign-in step (authenticator app) is live. Keep two founders enrolled so one can reset the other
+   d. Set spending alerts: Meta ads spending limit, Twilio usage trigger + UK-only geo permissions, Expo hosting limit,
+      Cloudflare bot fight + rate limit, Resend plan limit, Google Cloud budget alert + restrict the Firebase API key
+   e. Before launch day: remove /style-guide (src/app/style-guide.tsx) so it isn't public
+   f. Lower-risk items, any time: length limits on job/bio/report text, CORS limited to backedtrades.co.uk,
+      timing-safe secret check on the three internal functions, security headers (CSP, clickjacking), npm audit
+      warnings (wait for the next Expo patch)
 
 Steps 0, 1, 2 and 3 can all happen now while you wait on Apple and Google.
 Full runbook: https://claude.ai/artifact/GW2tTxB5Lgc92sLfNz6GWb
