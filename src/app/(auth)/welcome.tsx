@@ -16,7 +16,7 @@ const IS_WEB = Platform.OS === 'web';
 
 const POINTS = [
   IS_WEB
-    ? ['One flat price', '£14.99 a month for founding members in Runcorn, Widnes and Warrington. No paying per lead.']
+    ? ['One flat price', 'Join before 1 January 2027: pay £14.99 once to be covered until then, then £14.99 a month. No paying per lead.']
     : ['Local jobs, no paying per lead', 'Real jobs from customers in Runcorn, Widnes and Warrington, sent straight to your phone.'],
   ['A fair queue', 'Jobs go to the front of the queue. Win one and you go to the back, so everyone gets a turn.'],
   ['Every trade vetted', 'ID, insurance and registrations checked by hand, so customers can trust who turns up.'],

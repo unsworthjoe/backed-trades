@@ -58,13 +58,13 @@ isOneToOne: false
                   ]
                 },"app_settings": {
                   Row: {
-                    "auto_close_hours": number,"callout_wave_minutes": number,"callout_window_minutes": number,"contact_due_hours": number,"customer_rating_min_count": number,"decline_limit": number,"default_queue_cap": number,"founding_pricing_open": boolean,"id": boolean,"id_image_retention_days": number,"job_retention_months": number,"low_rating_min_count": number,"low_rating_threshold": number,"miss_limit": number,"not_my_kind_limit": number,"offer_reminder_minutes": number,"offers_per_wave": number,"outbox_retention_days": number,"reply_window_minutes": number,"review_window_days": number,"signoff_reminder_hours": (number)[],"unmatched_alert_hours": number,"updated_at": string,"working_day_end": string,"working_day_start": string
+                    "auto_close_hours": number,"callout_wave_minutes": number,"callout_window_minutes": number,"contact_due_hours": number,"customer_rating_min_count": number,"decline_limit": number,"default_queue_cap": number,"founding_pricing_open": boolean,"launch_offer_ends_at": string,"id": boolean,"id_image_retention_days": number,"job_retention_months": number,"low_rating_min_count": number,"low_rating_threshold": number,"miss_limit": number,"not_my_kind_limit": number,"offer_reminder_minutes": number,"offers_per_wave": number,"outbox_retention_days": number,"reply_window_minutes": number,"review_window_days": number,"signoff_reminder_hours": (number)[],"unmatched_alert_hours": number,"updated_at": string,"working_day_end": string,"working_day_start": string
                   }
                   Insert: {
-                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"job_retention_months"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"outbox_retention_days"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
+                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"launch_offer_ends_at"?: string,"id"?: boolean,"id_image_retention_days"?: number,"job_retention_months"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"outbox_retention_days"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
                   }
                   Update: {
-                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"id"?: boolean,"id_image_retention_days"?: number,"job_retention_months"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"outbox_retention_days"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
+                    "auto_close_hours"?: number,"callout_wave_minutes"?: number,"callout_window_minutes"?: number,"contact_due_hours"?: number,"customer_rating_min_count"?: number,"decline_limit"?: number,"default_queue_cap"?: number,"founding_pricing_open"?: boolean,"launch_offer_ends_at"?: string,"id"?: boolean,"id_image_retention_days"?: number,"job_retention_months"?: number,"low_rating_min_count"?: number,"low_rating_threshold"?: number,"miss_limit"?: number,"not_my_kind_limit"?: number,"offer_reminder_minutes"?: number,"offers_per_wave"?: number,"outbox_retention_days"?: number,"reply_window_minutes"?: number,"review_window_days"?: number,"signoff_reminder_hours"?: (number)[],"unmatched_alert_hours"?: number,"updated_at"?: string,"working_day_end"?: string,"working_day_start"?: string
                   }
                   Relationships: [
                     
@@ -791,6 +791,11 @@ isOneToOne: true
 "membership_prices":
 { Args: Record<PropertyKey, never>; Returns: {
               "is_founding": boolean,"lookup_key": string,"plan": Database["public"]['Enums']["subscription_plan"],"price_pence": number
+            }[]
+                           },
+"membership_offer":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "founding": boolean,"intro_until": string | null
             }[]
                            },
 "my_application_problems":

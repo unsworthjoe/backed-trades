@@ -52,25 +52,32 @@ export default function MembershipScreen() {
 type Price = { plan: 'monthly' | 'yearly'; is_founding: boolean; price_pence: number };
 
 async function loadMembership(tradeId: string) {
-  const [trade, subscription, prices, settings] = await Promise.all([
+  const [trade, subscription, prices, offer] = await Promise.all([
     supabase.from('trades').select('status, business_name').eq('id', tradeId).maybeSingle(),
     supabase.from('subscriptions').select('*').eq('trade_id', tradeId).maybeSingle(),
     supabase.rpc('membership_prices'),
-    supabase.from('app_settings').select('founding_pricing_open').single(),
+    supabase.rpc('membership_offer'),
   ]);
-  const failed = [trade, subscription, prices, settings].find((r) => r.error);
+  const failed = [trade, subscription, prices, offer].find((r) => r.error);
   if (failed) throw failed.error;
   return {
     trade: trade.data,
     subscription: subscription.data as Tables<'subscriptions'> | null,
     prices: (prices.data ?? []) as Price[],
-    founding: !!settings.data?.founding_pricing_open,
+    founding: !!offer.data?.[0]?.founding,
+    // Set while the launch offer's "covered until" period applies: the first £14.99 covers the
+    // member until this date, and their plan starts then.
+    introUntil: offer.data?.[0]?.intro_until ?? null,
   };
 }
 
 type Loaded = Awaited<ReturnType<typeof loadMembership>>;
 
 const pounds = (pence: number) => `£${(pence / 100).toFixed(2)}`;
+
+/** What the launch offer charges today: the founding monthly price. */
+const introPence = (data: Loaded) =>
+  data.prices.find((p) => p.plan === 'monthly' && p.is_founding)?.price_pence ?? 1499;
 
 /** The function's error code (e.g. ALREADY_MEMBER), from a supabase.functions.invoke error. */
 async function functionError(error: unknown) {
@@ -195,7 +202,14 @@ function Membership({ tradeId }: { tradeId: string }) {
           <ThemedText themeColor="textSecondary">
             Your membership turns on job offers in every queue you’re in. One price, every trade and town you cover.
           </ThemedText>
-          {data.founding && (
+          {data.founding && data.introUntil && (
+            <Notice
+              tone="success"
+              title={`Launch offer: pay ${pounds(introPence(data))} today and you’re covered until ${formatDate(data.introUntil)}`}
+              message={`Your chosen plan then starts at the founding price, and you keep that price for as long as you stay a member. Cancel any time.`}
+            />
+          )}
+          {data.founding && !data.introUntil && (
             <Notice
               tone="success"
               title="Founding member price"
@@ -212,8 +226,13 @@ function Membership({ tradeId }: { tradeId: string }) {
                   </ThemedText>
                   <ThemedText type="title">{pounds(price.price_pence)}</ThemedText>
                   <ThemedText themeColor="textSecondary">
-                    {plan === 'monthly' ? 'a month. Cancel any time.' : 'a year. Two months free.'}
+                    {plan === 'monthly' ? 'a month' : 'a year'}
+                    {data.introUntil ? `, from ${formatDate(data.introUntil)}` : ''}.{' '}
+                    {plan === 'monthly' ? 'Cancel any time.' : 'Two months free.'}
                   </ThemedText>
+                  {data.introUntil && (
+                    <ThemedText type="smallBold">Pay {pounds(introPence(data))} today to join</ThemedText>
+                  )}
                   <Button
                     label={busy ? 'Opening…' : `Choose ${plan}`}
                     variant={plan === 'yearly' ? 'primary' : 'outline'}

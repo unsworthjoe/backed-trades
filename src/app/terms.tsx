@@ -75,6 +75,7 @@ const SECTIONS: LegalSection[] = [
         list: [
           'Trades need an active membership to receive offers. You can start one once your application is approved.',
           'Founding members pay £14.99 a month or £149.90 a year, and keep that price for as long as their membership continues without a break. The standard price is £19.99 a month or £199.90 a year.',
+          'Launch offer: trades who join before 1 January 2027 pay the founding monthly price of £14.99 once when they join, which covers their membership until 1 January 2027. From then their chosen plan starts at the founding price and renews automatically until they cancel.',
           'Memberships are paid in advance by card through Stripe and renew automatically until you cancel.',
           'You can cancel at any time from your membership page. Your membership stays active until the end of the period you’ve paid for, and isn’t renewed after that. We don’t refund part periods, except where the law requires it.',
           'If a payment fails, we’ll let you know. Offers stop if your membership ends.',

@@ -18,22 +18,30 @@ serveWithCors(async (req) => {
   if (plan !== 'monthly' && plan !== 'yearly') return json(400, { error: 'PLAN_REQUIRED' });
 
   const db = adminClient();
-  const [trade, profile, existing, settings] = await Promise.all([
+  const [trade, profile, existing, offerResult] = await Promise.all([
     db.from('trades').select('status, business_name').eq('id', userId).maybeSingle(),
     db.from('profiles').select('email, full_name').eq('id', userId).single(),
     db.from('subscriptions').select('*').eq('trade_id', userId).maybeSingle(),
-    db.from('app_settings').select('founding_pricing_open').single(),
+    db.rpc('membership_offer'),
   ]);
   if (trade.data?.status !== 'approved') return json(403, { error: 'APPROVED_TRADES_ONLY' });
   if (existing.data && ['active', 'trialing', 'past_due'].includes(existing.data.status)) {
     return json(409, { error: 'ALREADY_MEMBER' });
   }
 
-  const founding = !!settings.data?.founding_pricing_open;
+  // Launch offer: before the end date the first £14.99 covers the member until then (a one-off
+  // charge now, with the subscription starting on the end date); the founding price follows.
+  const offer = (offerResult.data as { founding: boolean; intro_until: string | null }[] | null)?.[0];
+  if (!offer) {
+    console.error('membership_offer failed', offerResult.error);
+    return json(500, { error: 'CHECKOUT_FAILED' });
+  }
+  const founding = offer.founding;
+  const introUntil = offer.intro_until ? new Date(offer.intro_until) : null;
   const { data: prices } = await db.rpc('membership_prices');
-  const price = (prices as { plan: string; is_founding: boolean; price_pence: number; lookup_key: string }[]).find(
-    (p) => p.plan === plan && p.is_founding === founding,
-  )!;
+  const priceList = prices as { plan: string; is_founding: boolean; price_pence: number; lookup_key: string }[];
+  const price = priceList.find((p) => p.plan === plan && p.is_founding === founding)!;
+  const introPence = priceList.find((p) => p.plan === 'monthly' && p.is_founding)!.price_pence;
 
   try {
     let customerId = existing.data?.stripe_customer_id;
@@ -66,8 +74,32 @@ serveWithCors(async (req) => {
       mode: 'subscription',
       customer: customerId,
       client_reference_id: userId,
-      line_items: [{ price: stripePrice.id, quantity: 1 }],
-      subscription_data: { metadata: { trade_id: userId } },
+      line_items: [
+        { price: stripePrice.id, quantity: 1 },
+        ...(introUntil
+          ? [
+              {
+                price_data: {
+                  currency: 'gbp',
+                  unit_amount: introPence,
+                  product_data: {
+                    name: `Backed. founding membership, covered until ${introUntil.toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                      timeZone: 'Europe/London',
+                    })}`,
+                  },
+                },
+                quantity: 1,
+              },
+            ]
+          : []),
+      ],
+      subscription_data: {
+        metadata: { trade_id: userId },
+        ...(introUntil ? { trial_end: Math.floor(introUntil.getTime() / 1000) } : {}),
+      },
       // Lets the founders give free months with a promotion code.
       allow_promotion_codes: true,
       success_url: `${SITE_URL}/membership?checkout=done`,

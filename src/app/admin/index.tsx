@@ -147,7 +147,7 @@ function FoundingPricing() {
         label="Founding member price"
         hint={
           open
-            ? 'On: new members pay £14.99 a month or £149.90 a year, and keep that price while they stay a member.'
+            ? 'On: new members pay £14.99 a month or £149.90 a year, and keep that price while they stay a member. Closes by itself on 1 January 2027.'
             : 'Off: new members pay £19.99 a month or £199.90 a year. Existing founding members keep their price.'
         }
         value={open}
