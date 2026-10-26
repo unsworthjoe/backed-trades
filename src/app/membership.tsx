@@ -33,7 +33,7 @@ export default function MembershipScreen() {
       {!session ? (
         <>
           <ThemedText type="subtitle">Your Backed. membership</ThemedText>
-          <ThemedText themeColor="textSecondary">Sign in with the email and password you use in the Backed. app.</ThemedText>
+          <ThemedText themeColor="textSecondary">Sign in with the email and password you use for Backed.</ThemedText>
           <SignInForm
             onNeedsCode={(email) => router.push({ pathname: '/verify', params: { email } })}
             onCreateAccount={() => router.push('/sign-up')}
@@ -176,7 +176,7 @@ function Membership({ tradeId }: { tradeId: string }) {
             </ThemedText>
           )}
           <ThemedText themeColor="textSecondary">
-            You’re getting job offers in the Backed. app. Change your card or plan, see invoices, or cancel below.
+            Job offers come to you by email, and in the Backed. app once it’s available. Change your card or plan, see invoices, or cancel below.
           </ThemedText>
           <Button
             label={busy ? 'Opening…' : 'Manage membership'}

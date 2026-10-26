@@ -110,7 +110,7 @@ export function render(template: string, data: Record<string, unknown>, ctx: Con
     case 'paused_missed_offers':
       return {
         title: 'Offers paused',
-        body: '3 offers in a row ran out without a reply, so we’ve paused new offers. Switch them back on in the app when you’re ready.',
+        body: '3 offers in a row ran out without a reply, so we’ve paused new offers. Switch them back on when you’re ready.',
       };
     case 'moved_to_back':
       return { title: 'Moved to the back of a queue', body: `You declined 5 offers in a row for ${queue}.` };
@@ -126,12 +126,12 @@ export function render(template: string, data: Record<string, unknown>, ctx: Con
     case 'trade_rejected':
       return {
         title: 'Your application needs another look',
-        body: `${data.reason ?? ''} Open the app to fix it and send it again.`.trim(),
+        body: `${data.reason ?? ''} Open Backed. to fix it and send it again.`.trim(),
       };
     case 'insurance_expiring':
       return {
         title: `Your insurance expires on ${date(String(data.expires_on))}`,
-        body: 'Upload your new certificate in the app so your offers don’t stop.',
+        body: 'Upload your new certificate on Backed. so your offers don’t stop.',
       };
 
     case 'new_message':
@@ -147,14 +147,14 @@ export function render(template: string, data: Record<string, unknown>, ctx: Con
     case 'review_released':
       return {
         title: 'You have a new review',
-        body: `${Number(data.overall).toFixed(1)} out of 5 for ${what}. Open the app to read it.`,
+        body: `${Number(data.overall).toFixed(1)} out of 5 for ${what}. Open Backed. to read it.`,
       };
 
     // Memberships. Anything about paying goes by email with a website link, never in the app.
     case 'membership_invite':
       return {
         title: 'Set up your Backed. membership',
-        body: `You’re approved, welcome to Backed.\n\nThe last step is your membership. Once it’s active, job offers start arriving in the app.\n\nSet it up here: ${ctx.membershipLink}`,
+        body: `You’re approved, welcome to Backed.\n\nThe last step is your membership. Join before 1 January 2027 and your first £14.99 covers you until then, with your plan starting after that at the founding price. Once it’s active, job offers start arriving.\n\nSet it up here: ${ctx.membershipLink}`,
       };
     case 'membership_active':
       return { title: 'You’re a Backed. member', body: 'Your membership is active. Job offers start now.' };

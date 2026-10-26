@@ -86,7 +86,7 @@ async function deliver(row: Claimed): Promise<Outcome> {
     if (row.push_tokens.length) return sendPush(row, message, ctx);
     // No device registered (notifications not allowed yet): email instead.
     return row.email
-      ? sendEmail(row.email, message.title, `${message.body}\n\nOpen the Backed. app to see more.`)
+      ? sendEmail(row.email, message.title, tradeEmailBody(message, ctx))
       : { outcome: 'failed', error: 'no device or email address' };
   }
   if (row.channel === 'sms' || row.channel === 'whatsapp') {
@@ -98,6 +98,11 @@ async function deliver(row: Claimed): Promise<Outcome> {
       : { outcome: 'failed', error: 'no mobile number or email address' };
   }
   return row.email ? sendEmail(row.email, message.title, message.body) : { outcome: 'failed', error: 'no email address' };
+}
+
+/** A trade’s message as an email: the wording, then a link to the right page on the website. */
+function tradeEmailBody(message: Message, ctx: Context) {
+  return `${message.body}\n\nOpen it on Backed.: ${SITE_URL}${ctx.appPath ?? '/'}`;
 }
 
 /** Looks up the names and links a message needs. */
@@ -219,7 +224,7 @@ async function sendPush(row: Claimed, message: Message, ctx: Context): Promise<O
   const errors = tickets.map((t) => t.details?.error ?? t.message).join(', ');
   // Every device is gone: fall back to email so the message isn't lost.
   if (gone.length === row.push_tokens.length && row.email) {
-    return sendEmail(row.email, message.title, `${message.body}\n\nOpen the Backed. app to see more.`);
+    return sendEmail(row.email, message.title, tradeEmailBody(message, ctx));
   }
   return { outcome: 'retry', error: `Expo push: ${errors}` };
 }
